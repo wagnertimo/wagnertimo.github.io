@@ -4,12 +4,12 @@ title: About
 permalink: /about/
 ---
 
-Some information about you!
+Hey, my name is Timo Wagner. I am currently a master student at the Karlsruher Institute of Technology (KIT). I am passionated about Data Science. I like to crawl the web for data and I am also keen on machine learning algorithms.
 
 ### More Information
 
-A place to include any other types of information that you'd like to include about yourself.
+With this blog I want to try to document my journey about learning the insights around Data Science. I also want to help others for a better understanding of machine learning algorithms and the practical use of those tools. If you want to know more or want to share a project, don't hesitate to contact me.
 
-### Contact me
+### Keep in touch
 
-[email@domain.com](mailto:email@domain.com)
+[wagnertimo@gmx.de](mailto:wagnertimo@gmx.de)
