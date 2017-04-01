@@ -1,6 +1,7 @@
 ---
-published: false
+published: true
 layout: post
+title: New Project Started
 ---
 This is my first blog post on my new blog. I decided to host it on GitHubs Pages. It is more convenient since I am already working with Git.
 
