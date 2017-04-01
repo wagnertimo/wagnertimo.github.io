@@ -1,10 +1,8 @@
 ---
 layout: post
-title: You're up and running!
+title: New Project Started
+published: true
 ---
+This is my first blog post on my new blog. I decided to host it on GitHubs Pages. It is more convenient since I am already working with Git.
 
-Next you can update your site name, avatar and other options using the _config.yml file in the root of your repository (shown below).
-
-![_config.yml]({{ site.baseurl }}/images/config.png)
-
-The easiest way to make your first post is to edit this one. Go into /_posts/ and update the Hello World markdown file. For more instructions head over to the [Jekyll Now repository](https://github.com/barryclark/jekyll-now) on GitHub.
+I am also proud to announce a new Data Science project I am working on as part of my master thesis. It is about analyzing the operating reserve market in the german energy market. The aim is to enhance optimization algorithms input factors by predicting the call probability of work prices of reserve calls. For more information head over to [my latest GitHub project](https://github.com/wagnertimo/rmarketcrawlR).
