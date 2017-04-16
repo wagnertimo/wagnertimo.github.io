@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Python and Machine Learning – Building an ANN with Keras – Timo Wager – Yet Another Data Science Blog.</title>
+
+        <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="In this post you will get to know how to define a simple Neural Network with the Keras package by solving a binary classification problem on the pima-indians-diabetes dataset.
+
+" />
+    <meta property="og:description" content="In this post you will get to know how to define a simple Neural Network with the Keras package by solving a binary classification problem on the pima-indians-diabetes dataset.
+
+" />
+    
+    <meta name="author" content="Timo Wager" />
+
+    
+    <meta property="og:title" content="Python and Machine Learning – Building an ANN with Keras" />
+    <meta property="twitter:title" content="Python and Machine Learning – Building an ANN with Keras" />
+    
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    <link rel="alternate" type="application/rss+xml" title="Timo Wager - Yet Another Data Science Blog." href="/feed.xml" />
+
+    <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+  </head>
+
+  <body>
+    <div class="wrapper-masthead">
+      <div class="container">
+        <header class="masthead clearfix">
+          <a href="/" class="site-avatar"><img src="https://avatars2.githubusercontent.com/u/26152358?v=3&u=3ce04d6d58ef6f11be830f4b1c59ce2db97cfec2&s=400" /></a>
+
+          <div class="site-info">
+            <h1 class="site-name"><a href="/">Timo Wager</a></h1>
+            <p class="site-description">Yet Another Data Science Blog.</p>
+          </div>
+
+          <nav>
+            <a href="/">Blog</a>
+            <a href="/about">About</a>
+          </nav>
+        </header>
+      </div>
+    </div>
+
+    <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>Python and Machine Learning – Building an ANN with Keras</h1>
+
+  <div class="entry">
+    <p>In this post you will get to know how to define a simple Neural Network with the Keras package by solving a binary classification problem on the pima-indians-diabetes dataset.</p>
+
+<h2 id="1-load-the-data">1. Load the data</h2>
+
+<p>Loading the keras and numpy package</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
+<span class="kn">from</span> <span class="nn">keras.layers</span> <span class="kn">import</span> <span class="n">Dense</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="c"># fix random seed for reproducibility</span>
+<span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Using TensorFlow backend.
+</code></pre>
+</div>
+
+<p>Loading the binary classification data set</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># load pima indians dataset</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s">"pima-indians-diabetes.csv"</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">","</span><span class="p">)</span>
+<span class="c"># split into input (X) and output (Y) variables</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">8</span><span class="p">]</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[:,</span><span class="mi">8</span><span class="p">]</span>
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">X</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>array([[   6.   ,  148.   ,   72.   , ...,   33.6  ,    0.627,   50.   ],
+       [   1.   ,   85.   ,   66.   , ...,   26.6  ,    0.351,   31.   ],
+       [   8.   ,  183.   ,   64.   , ...,   23.3  ,    0.672,   32.   ],
+       ...,
+       [   5.   ,  121.   ,   72.   , ...,   26.2  ,    0.245,   30.   ],
+       [   1.   ,  126.   ,   60.   , ...,   30.1  ,    0.349,   47.   ],
+       [   1.   ,   93.   ,   70.   , ...,   30.4  ,    0.315,   23.   ]])
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">Y</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>array([ 1.,  0.,  1.,  0.,  1.,  0.,  1.,  0.,  1.,  1.,  0.,  1.,  0.,
+        1.,  1.,  1.,  1.,  1.,  0.,  1.,  0.,  0.,  1.,  1.,  1.,  1.,
+        1.,  0.,  0.,  0.,  0.,  1.,  0.,  0.,  0.,  0.,  0.,  1.,  1.,
+        1.,  0.,  0.,  0.,  1.,  0.,  1.,  0.,  0.,  1.,  0.,  0.,  0.,
+        0.,  1.,  0.,  0.,  1.,  0.,  0.,  0.,  0.,  1.,  0.,  0.,  1.,
+        0.,  1.,  0.,  0.,  0.,  1.,  0.,  1.,  0.,  0.,  0.,  0.,  0.,
+        1.,  0.,  0.,  0.,  0.,  0.,  1.,  0.,  0.,  0.,  1.,  0.,  0.,
+        0.,  0.,  1.,  0.,  0.,  0.,  0.,  0.,  1.,  1.,  0.,  0.,  0.,
+        0.,  0.,  0.,  0.,  0.,  1.,  1.,  1.,  0.,  0.,  1.,  1.,  1.,
+        0.,  0.,  0.,  1.,  0.,  0.,  0.,  1.,  1.,  0.,  0.,  1.,  1.,
+        1.,  1.,  1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,
+        1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  1.,  0.,  1.,  1.,
+        0.,  0.,  0.,  1.,  0.,  0.,  0.,  0.,  1.,  1.,  0.,  0.,  0.,
+        0.,  1.,  1.,  0.,  0.,  0.,  1.,  0.,  1.,  0.,  1.,  0.,  0.,
+        0.,  0.,  0.,  1.,  1.,  1.,  1.,  1.,  0.,  0.,  1.,  1.,  0.,
+        1.,  0.,  1.,  1.,  1.,  0.,  0.,  0.,  0.,  0.,  0.,  1.,  1.,
+        0.,  1.,  0.,  0.,  0.,  1.,  1.,  1.,  1.,  0.,  1.,  1.,  1.,
+        1.,  0.,  0.,  0.,  0.,  0.,  1.,  0.,  0.,  1.,  1.,  0.,  0.,
+        0.,  1.,  1.,  1.,  1.,  0.,  0.,  0.,  1.,  1.,  0.,  1.,  0.,
+        0.,  0.,  0.,  0.,  0.,  0.,  0.,  1.,  1.,  0.,  0.,  0.,  1.,
+        0.,  1.,  0.,  0.,  1.,  0.,  1.,  0.,  0.,  1.,  1.,  0.,  0.,
+        0.,  0.,  0.,  1.,  0.,  0.,  0.,  1.,  0.,  0.,  1.,  1.,  0.,
+        0.,  1.,  0.,  0.,  0.,  1.,  1.,  1.,  0.,  0.,  1.,  0.,  1.,
+        0.,  1.,  1.,  0.,  1.,  0.,  0.,  1.,  0.,  1.,  1.,  0.,  0.,
+        1.,  0.,  1.,  0.,  0.,  1.,  0.,  1.,  0.,  1.,  1.,  1.,  0.,
+        0.,  1.,  0.,  1.,  0.,  0.,  0.,  1.,  0.,  0.,  0.,  0.,  1.,
+        1.,  1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  1.,  0.,
+        0.,  0.,  0.,  0.,  1.,  1.,  1.,  0.,  1.,  1.,  0.,  0.,  1.,
+        0.,  0.,  1.,  0.,  0.,  1.,  1.,  0.,  0.,  0.,  0.,  1.,  0.,
+        0.,  1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  1.,  1.,  1.,  0.,
+        0.,  1.,  0.,  0.,  1.,  0.,  0.,  1.,  0.,  1.,  1.,  0.,  1.,
+        0.,  1.,  0.,  1.,  0.,  1.,  1.,  0.,  0.,  0.,  0.,  1.,  1.,
+        0.,  1.,  0.,  1.,  0.,  0.,  0.,  0.,  1.,  1.,  0.,  1.,  0.,
+        1.,  0.,  0.,  0.,  0.,  0.,  1.,  0.,  0.,  0.,  0.,  1.,  0.,
+        0.,  1.,  1.,  1.,  0.,  0.,  1.,  0.,  0.,  1.,  0.,  0.,  0.,
+        1.,  0.,  0.,  1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,
+        1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  1.,  0.,  0.,  0.,  1.,
+        0.,  0.,  0.,  1.,  1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  1.,
+        0.,  0.,  0.,  0.,  1.,  0.,  0.,  0.,  1.,  0.,  0.,  0.,  1.,
+        0.,  0.,  0.,  1.,  0.,  0.,  0.,  0.,  1.,  1.,  0.,  0.,  0.,
+        0.,  0.,  0.,  1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,
+        0.,  0.,  1.,  0.,  0.,  0.,  1.,  1.,  1.,  1.,  0.,  0.,  1.,
+        1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,
+        0.,  1.,  1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  1.,  0.,  0.,
+        0.,  0.,  0.,  0.,  0.,  1.,  0.,  1.,  1.,  0.,  0.,  0.,  1.,
+        0.,  1.,  0.,  1.,  0.,  1.,  0.,  1.,  0.,  0.,  1.,  0.,  0.,
+        1.,  0.,  0.,  0.,  0.,  1.,  1.,  0.,  1.,  0.,  0.,  0.,  0.,
+        1.,  1.,  0.,  1.,  0.,  0.,  0.,  1.,  1.,  0.,  0.,  0.,  0.,
+        0.,  0.,  0.,  0.,  0.,  0.,  1.,  0.,  0.,  0.,  0.,  1.,  0.,
+        0.,  1.,  0.,  0.,  0.,  1.,  0.,  0.,  0.,  1.,  1.,  1.,  0.,
+        0.,  0.,  0.,  0.,  0.,  1.,  0.,  0.,  0.,  1.,  0.,  1.,  1.,
+        1.,  1.,  0.,  1.,  1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  1.,
+        1.,  0.,  1.,  0.,  0.,  1.,  0.,  1.,  0.,  0.,  0.,  0.,  0.,
+        1.,  0.,  1.,  0.,  1.,  0.,  1.,  1.,  0.,  0.,  0.,  0.,  1.,
+        1.,  0.,  0.,  0.,  1.,  0.,  1.,  1.,  0.,  0.,  1.,  0.,  0.,
+        1.,  1.,  0.,  0.,  1.,  0.,  0.,  1.,  0.,  0.,  0.,  0.,  0.,
+        0.,  0.,  1.,  1.,  1.,  0.,  0.,  0.,  0.,  0.,  0.,  1.,  1.,
+        0.,  0.,  1.,  0.,  0.,  1.,  0.,  1.,  1.,  1.,  0.,  0.,  1.,
+        1.,  1.,  0.,  1.,  0.,  1.,  0.,  1.,  0.,  0.,  0.,  0.,  1.,  0.])
+</code></pre>
+</div>
+
+<h2 id="2-define-model">2. Define Model</h2>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># create sequential model layer by layer</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
+<span class="c"># 1. hidden layer with 12 neurons expects 8 inputs and rectifier activation function</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="n">input_dim</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">))</span>
+<span class="c"># 2. hidden layer with 8 neurons and rectifier activation function</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">))</span>
+<span class="c"># output layer with one neuron for the binary classification</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'sigmoid'</span><span class="p">))</span>
+</code></pre>
+</div>
+
+<h2 id="3-compile-model">3. Compile Model</h2>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># Compile the model with binary crossentropy as the evaluation function and adam as the weights optimizer. Report the accuracy metri</span>
+<span class="n">model</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s">'binary_crossentropy'</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s">'adam'</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s">'accuracy'</span><span class="p">])</span>
+</code></pre>
+</div>
+
+<h2 id="4-fit-model">4. Fit Model</h2>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># Fit the model using 150 epochs and the batch size (#instances that are evaluated before a weight update) of 10</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Epoch 1/150
+768/768 [==============================] - 0s - loss: 3.7497 - acc: 0.6003     
+Epoch 2/150
+768/768 [==============================] - 0s - loss: 0.9433 - acc: 0.5951     
+Epoch 3/150
+768/768 [==============================] - 0s - loss: 0.7511 - acc: 0.6367     
+Epoch 4/150
+768/768 [==============================] - 0s - loss: 0.7133 - acc: 0.6549     
+Epoch 5/150
+768/768 [==============================] - 0s - loss: 0.6827 - acc: 0.6732     
+Epoch 6/150
+768/768 [==============================] - 0s - loss: 0.6516 - acc: 0.6810     
+Epoch 7/150
+768/768 [==============================] - 0s - loss: 0.6499 - acc: 0.6771     
+Epoch 8/150
+768/768 [==============================] - 0s - loss: 0.6380 - acc: 0.6836     
+Epoch 9/150
+768/768 [==============================] - 0s - loss: 0.6249 - acc: 0.6927     
+Epoch 10/150
+768/768 [==============================] - 0s - loss: 0.6315 - acc: 0.6745     
+Epoch 11/150
+768/768 [==============================] - 0s - loss: 0.6500 - acc: 0.6693     
+Epoch 12/150
+768/768 [==============================] - 0s - loss: 0.6407 - acc: 0.6745     
+Epoch 13/150
+768/768 [==============================] - 0s - loss: 0.6260 - acc: 0.6771     
+Epoch 14/150
+768/768 [==============================] - 0s - loss: 0.6192 - acc: 0.6966     
+Epoch 15/150
+768/768 [==============================] - 0s - loss: 0.6026 - acc: 0.6953     
+Epoch 16/150
+768/768 [==============================] - 0s - loss: 0.5883 - acc: 0.6992     
+Epoch 17/150
+768/768 [==============================] - 0s - loss: 0.5851 - acc: 0.6979     
+Epoch 18/150
+768/768 [==============================] - 0s - loss: 0.5994 - acc: 0.6901     
+Epoch 19/150
+768/768 [==============================] - 0s - loss: 0.5801 - acc: 0.7109     
+Epoch 20/150
+768/768 [==============================] - 0s - loss: 0.5795 - acc: 0.7214     
+Epoch 21/150
+768/768 [==============================] - 0s - loss: 0.5687 - acc: 0.7148     
+Epoch 22/150
+768/768 [==============================] - 0s - loss: 0.5820 - acc: 0.6940     
+Epoch 23/150
+768/768 [==============================] - 0s - loss: 0.5734 - acc: 0.7122     
+Epoch 24/150
+768/768 [==============================] - 0s - loss: 0.5679 - acc: 0.7305     
+Epoch 25/150
+768/768 [==============================] - 0s - loss: 0.5574 - acc: 0.7370     
+Epoch 26/150
+768/768 [==============================] - 0s - loss: 0.5707 - acc: 0.7057     
+Epoch 27/150
+768/768 [==============================] - 0s - loss: 0.5556 - acc: 0.7227     
+Epoch 28/150
+768/768 [==============================] - 0s - loss: 0.5555 - acc: 0.7305     
+Epoch 29/150
+768/768 [==============================] - 0s - loss: 0.5728 - acc: 0.7174     
+Epoch 30/150
+768/768 [==============================] - 0s - loss: 0.5611 - acc: 0.7214     
+Epoch 31/150
+768/768 [==============================] - 0s - loss: 0.5683 - acc: 0.7188     
+Epoch 32/150
+768/768 [==============================] - 0s - loss: 0.5651 - acc: 0.7096     
+Epoch 33/150
+768/768 [==============================] - 0s - loss: 0.5515 - acc: 0.7227     
+Epoch 34/150
+768/768 [==============================] - 0s - loss: 0.5479 - acc: 0.7292     
+Epoch 35/150
+768/768 [==============================] - 0s - loss: 0.5492 - acc: 0.7240     
+Epoch 36/150
+768/768 [==============================] - 0s - loss: 0.5652 - acc: 0.7070     
+Epoch 37/150
+768/768 [==============================] - 0s - loss: 0.5339 - acc: 0.7383     
+Epoch 38/150
+768/768 [==============================] - 0s - loss: 0.5410 - acc: 0.7253     
+Epoch 39/150
+768/768 [==============================] - 0s - loss: 0.5465 - acc: 0.7214     
+Epoch 40/150
+768/768 [==============================] - 0s - loss: 0.5451 - acc: 0.7240     
+Epoch 41/150
+768/768 [==============================] - 0s - loss: 0.5426 - acc: 0.7331     
+Epoch 42/150
+768/768 [==============================] - 0s - loss: 0.5377 - acc: 0.7448     
+Epoch 43/150
+768/768 [==============================] - 0s - loss: 0.5306 - acc: 0.7539     
+Epoch 44/150
+768/768 [==============================] - 0s - loss: 0.5329 - acc: 0.7474     
+Epoch 45/150
+768/768 [==============================] - 0s - loss: 0.5322 - acc: 0.7474     
+Epoch 46/150
+768/768 [==============================] - 0s - loss: 0.5310 - acc: 0.7526     
+Epoch 47/150
+768/768 [==============================] - 0s - loss: 0.5316 - acc: 0.7409     
+Epoch 48/150
+768/768 [==============================] - 0s - loss: 0.5319 - acc: 0.7422     
+Epoch 49/150
+768/768 [==============================] - 0s - loss: 0.5335 - acc: 0.7474     
+Epoch 50/150
+768/768 [==============================] - 0s - loss: 0.5265 - acc: 0.7357     
+Epoch 51/150
+768/768 [==============================] - 0s - loss: 0.5262 - acc: 0.7474     
+Epoch 52/150
+768/768 [==============================] - 0s - loss: 0.5323 - acc: 0.7448     
+Epoch 53/150
+768/768 [==============================] - 0s - loss: 0.5384 - acc: 0.7487     
+Epoch 54/150
+768/768 [==============================] - 0s - loss: 0.5382 - acc: 0.7240     
+Epoch 55/150
+768/768 [==============================] - 0s - loss: 0.5217 - acc: 0.7500     
+Epoch 56/150
+768/768 [==============================] - 0s - loss: 0.5286 - acc: 0.7422     
+Epoch 57/150
+768/768 [==============================] - 0s - loss: 0.5309 - acc: 0.7344     
+Epoch 58/150
+768/768 [==============================] - 0s - loss: 0.5215 - acc: 0.7513     
+Epoch 59/150
+768/768 [==============================] - 0s - loss: 0.5128 - acc: 0.7604     
+Epoch 60/150
+768/768 [==============================] - 0s - loss: 0.5352 - acc: 0.7396     
+Epoch 61/150
+768/768 [==============================] - 0s - loss: 0.5264 - acc: 0.7305     
+Epoch 62/150
+768/768 [==============================] - 0s - loss: 0.5170 - acc: 0.7578     
+Epoch 63/150
+768/768 [==============================] - 0s - loss: 0.5430 - acc: 0.7383     
+Epoch 64/150
+768/768 [==============================] - 0s - loss: 0.5328 - acc: 0.7370     
+Epoch 65/150
+768/768 [==============================] - 0s - loss: 0.5197 - acc: 0.7474     
+Epoch 66/150
+768/768 [==============================] - 0s - loss: 0.5066 - acc: 0.7487     
+Epoch 67/150
+768/768 [==============================] - 0s - loss: 0.5162 - acc: 0.7331     
+Epoch 68/150
+768/768 [==============================] - 0s - loss: 0.5131 - acc: 0.7526     
+Epoch 69/150
+768/768 [==============================] - 0s - loss: 0.5128 - acc: 0.7526     
+Epoch 70/150
+768/768 [==============================] - 0s - loss: 0.5346 - acc: 0.7188     
+Epoch 71/150
+768/768 [==============================] - 0s - loss: 0.5191 - acc: 0.7435     
+Epoch 72/150
+768/768 [==============================] - 0s - loss: 0.5164 - acc: 0.7513     
+Epoch 73/150
+768/768 [==============================] - 0s - loss: 0.5167 - acc: 0.7435     
+Epoch 74/150
+768/768 [==============================] - 0s - loss: 0.5091 - acc: 0.7604     
+Epoch 75/150
+768/768 [==============================] - 0s - loss: 0.5122 - acc: 0.7552     
+Epoch 76/150
+768/768 [==============================] - 0s - loss: 0.5141 - acc: 0.7513     
+Epoch 77/150
+768/768 [==============================] - 0s - loss: 0.5151 - acc: 0.7591     
+Epoch 78/150
+768/768 [==============================] - 0s - loss: 0.5140 - acc: 0.7487     
+Epoch 79/150
+768/768 [==============================] - 0s - loss: 0.5150 - acc: 0.7357     
+Epoch 80/150
+768/768 [==============================] - 0s - loss: 0.5109 - acc: 0.7539     
+Epoch 81/150
+768/768 [==============================] - 0s - loss: 0.5061 - acc: 0.7695     
+Epoch 82/150
+768/768 [==============================] - 0s - loss: 0.5030 - acc: 0.7500     
+Epoch 83/150
+768/768 [==============================] - 0s - loss: 0.5020 - acc: 0.7565     
+Epoch 84/150
+768/768 [==============================] - 0s - loss: 0.4980 - acc: 0.7539     
+Epoch 85/150
+768/768 [==============================] - 0s - loss: 0.5060 - acc: 0.7487     
+Epoch 86/150
+768/768 [==============================] - 0s - loss: 0.5080 - acc: 0.7487     
+Epoch 87/150
+768/768 [==============================] - 0s - loss: 0.4998 - acc: 0.7565     
+Epoch 88/150
+768/768 [==============================] - 0s - loss: 0.5013 - acc: 0.7669     
+Epoch 89/150
+768/768 [==============================] - 0s - loss: 0.5065 - acc: 0.7591     
+Epoch 90/150
+768/768 [==============================] - 0s - loss: 0.5105 - acc: 0.7461     
+Epoch 91/150
+768/768 [==============================] - 0s - loss: 0.5002 - acc: 0.7487     
+Epoch 92/150
+768/768 [==============================] - 0s - loss: 0.5055 - acc: 0.7435     
+Epoch 93/150
+768/768 [==============================] - 0s - loss: 0.4983 - acc: 0.7565     
+Epoch 94/150
+768/768 [==============================] - 0s - loss: 0.4989 - acc: 0.7578     
+Epoch 95/150
+768/768 [==============================] - 0s - loss: 0.5065 - acc: 0.7435     
+Epoch 96/150
+768/768 [==============================] - 0s - loss: 0.4937 - acc: 0.7604     
+Epoch 97/150
+768/768 [==============================] - 0s - loss: 0.4970 - acc: 0.7708     
+Epoch 98/150
+768/768 [==============================] - 0s - loss: 0.4902 - acc: 0.7578     
+Epoch 99/150
+768/768 [==============================] - 0s - loss: 0.4900 - acc: 0.7656     
+Epoch 100/150
+768/768 [==============================] - 0s - loss: 0.4848 - acc: 0.7760     
+Epoch 101/150
+768/768 [==============================] - 0s - loss: 0.4898 - acc: 0.7734     
+Epoch 102/150
+768/768 [==============================] - 0s - loss: 0.4981 - acc: 0.7565     
+Epoch 103/150
+768/768 [==============================] - 0s - loss: 0.4986 - acc: 0.7526     
+Epoch 104/150
+768/768 [==============================] - 0s - loss: 0.4929 - acc: 0.7865     
+Epoch 105/150
+768/768 [==============================] - 0s - loss: 0.5259 - acc: 0.7461     
+Epoch 106/150
+768/768 [==============================] - 0s - loss: 0.4914 - acc: 0.7708     
+Epoch 107/150
+768/768 [==============================] - 0s - loss: 0.4885 - acc: 0.7721     
+Epoch 108/150
+768/768 [==============================] - 0s - loss: 0.5021 - acc: 0.7630     
+Epoch 109/150
+768/768 [==============================] - 0s - loss: 0.4871 - acc: 0.7591     
+Epoch 110/150
+768/768 [==============================] - 0s - loss: 0.4876 - acc: 0.7669     
+Epoch 111/150
+768/768 [==============================] - 0s - loss: 0.4829 - acc: 0.7786     
+Epoch 112/150
+768/768 [==============================] - 0s - loss: 0.4914 - acc: 0.7773     
+Epoch 113/150
+768/768 [==============================] - 0s - loss: 0.4971 - acc: 0.7591     
+Epoch 114/150
+768/768 [==============================] - 0s - loss: 0.4912 - acc: 0.7526     
+Epoch 115/150
+768/768 [==============================] - 0s - loss: 0.4917 - acc: 0.7643     
+Epoch 116/150
+768/768 [==============================] - 0s - loss: 0.4907 - acc: 0.7721     
+Epoch 117/150
+768/768 [==============================] - 0s - loss: 0.4919 - acc: 0.7617     
+Epoch 118/150
+768/768 [==============================] - 0s - loss: 0.4881 - acc: 0.7760     
+Epoch 119/150
+768/768 [==============================] - 0s - loss: 0.4842 - acc: 0.7604     
+Epoch 120/150
+768/768 [==============================] - 0s - loss: 0.4952 - acc: 0.7708     
+Epoch 121/150
+768/768 [==============================] - 0s - loss: 0.4931 - acc: 0.7747     
+Epoch 122/150
+768/768 [==============================] - 0s - loss: 0.4831 - acc: 0.7747     
+Epoch 123/150
+768/768 [==============================] - 0s - loss: 0.4870 - acc: 0.7617     
+Epoch 124/150
+768/768 [==============================] - 0s - loss: 0.4845 - acc: 0.7734     
+Epoch 125/150
+768/768 [==============================] - 0s - loss: 0.4877 - acc: 0.7799     
+Epoch 126/150
+768/768 [==============================] - 0s - loss: 0.4818 - acc: 0.7669     
+Epoch 127/150
+768/768 [==============================] - 0s - loss: 0.4897 - acc: 0.7617     
+Epoch 128/150
+768/768 [==============================] - 0s - loss: 0.4726 - acc: 0.7747     
+Epoch 129/150
+768/768 [==============================] - 0s - loss: 0.4831 - acc: 0.7682     
+Epoch 130/150
+768/768 [==============================] - 0s - loss: 0.4729 - acc: 0.7878     
+Epoch 131/150
+768/768 [==============================] - 0s - loss: 0.4846 - acc: 0.7630     
+Epoch 132/150
+768/768 [==============================] - 0s - loss: 0.4818 - acc: 0.7812     
+Epoch 133/150
+768/768 [==============================] - 0s - loss: 0.4857 - acc: 0.7682     
+Epoch 134/150
+768/768 [==============================] - 0s - loss: 0.4858 - acc: 0.7721     
+Epoch 135/150
+768/768 [==============================] - 0s - loss: 0.4776 - acc: 0.7643     
+Epoch 136/150
+768/768 [==============================] - 0s - loss: 0.4747 - acc: 0.7695     
+Epoch 137/150
+768/768 [==============================] - 0s - loss: 0.4695 - acc: 0.7826     
+Epoch 138/150
+768/768 [==============================] - 0s - loss: 0.4804 - acc: 0.7773     
+Epoch 139/150
+768/768 [==============================] - 0s - loss: 0.4664 - acc: 0.7773     
+Epoch 140/150
+768/768 [==============================] - 0s - loss: 0.4831 - acc: 0.7747     
+Epoch 141/150
+768/768 [==============================] - 0s - loss: 0.4713 - acc: 0.7826     
+Epoch 142/150
+768/768 [==============================] - 0s - loss: 0.4819 - acc: 0.7682     
+Epoch 143/150
+768/768 [==============================] - 0s - loss: 0.4760 - acc: 0.7695     
+Epoch 144/150
+768/768 [==============================] - 0s - loss: 0.4732 - acc: 0.7747     
+Epoch 145/150
+768/768 [==============================] - 0s - loss: 0.4958 - acc: 0.7552     
+Epoch 146/150
+768/768 [==============================] - 0s - loss: 0.4917 - acc: 0.7695     
+Epoch 147/150
+768/768 [==============================] - 0s - loss: 0.4844 - acc: 0.7721     
+Epoch 148/150
+768/768 [==============================] - 0s - loss: 0.4715 - acc: 0.7786     
+Epoch 149/150
+768/768 [==============================] - 0s - loss: 0.4742 - acc: 0.7656     
+Epoch 150/150
+768/768 [==============================] - 0s - loss: 0.4784 - acc: 0.7812     
+
+
+
+
+
+&lt;keras.callbacks.History at 0x118859dd8&gt;
+</code></pre>
+</div>
+
+<h2 id="5-evaluate-the-model">5. Evaluate the Model</h2>
+
+<p>We have trained our neural network on the entire dataset and we can evaluate the performance of the network on the same dataset.</p>
+
+<p>We have done this for simplicity, but ideally, you should separate your data into train and test data for training and evaluation of your model.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># evaluate the model</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="si">%</span><span class="s">s: </span><span class="si">%.2</span><span class="s">f</span><span class="si">%%</span><span class="s">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">metrics_names</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">scores</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">))</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code> 32/768 [&gt;.............................] - ETA: 0s
+acc: 77.99%
+</code></pre>
+</div>
+
+<h2 id="6-model-predictions">6. Model Predictions</h2>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># calculate predictions</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="c"># round predictions</span>
+<span class="n">rounded</span> <span class="o">=</span> <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">predictions</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">rounded</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0]
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code>
+</code></pre>
+</div>
+
+  </div>
+
+  <div class="date">
+    Written on April 15, 2017
+  </div>
+
+  
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          
+<a href="mailto:wagnertimo@gmx.de"><i class="svg-icon email"></i></a>
+
+
+<a href="https://github.com/wagnertimo"><i class="svg-icon github"></i></a>
+
+<a href="https://www.linkedin.com/in/timo-wagner-95168213a/"><i class="svg-icon linkedin"></i></a>
+
+
+
+
+
+
+        </footer>
+      </div>
+    </div>
+
+    
+
+  </body>
+</html>

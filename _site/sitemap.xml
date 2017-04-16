@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+<loc>http://localhost:4000/New-Project-Started/</loc>
+<lastmod>2017-04-01T00:00:00+02:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/R-And-Jupyter-Notebook-Installation/</loc>
+<lastmod>2017-04-01T00:00:00+02:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/Jupter-Notebook-as-a-Jekyll-Blog-Post/</loc>
+<lastmod>2017-04-15T00:00:00+02:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/Python-and-Machine-Learning-Building-an-ANN-with-Keras/</loc>
+<lastmod>2017-04-15T00:00:00+02:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/Python-and-Machine-Learning-Theano/</loc>
+<lastmod>2017-04-15T00:00:00+02:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/404/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/about/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/</loc>
+</url>
+</urlset>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Python and Machine Learning – Theano – Timo Wager – Yet Another Data Science Blog.</title>
+
+        <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="Theano is a Python library for fast numerical computation to aid in the development of deep learning models.
+
+" />
+    <meta property="og:description" content="Theano is a Python library for fast numerical computation to aid in the development of deep learning models.
+
+" />
+    
+    <meta name="author" content="Timo Wager" />
+
+    
+    <meta property="og:title" content="Python and Machine Learning – Theano" />
+    <meta property="twitter:title" content="Python and Machine Learning – Theano" />
+    
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    <link rel="alternate" type="application/rss+xml" title="Timo Wager - Yet Another Data Science Blog." href="/feed.xml" />
+
+    <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+  </head>
+
+  <body>
+    <div class="wrapper-masthead">
+      <div class="container">
+        <header class="masthead clearfix">
+          <a href="/" class="site-avatar"><img src="https://avatars2.githubusercontent.com/u/26152358?v=3&u=3ce04d6d58ef6f11be830f4b1c59ce2db97cfec2&s=400" /></a>
+
+          <div class="site-info">
+            <h1 class="site-name"><a href="/">Timo Wager</a></h1>
+            <p class="site-description">Yet Another Data Science Blog.</p>
+          </div>
+
+          <nav>
+            <a href="/">Blog</a>
+            <a href="/about">About</a>
+          </nav>
+        </header>
+      </div>
+    </div>
+
+    <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>Python and Machine Learning – Theano</h1>
+
+  <div class="entry">
+    <p>Theano is a Python library for fast numerical computation to aid in the development of deep learning models.</p>
+
+<p>At its heart, Theano is a compiler for mathematical expressions in Python. It knows how to take your structures and turn them into very efficient code that uses NumPy and efficient native libraries to run as fast as possible on CPUs or GPUs.</p>
+
+<p>The actual syntax of Theano expressions is symbolic, which can be off-putting to beginners used to normal software development. Specifically, expression are defined in the abstract sense, compiled and later actually used to make calculations.</p>
+
+<p>In this lesson, your goal is to install Theano and write a small example that demonstrates the symbolic nature of Theano programs.</p>
+
+<p>For example, you can install Theano using pip as follows:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>sudo pip install Theano
+</code></pre>
+</div>
+
+<p>A small example of a Theano program that you can use as a starting point is listed below:</p>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">theano</span>
+<span class="kn">from</span> <span class="nn">theano</span> <span class="kn">import</span> <span class="n">tensor</span>
+<span class="c"># declare two symbolic floating-point scalars</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">dscalar</span><span class="p">()</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">dscalar</span><span class="p">()</span>
+<span class="c"># create a simple expression</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<span class="c"># convert the expression into a callable object that takes (a,b)</span>
+<span class="c"># values as input and computes a value for c</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">function</span><span class="p">([</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">],</span> <span class="n">c</span><span class="p">)</span>
+<span class="c"># bind 1.5 to 'a', 2.5 to 'b', and evaluate 'c'</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Learn more about Theano on the <a href="http://deeplearning.net/software/theano/?__s=rvasa3puiemv9zazwcff">Theano homepage</a>.</p>
+
+  </div>
+
+  <div class="date">
+    Written on April 15, 2017
+  </div>
+
+  
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          
+<a href="mailto:wagnertimo@gmx.de"><i class="svg-icon email"></i></a>
+
+
+<a href="https://github.com/wagnertimo"><i class="svg-icon github"></i></a>
+
+<a href="https://www.linkedin.com/in/timo-wagner-95168213a/"><i class="svg-icon linkedin"></i></a>
+
+
+
+
+
+
+        </footer>
+      </div>
+    </div>
+
+    
+
+  </body>
+</html>
