@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>R and Jupyter Notebook – Installation – Timo Wager – Yet Another Data Science Blog.</title>
+    <title>Jupyter Notebook – Using R – Timo Wager – Yet Another Data Science Blog.</title>
 
         <meta charset="utf-8" />
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
@@ -9,11 +9,11 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
 
     
-    <meta name="description" content="Jupyter Notebook is a server-client application that allows editing and running notebook documents via a web browser. Notebook documents are documents produced by Jupyter Notebook which contain both computer code (e.g. python) and rich text elements (paragraph, equations, figures, links, etc.). They are both human-readable documents containing the analysis description and the results (figures, tables, etc.) as well as executable documents which can be run to perform data analysis.
+    <meta name="description" content="You can use the programming language R in Jupyter Notebook by installing the IRkernel.
 A notebook kernel is a computational engine that executes the code contained in a notebook document. The ipython kernel executes python code and the IRkernel runs R code which will be used later. But there are also kernels for many other languages.
 
 " />
-    <meta property="og:description" content="Jupyter Notebook is a server-client application that allows editing and running notebook documents via a web browser. Notebook documents are documents produced by Jupyter Notebook which contain both computer code (e.g. python) and rich text elements (paragraph, equations, figures, links, etc.). They are both human-readable documents containing the analysis description and the results (figures, tables, etc.) as well as executable documents which can be run to perform data analysis.
+    <meta property="og:description" content="You can use the programming language R in Jupyter Notebook by installing the IRkernel.
 A notebook kernel is a computational engine that executes the code contained in a notebook document. The ipython kernel executes python code and the IRkernel runs R code which will be used later. But there are also kernels for many other languages.
 
 " />
@@ -21,8 +21,8 @@ A notebook kernel is a computational engine that executes the code contained in 
     <meta name="author" content="Timo Wager" />
 
     
-    <meta property="og:title" content="R and Jupyter Notebook – Installation" />
-    <meta property="twitter:title" content="R and Jupyter Notebook – Installation" />
+    <meta property="og:title" content="Jupyter Notebook – Using R" />
+    <meta property="twitter:title" content="Jupyter Notebook – Using R" />
     
 
     <!--[if lt IE 9]>
@@ -56,26 +56,24 @@ A notebook kernel is a computational engine that executes the code contained in 
 
     <div id="main" role="main" class="container">
       <article class="post">
-  <h1>R and Jupyter Notebook – Installation</h1>
+  <h1>Jupyter Notebook – Using R</h1>
 
   <div class="entry">
-    <p><a href="http://jupyter.org">Jupyter Notebook</a> is a server-client application that allows editing and running notebook documents via a web browser. Notebook documents are documents produced by Jupyter Notebook which contain both computer code (e.g. python) and rich text elements (paragraph, equations, figures, links, etc.). They are both human-readable documents containing the analysis description and the results (figures, tables, etc.) as well as executable documents which can be run to perform data analysis.
-A notebook kernel is a computational engine that executes the code contained in a notebook document. The ipython kernel executes python code and the IRkernel runs R code which will be used later. But there are also kernels for many other languages.</p>
+    <p>You can use the programming language <code class="highlighter-rouge">R</code> in Jupyter Notebook by installing the <code class="highlighter-rouge">IRkernel</code>.
+A notebook kernel is a computational engine that executes the code contained in a notebook document. The <code class="highlighter-rouge">ipython kernel</code> executes python code and the <code class="highlighter-rouge">IRkernel</code> runs R code which will be used later. But there are also kernels for many <a href="https://github.com/jupyter/jupyter/wiki/Jupyter-kernels">other languages</a>.</p>
 
-<h3 id="get-r-working-in-the-jupyter-notebook">Get R working in the Jupyter Notebook</h3>
+<p>Firstly, you need to install the latest anaconda package. If you haven’t done this before, walk through my post <a href="../Jupyter-Notebook-Installation">Jupyter Notebook – Installation</a>.</p>
 
-<p><strong>Step 1:</strong> Installation of the anaconda package.</p>
+<p>Now you can get R working in Jupyter notebook by following simple command lines.</p>
 
-<p>Download the newest <a href="https://www.continuum.io/downloads">anaconda installer</a>. You can choose between the graphical interface or the command line version for installation.</p>
-
-<p><strong>Step 2:</strong> Install the IRkernel.</p>
+<p><strong>Step 1:</strong> Install the IRkernel.</p>
 
 <p>After downloading and installing anaconda, you need to install the IRkernel. This will do anaconda for you. Just type the following command in the terminal.</p>
 <div class="language-sh highlighter-rouge"><pre class="highlight"><code>conda install -c r ipython-notebook r-irkernel
 </code></pre>
 </div>
 
-<p><strong>Step 3:</strong> Install required R packages.</p>
+<p><strong>Step 2:</strong> Install required R packages.</p>
 
 <p>Now you need some additional R packages to get everything running. Open RStudio or any other IDE and type in the following command in the console.</p>
 <div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">install.packages</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s1">'repr'</span><span class="p">,</span><span class="w"> </span><span class="s1">'IRdisplay'</span><span class="p">,</span><span class="w"> </span><span class="s1">'evaluate'</span><span class="p">,</span><span class="w"> </span><span class="s1">'crayon'</span><span class="p">,</span><span class="w"> </span><span class="s1">'pbdZMQ'</span><span class="p">,</span><span class="w"> </span><span class="s1">'devtools'</span><span class="p">,</span><span class="w"> </span><span class="s1">'uuid'</span><span class="p">,</span><span class="w"> </span><span class="s1">'digest'</span><span class="p">))</span><span class="w">
@@ -83,19 +81,19 @@ A notebook kernel is a computational engine that executes the code contained in 
 </span></code></pre>
 </div>
 
-<p><strong>Step 4:</strong> Loading the IRkernel.
+<p><strong>Step 3:</strong> Loading the IRkernel.
 After installing the packages, you have to load the IRkernel. Therefore call the <code class="highlighter-rouge">installspec()</code> function of the IRkernel package in the R console.</p>
 <div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">IRkernel</span><span class="o">::</span><span class="n">installspec</span><span class="p">()</span><span class="w">
 </span></code></pre>
 </div>
 
-<p><strong>Step 5:</strong> Install the Essentials.
+<p><strong>Step 4:</strong> Install the Essentials.
 Before you are able to run R in Jupyter Notebook, you will need some essentials to be installed. Use again the <code class="highlighter-rouge">conda</code>command in the shell.</p>
 <div class="language-sh highlighter-rouge"><pre class="highlight"><code>conda install -c r r-essentials
 </code></pre>
 </div>
 
-<p><strong>Step 6:</strong> Launch Jupyter Notebook.
+<p><strong>Step 5:</strong> Launch Jupyter Notebook.
 Now you should be able to open Jupyter Notebook and select R as the notebook kernel.</p>
 <div class="language-sh highlighter-rouge"><pre class="highlight"><code>jupyter notebook
 </code></pre>
@@ -109,6 +107,23 @@ Now you should be able to open Jupyter Notebook and select R as the notebook ker
   </div>
 
   
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+
+	    var disqus_shortname = '{"shortname"=>"disqus_9qVzDjGyqM"}';
+
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
 </article>
 
     </div>

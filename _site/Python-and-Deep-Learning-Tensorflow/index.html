@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Python and Deep Learning – Tensorflow – Timo Wager – Yet Another Data Science Blog.</title>
+
+        <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="TensorFlow is a Python library for fast numerical computing created and released by Google. Like Theano, TensorFlow is intended to be used to develop deep learning models.
+
+" />
+    <meta property="og:description" content="TensorFlow is a Python library for fast numerical computing created and released by Google. Like Theano, TensorFlow is intended to be used to develop deep learning models.
+
+" />
+    
+    <meta name="author" content="Timo Wager" />
+
+    
+    <meta property="og:title" content="Python and Deep Learning – Tensorflow" />
+    <meta property="twitter:title" content="Python and Deep Learning – Tensorflow" />
+    
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    <link rel="alternate" type="application/rss+xml" title="Timo Wager - Yet Another Data Science Blog." href="/feed.xml" />
+
+    <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+  </head>
+
+  <body>
+    <div class="wrapper-masthead">
+      <div class="container">
+        <header class="masthead clearfix">
+          <a href="/" class="site-avatar"><img src="https://avatars2.githubusercontent.com/u/26152358?v=3&u=3ce04d6d58ef6f11be830f4b1c59ce2db97cfec2&s=400" /></a>
+
+          <div class="site-info">
+            <h1 class="site-name"><a href="/">Timo Wager</a></h1>
+            <p class="site-description">Yet Another Data Science Blog.</p>
+          </div>
+
+          <nav>
+            <a href="/">Blog</a>
+            <a href="/about">About</a>
+          </nav>
+        </header>
+      </div>
+    </div>
+
+    <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>Python and Deep Learning – Tensorflow</h1>
+
+  <div class="entry">
+    <p>TensorFlow is a Python library for fast numerical computing created and released by Google. Like Theano, TensorFlow is intended to be used to develop deep learning models.</p>
+
+<p>With the backing of Google, perhaps used in some of its production systems and used by the Google DeepMind research group, it is a platform that we cannot ignore.</p>
+
+<p>Unlike Theano, TensorFlow does have more of a production focus with a capability to run on CPUs, GPUs and even very large clusters.</p>
+
+<p>The goal for this post is to install TensorFlow and become familiar with the syntax of the symbolic expressions used in TensorFlow programs.</p>
+
+<p>For example, you can install TensorFlow using pip. There are many different versions of TensorFlow, specialized for each platform. Select the right version for your platform on the <a href="https://www.tensorflow.org/install">TensorFlow installation webpage</a>.</p>
+
+<p>A small example of a TensorFlow program that you can use as a starting point is listed below:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
+<span class="c"># declare two symbolic floating-point scalars</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="c"># create a simple symbolic expression using the add function</span>
+<span class="n">add</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="c"># bind 1.5 to ' a ' , 2.5 to ' b ' , and evaluate ' c '</span>
+<span class="n">sess</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+<span class="n">binding</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="p">:</span> <span class="mf">1.5</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="mf">2.5</span><span class="p">}</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">add</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="n">binding</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Learn more about TensorFlow on the <a href="https://www.tensorflow.org">TensorFlow homepage</a>.</p>
+
+  </div>
+
+  <div class="date">
+    Written on April 17, 2017
+  </div>
+
+  
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+
+	    var disqus_shortname = '{"shortname"=>"disqus_9qVzDjGyqM"}';
+
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          
+<a href="mailto:wagnertimo@gmx.de"><i class="svg-icon email"></i></a>
+
+
+<a href="https://github.com/wagnertimo"><i class="svg-icon github"></i></a>
+
+<a href="https://www.linkedin.com/in/timo-wagner-95168213a/"><i class="svg-icon linkedin"></i></a>
+
+
+
+
+
+
+        </footer>
+      </div>
+    </div>
+
+    
+
+  </body>
+</html>

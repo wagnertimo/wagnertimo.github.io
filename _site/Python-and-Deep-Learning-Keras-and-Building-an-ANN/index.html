@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Python and Machine Learning – Building an ANN with Keras – Timo Wager – Yet Another Data Science Blog.</title>
+    <title>Python and Deep Learning – Keras and Building an ANN – Timo Wager – Yet Another Data Science Blog.</title>
 
         <meta charset="utf-8" />
     <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
@@ -19,8 +19,8 @@
     <meta name="author" content="Timo Wager" />
 
     
-    <meta property="og:title" content="Python and Machine Learning – Building an ANN with Keras" />
-    <meta property="twitter:title" content="Python and Machine Learning – Building an ANN with Keras" />
+    <meta property="og:title" content="Python and Deep Learning – Keras and Building an ANN" />
+    <meta property="twitter:title" content="Python and Deep Learning – Keras and Building an ANN" />
     
 
     <!--[if lt IE 9]>
@@ -54,10 +54,12 @@
 
     <div id="main" role="main" class="container">
       <article class="post">
-  <h1>Python and Machine Learning – Building an ANN with Keras</h1>
+  <h1>Python and Deep Learning – Keras and Building an ANN</h1>
 
   <div class="entry">
     <p>In this post you will get to know how to define a simple Neural Network with the Keras package by solving a binary classification problem on the pima-indians-diabetes dataset.</p>
+
+<p>If you haven’t installed Keras, please walk through my general <a href="../Python-and-Deep-Learning-Keras">post</a> about Keras.</p>
 
 <h2 id="1-load-the-data">1. Load the data</h2>
 
@@ -167,6 +169,8 @@
 
 <h2 id="2-define-model">2. Define Model</h2>
 
+<p>The <code class="highlighter-rouge">Sequential</code> model is a linear stack of layers. <code class="highlighter-rouge">Dense(12)</code> is a fully-connected layer with 12 hidden units. For the first layer, you must specify the expected input data shape: 8-dimensional vectors. You can simply add layers via the <code class="highlighter-rouge">.add()</code> method:</p>
+
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># create sequential model layer by layer</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
 <span class="c"># 1. hidden layer with 12 neurons expects 8 inputs and rectifier activation function</span>
@@ -180,12 +184,22 @@
 
 <h2 id="3-compile-model">3. Compile Model</h2>
 
+<p>Before training a model, you need to configure the learning process, which is done via the <code class="highlighter-rouge">compile</code> method. It receives three arguments:</p>
+
+<ul>
+  <li>An optimizer</li>
+  <li>A loss function</li>
+  <li>A list of metrics</li>
+</ul>
+
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># Compile the model with binary crossentropy as the evaluation function and adam as the weights optimizer. Report the accuracy metri</span>
 <span class="n">model</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s">'binary_crossentropy'</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s">'adam'</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s">'accuracy'</span><span class="p">])</span>
 </code></pre>
 </div>
 
 <h2 id="4-fit-model">4. Fit Model</h2>
+
+<p>Keras models are trained on <code class="highlighter-rouge">numpy arrays</code> of input data and labels which we already prepared with the <code class="highlighter-rouge">numpy.loadtxt()</code> method. For training a model, you will typically use the <code class="highlighter-rouge">fit</code> function:</p>
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># Fit the model using 150 epochs and the batch size (#instances that are evaluated before a weight update) of 10</span>
 <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
@@ -532,17 +546,30 @@ acc: 77.99%
 </code></pre>
 </div>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code>
-</code></pre>
-</div>
-
   </div>
 
   <div class="date">
-    Written on April 15, 2017
+    Written on April 19, 2017
   </div>
 
   
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+
+	    var disqus_shortname = '{"shortname"=>"disqus_9qVzDjGyqM"}';
+
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
 </article>
 
     </div>

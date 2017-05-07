@@ -1,6 +1,6 @@
 ---
 published: true
-title: Jupyter Notebook – Jupyter Notebook as a Jekyll blog post
+title: Jupyter Notebook – Notebook as a Jekyll blog post
 layout: post
 ---
 

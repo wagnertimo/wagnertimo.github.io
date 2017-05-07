@@ -1,35 +1,319 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-04-15T17:06:52+02:00</updated><id>http://localhost:4000/</id><title type="html">Timo Wager</title><subtitle>Yet Another Data Science Blog.</subtitle><entry><title type="html">Python and Machine Learning – Theano</title><link href="http://localhost:4000/Python-and-Machine-Learning-Theano/" rel="alternate" type="text/html" title="Python and Machine Learning – Theano" /><published>2017-04-15T00:00:00+02:00</published><updated>2017-04-15T00:00:00+02:00</updated><id>http://localhost:4000/Python-and-Machine-Learning-Theano</id><content type="html" xml:base="http://localhost:4000/Python-and-Machine-Learning-Theano/">&lt;p&gt;Theano is a Python library for fast numerical computation to aid in the development of deep learning models.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-05-07T17:54:29+02:00</updated><id>http://localhost:4000/</id><title type="html">Timo Wager</title><subtitle>Yet Another Data Science Blog.</subtitle><entry><title type="html">R and Visualizations – Quick Plots</title><link href="http://localhost:4000/R-and-Visualizations-Quick-Plots/" rel="alternate" type="text/html" title="R and Visualizations – Quick Plots" /><published>2017-05-05T00:00:00+02:00</published><updated>2017-05-05T00:00:00+02:00</updated><id>http://localhost:4000/R-and-Visualizations-Quick-Plots</id><content type="html" xml:base="http://localhost:4000/R-and-Visualizations-Quick-Plots/">&lt;p&gt;In this post, I wanna talk about how you can make quick visualizations  with R. This series will be continued with advanced plotting using the neat R package &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; or interactive graphics with &lt;code class=&quot;highlighter-rouge&quot;&gt;plotly&lt;/code&gt;. But at first let’s start with some quick and dirty techniques to get a first glance at your data. As you know, every data analysis should start with summaries of exploratory statistics and most important a holistic glimpse into your data set. Let’s face it, human are visual living beings.&lt;/p&gt;
 
-&lt;p&gt;At its heart, Theano is a compiler for mathematical expressions in Python. It knows how to take your structures and turn them into very efficient code that uses NumPy and efficient native libraries to run as fast as possible on CPUs or GPUs.&lt;/p&gt;
+&lt;p&gt;I will briefly capture the basic graphic types:&lt;/p&gt;
 
-&lt;p&gt;The actual syntax of Theano expressions is symbolic, which can be off-putting to beginners used to normal software development. Specifically, expression are defined in the abstract sense, compiled and later actually used to make calculations.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;em&gt;Scatter Plots&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Line Graphs&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Bar Graphs&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Histograms&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Box Plots&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Function Curves&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;p&gt;In this lesson, your goal is to install Theano and write a small example that demonstrates the symbolic nature of Theano programs.&lt;/p&gt;
+&lt;h3 id=&quot;scatter-plot&quot;&gt;Scatter Plot&lt;/h3&gt;
 
-&lt;p&gt;For example, you can install Theano using pip as follows:&lt;/p&gt;
+&lt;p&gt;Let’ start with a simple scatter plot. The sample data set we will use for the demonstrations is the build in &lt;em&gt;Motor Trend Car Road Tests&lt;/em&gt; (&lt;code class=&quot;highlighter-rouge&quot;&gt;mtcars&lt;/code&gt;) data set. Use the &lt;code class=&quot;highlighter-rouge&quot;&gt;str()&lt;/code&gt; command to get to know the structure of the &lt;code class=&quot;highlighter-rouge&quot;&gt;data.frame&lt;/code&gt;. As you see we have 11 numerical variables.&lt;/p&gt;
 
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo pip install Theano
+&lt;div class=&quot;language-R highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mtcars&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;'data.frame':	32 obs. of  11 variables:
+ $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
+ $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
+ $ disp: num  160 160 108 258 360 ...
+ $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
+ $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
+ $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
+ $ qsec: num  16.5 17 18.6 19.4 17 ...
+ $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...
+ $ am  : num  1 1 1 0 0 0 0 0 0 0 ...
+ $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
+ $ carb: num  4 4 1 1 2 1 4 2 2 4 ...
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;A small example of a Theano program that you can use as a starting point is listed below:&lt;/p&gt;
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;theano&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;theano&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tensor&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# declare two symbolic floating-point scalars&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tensor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dscalar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tensor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dscalar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# create a simple expression&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# convert the expression into a callable object that takes (a,b)&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# values as input and computes a value for c&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;theano&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# bind 1.5 to 'a', 2.5 to 'b', and evaluate 'c'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;2.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;p&gt;So let’s quickly plot the weights &lt;code class=&quot;highlighter-rouge&quot;&gt;wt&lt;/code&gt; against the gasoline consumption &lt;code class=&quot;highlighter-rouge&quot;&gt;mpg&lt;/code&gt; (miles per gallon)&lt;/p&gt;
+
+&lt;div class=&quot;language-R highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mtcars&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mtcars&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mpg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_5_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;As expected, we can see a clear negative correlation. The heavier the car the less miles per gallon are driven, hence the gasoline consumption for a given distance rises.&lt;/p&gt;
+
+&lt;p&gt;We now use the &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; package. If you don’t have it installed yet, call &lt;code class=&quot;highlighter-rouge&quot;&gt;install.packages(&quot;ggplot2&quot;)&lt;/code&gt;.
+Now we can activate the library and use its quick plot function &lt;code class=&quot;highlighter-rouge&quot;&gt;qplot()&lt;/code&gt; to get the similiar result but in a nicer format.&lt;/p&gt;
+
+&lt;div class=&quot;language-R highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ggplot2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;qplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mtcars&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mtcars&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mpg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_7_1.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Looks cool right? … And if your two variables are in the same data set you can leave out the &lt;code class=&quot;highlighter-rouge&quot;&gt;$&lt;/code&gt; declaration and call &lt;code class=&quot;highlighter-rouge&quot;&gt;qplot(wt, mpg, data = mtcars)&lt;/code&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Note that for both approaches the variables for the &lt;code class=&quot;highlighter-rouge&quot;&gt;x axis&lt;/code&gt; is the first parameter, followed by the &lt;code class=&quot;highlighter-rouge&quot;&gt;y axis&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;I will go more in depth with the individual plotting function &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot()&lt;/code&gt; in later blog posts of this series. So let’s move forward to line graphs.&lt;/p&gt;
+
+&lt;h2 id=&quot;line-graph&quot;&gt;Line Graph&lt;/h2&gt;
+
+&lt;p&gt;For this demonstrations the build in &lt;code class=&quot;highlighter-rouge&quot;&gt;pressure&lt;/code&gt; data set suits perfectly. Let’s have a look…&lt;/p&gt;
+
+&lt;div class=&quot;language-R highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pressure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;'data.frame':	19 obs. of  2 variables:
+ $ temperature: num  0 20 40 60 80 100 120 140 160 180 ...
+ $ pressure   : num  0.0002 0.0012 0.006 0.03 0.09 0.27 0.75 1.85 4.2 8.8 ...
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Learn more about Theano on the &lt;a href=&quot;http://deeplearning.net/software/theano/?__s=rvasa3puiemv9zazwcff&quot;&gt;Theano homepage&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><summary type="html">Theano is a Python library for fast numerical computation to aid in the development of deep learning models.</summary></entry><entry><title type="html">Python and Machine Learning – Building an ANN with Keras</title><link href="http://localhost:4000/Python-and-Machine-Learning-Building-an-ANN-with-Keras/" rel="alternate" type="text/html" title="Python and Machine Learning – Building an ANN with Keras" /><published>2017-04-15T00:00:00+02:00</published><updated>2017-04-15T00:00:00+02:00</updated><id>http://localhost:4000/Python-and-Machine-Learning-Building-an-ANN-with-Keras</id><content type="html" xml:base="http://localhost:4000/Python-and-Machine-Learning-Building-an-ANN-with-Keras/">&lt;p&gt;In this post you will get to know how to define a simple Neural Network with the Keras package by solving a binary classification problem on the pima-indians-diabetes dataset.&lt;/p&gt;
+&lt;p&gt;Ok… so why not check out the relationship between temperature and pressure. To declare a line graph for the base &lt;code class=&quot;highlighter-rouge&quot;&gt;plot()&lt;/code&gt; function declare its &lt;code class=&quot;highlighter-rouge&quot;&gt;type&lt;/code&gt; parameter with &lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;l&quot;&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-R highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pressure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;temperature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pressure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pressure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;l&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_13_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If we want to modify the line, you can simply call e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;points()&lt;/code&gt; in the next line with the same data to add points to the lines. When you want to display other line graphs in the same plot, just call &lt;code class=&quot;highlighter-rouge&quot;&gt;lines()&lt;/code&gt;. To distinguish between the two lines, use the &lt;code class=&quot;highlighter-rouge&quot;&gt;col&lt;/code&gt; parameter to define the color.&lt;/p&gt;
+
+&lt;div class=&quot;language-R highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pressure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;temperature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pressure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pressure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;l&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# add points to the line graph
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;points&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pressure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;temperature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pressure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pressure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# add another line graph with points to the current plot. Use a red color
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lines&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pressure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;temperature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pressure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pressure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;col&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;blue&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;points&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pressure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;temperature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pressure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pressure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;col&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;blue&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_15_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now let’s look again at the &lt;code class=&quot;highlighter-rouge&quot;&gt;qplot()&lt;/code&gt; function of the &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; library.&lt;/p&gt;
+
+&lt;div class=&quot;language-R highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;qplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;temperature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pressure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pressure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;line&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_17_1.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Like in the case of the base &lt;code class=&quot;highlighter-rouge&quot;&gt;plot()&lt;/code&gt; function you can simply add modification options or other lines.&lt;/p&gt;
+
+&lt;div class=&quot;language-R highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;qplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;temperature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pressure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pressure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;line&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;point&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;a&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# Add a second line with points to the plot. Use the group parameter color for differentiation. This sets colors autom.
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;temperature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pressure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;b&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pressure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_point&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;temperature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pressure&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;b&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pressure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;#+ scale_color_manual(values=c(&quot;black&quot;, &quot;blue&quot;))
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_19_1.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To add another line to the quick plot of &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt;, you have to use the plus sign &lt;code class=&quot;highlighter-rouge&quot;&gt;+&lt;/code&gt;. This is a common procedure, also for the &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot()&lt;/code&gt; function. You basically add other options, lines etc. to the active plot. The &lt;code class=&quot;highlighter-rouge&quot;&gt;aes&lt;/code&gt; parameter builds the aesthetic mappings and describe how variables in the data are mapped to visual properties (aesthetics) of &lt;code class=&quot;highlighter-rouge&quot;&gt;geoms&lt;/code&gt; (geometric forms: lines, points etc.). The arguments for &lt;code class=&quot;highlighter-rouge&quot;&gt;aes&lt;/code&gt; are the &lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;y&lt;/code&gt; axis. Optionally you can set a &lt;code class=&quot;highlighter-rouge&quot;&gt;color&lt;/code&gt; parameter for differentiation.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Note that the &lt;code class=&quot;highlighter-rouge&quot;&gt;color&lt;/code&gt; argument in the &lt;code class=&quot;highlighter-rouge&quot;&gt;qplot()&lt;/code&gt; function is not equivilent to the &lt;code class=&quot;highlighter-rouge&quot;&gt;col&lt;/code&gt; argument in the base &lt;code class=&quot;highlighter-rouge&quot;&gt;plot()&lt;/code&gt; function. &lt;code class=&quot;highlighter-rouge&quot;&gt;Color&lt;/code&gt; is a group parameter and sets automatically the colors. If you want to determine the used colors in the plot manually you have also to add &lt;code class=&quot;highlighter-rouge&quot;&gt;scale_color_manual()&lt;/code&gt; to the plot function. You will see that in another post.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;bar-graph&quot;&gt;Bar Graph&lt;/h2&gt;
+
+&lt;p&gt;To make a bar chart you can use the base function &lt;code class=&quot;highlighter-rouge&quot;&gt;barplot()&lt;/code&gt; and pass it a vector of values for the height of each bar and (optionally) a vector of labels for each bar (&lt;code class=&quot;highlighter-rouge&quot;&gt;names.arg&lt;/code&gt; parameter).&lt;/p&gt;
+
+&lt;p&gt;Let us investigate the build in data &lt;code class=&quot;highlighter-rouge&quot;&gt;BOD&lt;/code&gt;. We have a discrete &lt;code class=&quot;highlighter-rouge&quot;&gt;Time&lt;/code&gt; variable and continous values for the biochemical oxygen &lt;code class=&quot;highlighter-rouge&quot;&gt;demand&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-R highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BOD&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;'data.frame':	6 obs. of  2 variables:
+ $ Time  : num  1 2 3 4 5 7
+ $ demand: num  8.3 10.3 19 16 15.6 19.8
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-R highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# without names.arg=BOD$Time the x axis would not have labels
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;barplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BOD&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;demand&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;names.arg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BOD&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_23_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;For every discrete Timestamp the demand value is plotted. Sometimes the &lt;code class=&quot;highlighter-rouge&quot;&gt;y axis&lt;/code&gt; (or bars) shows the discrete counts for each category on the &lt;code class=&quot;highlighter-rouge&quot;&gt;x axis&lt;/code&gt;. This is similar to a histogram, but with a discrete instead of continuous &lt;code class=&quot;highlighter-rouge&quot;&gt;x axis&lt;/code&gt;. To generate the count of each unique value in a vector, call the &lt;code class=&quot;highlighter-rouge&quot;&gt;table()&lt;/code&gt; function.&lt;/p&gt;
+
+&lt;div class=&quot;language-R highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;table&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mtcars&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cyl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# There are 11 cases with 4 cylinders, 7 cases of 6, and 14 cases of 8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; 4  6  8
+11  7 14
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now you can easily use the &lt;code class=&quot;highlighter-rouge&quot;&gt;barplot()&lt;/code&gt; function to generate a visualization out of that information.&lt;/p&gt;
+
+&lt;div class=&quot;language-R highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# Generate a table of cylinder counts
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;barplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;table&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mtcars&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cyl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_27_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; you can use the &lt;code class=&quot;highlighter-rouge&quot;&gt;qplot()&lt;/code&gt; function for a fast way to show a count-based bar chart. Notice the difference between a continous and a discrete &lt;code class=&quot;highlighter-rouge&quot;&gt;x axis&lt;/code&gt;. Call the &lt;code class=&quot;highlighter-rouge&quot;&gt;factor()&lt;/code&gt; method to discretize the &lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt; values.&lt;/p&gt;
+
+&lt;div class=&quot;language-R highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# cyl is continuous here
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;qplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mtcars&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cyl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# Treat cyl as discrete
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;qplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;factor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mtcars&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cyl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_29_3.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_29_4.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;histogram&quot;&gt;Histogram&lt;/h2&gt;
+
+&lt;p&gt;Now we will view the distribution of one-dimensional data with a histogram. Let’s see how the gasoline consumption of the cars in the &lt;code class=&quot;highlighter-rouge&quot;&gt;mtcars&lt;/code&gt; data set is distributed.&lt;/p&gt;
+
+&lt;div class=&quot;language-R highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mtcars&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mpg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# Specify approximate number of bins with breaks
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mtcars&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mpg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;breaks&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_31_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_31_1.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The chart at the bottom has more bins. Notice that because the bins are narrower, there are fewer items in each bin.&lt;/p&gt;
+
+&lt;p&gt;With the &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; package you can get a similar result using &lt;code class=&quot;highlighter-rouge&quot;&gt;qplot()&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-R highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ggplot2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+
+&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# default bin width
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;qplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mtcars&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mpg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# with wider bins
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;qplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mpg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mtcars&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;binwidth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_33_3.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_33_4.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;box-plots&quot;&gt;Box Plots&lt;/h2&gt;
+
+&lt;p&gt;Now it is time to focus on Box plots. It is a helpful tool to compare distributions. Therfore, let’s dive into the effect of vitamin C on tooth growth in guinea pigs.&lt;/p&gt;
+
+&lt;div class=&quot;language-R highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToothGrowth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;'data.frame':	60 obs. of  3 variables:
+ $ len : num  4.2 11.5 7.3 5.8 6.4 10 11.2 11.2 5.2 7 ...
+ $ supp: Factor w/ 2 levels &quot;OJ&quot;,&quot;VC&quot;: 2 2 2 2 2 2 2 2 2 2 ...
+ $ dose: num  0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;We want to compare the tooth length of the two supplement types (&lt;code class=&quot;highlighter-rouge&quot;&gt;VC&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;OJ&lt;/code&gt;). So we can look at the box plots. The base &lt;code class=&quot;highlighter-rouge&quot;&gt;plot()&lt;/code&gt;function will automatically create a box plot when &lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt; is a factor. So pass it a factor of x values and a vector of y values. Here, &lt;code class=&quot;highlighter-rouge&quot;&gt;supp&lt;/code&gt; is a factor value with two levels &lt;code class=&quot;highlighter-rouge&quot;&gt;VC&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;OJ&lt;/code&gt;, where &lt;code class=&quot;highlighter-rouge&quot;&gt;y&lt;/code&gt; is the numerical length value.&lt;/p&gt;
+
+&lt;div class=&quot;language-R highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToothGrowth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;supp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToothGrowth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_37_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;As we can see, the group of guinea pigs which got the orange juice (&lt;code class=&quot;highlighter-rouge&quot;&gt;OJ&lt;/code&gt;) have a higher median and quartiles as well as the spread of lengths is narrower.&lt;/p&gt;
+
+&lt;p&gt;If the two vectors are in the same data frame, you can also use the &lt;em&gt;formula syntax&lt;/em&gt; (a typical &lt;code class=&quot;highlighter-rouge&quot;&gt;R&lt;/code&gt; procedure as seen in other functions). With this syntax, you can also combine two variables on the &lt;code class=&quot;highlighter-rouge&quot;&gt;x axis&lt;/code&gt;. We can see then how the &lt;code class=&quot;highlighter-rouge&quot;&gt;dose&lt;/code&gt; variable (0.5, 1, and 2 mg/day) interacts with the supplement group (&lt;code class=&quot;highlighter-rouge&quot;&gt;OJ&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;VC&lt;/code&gt;).&lt;/p&gt;
+
+&lt;div class=&quot;language-R highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# Formula syntax
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;boxplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;supp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToothGrowth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# Put interaction of two variables on x axis
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;boxplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;supp&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dose&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToothGrowth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_39_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_39_1.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Not surprisingly, as the dose of vitamine C rises the tooth length does too. And with 2 mg/day the medians of the two supplement groups are the same. But the &lt;code class=&quot;highlighter-rouge&quot;&gt;VC&lt;/code&gt; group has more variance. The lowest variance (except of one outlier) is achieved with 1 mg/day of ascorbic acid (a form of vitamin C and coded as &lt;code class=&quot;highlighter-rouge&quot;&gt;VC&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;As you should already guess, slightly* the same results can be achieved with &lt;code class=&quot;highlighter-rouge&quot;&gt;qplot()&lt;/code&gt; (* Read the note section at the end). You only have to declare the &lt;code class=&quot;highlighter-rouge&quot;&gt;geom&lt;/code&gt; parameter as &lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;boxplot&quot;&lt;/code&gt;. To combine more variables, you have to use the &lt;code class=&quot;highlighter-rouge&quot;&gt;interaction()&lt;/code&gt; function as &lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt; variable; formula syntax is not allowed.&lt;/p&gt;
+
+&lt;div class=&quot;language-R highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ggplot2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;qplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToothGrowth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;supp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToothGrowth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;boxplot&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# Using three separate vectors
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;qplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;interaction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToothGrowth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;supp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToothGrowth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dose&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToothGrowth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;boxplot&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_41_2.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_41_3.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;You may noticed that the box plots from the base graphics are slightly different from &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt;. This is because they use different methods for calculating quantiles. See &lt;code class=&quot;highlighter-rouge&quot;&gt;?geom_boxplot&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;?boxplot.stats&lt;/code&gt; for more information.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;function-curves&quot;&gt;Function Curves&lt;/h2&gt;
+
+&lt;p&gt;If you want to plot a function use &lt;code class=&quot;highlighter-rouge&quot;&gt;curve()&lt;/code&gt; and pass it an expression with the variable x. Define the &lt;code class=&quot;highlighter-rouge&quot;&gt;from&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;to&lt;/code&gt; arguments to set the domain.&lt;/p&gt;
+
+&lt;div class=&quot;language-R highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;curve&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;from&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;-4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_44_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You can also define your own function. It just has to output a numeric vector. Using &lt;code class=&quot;highlighter-rouge&quot;&gt;add = TRUE&lt;/code&gt; will add a curve to the previously created plot. We will show this by plotting the inverse function.&lt;/p&gt;
+
+&lt;div class=&quot;language-R highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# Plot a user-defined function
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myfun&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xvar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;exp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xvar&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;curve&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myfun&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;from&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# Add a line:
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;curve&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myfun&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;col&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;red&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_46_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;For the &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; package equivilent, one used &lt;code class=&quot;highlighter-rouge&quot;&gt;qplot(c(0,2), fun=myfun, stat=&quot;function&quot;, geom=&quot;line&quot;)&lt;/code&gt; But now &lt;code class=&quot;highlighter-rouge&quot;&gt;stat&lt;/code&gt; is deprecated in 2016 and &lt;code class=&quot;highlighter-rouge&quot;&gt;fun&lt;/code&gt; is no longer an acceptable parameter.&lt;/p&gt;
+
+&lt;p&gt;To get similar results with the &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; package you now have to use the &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot()&lt;/code&gt; method and call the &lt;code class=&quot;highlighter-rouge&quot;&gt;stat_function()&lt;/code&gt; with parameter &lt;code class=&quot;highlighter-rouge&quot;&gt;fun&lt;/code&gt;. The domain input has to be defined as a &lt;code class=&quot;highlighter-rouge&quot;&gt;data.frame&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-R highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ggplot2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+
+&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# Plot a user-defined function
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myfun&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xvar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;exp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xvar&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ggplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data.frame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stat_function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myfun&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_48_1.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;So now you should have a basic understanding to plot some quick graphs to get a first look into your data. I will try to continue this series with more detailed explanations on how to use the &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; package with the &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot()&lt;/code&gt; function since this is more powerful for making expressive charts.&lt;/p&gt;</content><author><name></name></author><summary type="html">In this post, I wanna talk about how you can make quick visualizations with R. This series will be continued with advanced plotting using the neat R package ggplot2 or interactive graphics with plotly. But at first let’s start with some quick and dirty techniques to get a first glance at your data. As you know, every data analysis should start with summaries of exploratory statistics and most important a holistic glimpse into your data set. Let’s face it, human are visual living beings.</summary></entry><entry><title type="html">Python and Deep Learning – Keras and Building an ANN</title><link href="http://localhost:4000/Python-and-Deep-Learning-Keras-and-Building-an-ANN/" rel="alternate" type="text/html" title="Python and Deep Learning – Keras and Building an ANN" /><published>2017-04-19T00:00:00+02:00</published><updated>2017-04-19T00:00:00+02:00</updated><id>http://localhost:4000/Python-and-Deep-Learning-Keras-and-Building-an-ANN</id><content type="html" xml:base="http://localhost:4000/Python-and-Deep-Learning-Keras-and-Building-an-ANN/">&lt;p&gt;In this post you will get to know how to define a simple Neural Network with the Keras package by solving a binary classification problem on the pima-indians-diabetes dataset.&lt;/p&gt;
+
+&lt;p&gt;If you haven’t installed Keras, please walk through my general &lt;a href=&quot;../Python-and-Deep-Learning-Keras&quot;&gt;post&lt;/a&gt; about Keras.&lt;/p&gt;
 
 &lt;h2 id=&quot;1-load-the-data&quot;&gt;1. Load the data&lt;/h2&gt;
 
@@ -139,6 +423,8 @@
 
 &lt;h2 id=&quot;2-define-model&quot;&gt;2. Define Model&lt;/h2&gt;
 
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;Sequential&lt;/code&gt; model is a linear stack of layers. &lt;code class=&quot;highlighter-rouge&quot;&gt;Dense(12)&lt;/code&gt; is a fully-connected layer with 12 hidden units. For the first layer, you must specify the expected input data shape: 8-dimensional vectors. You can simply add layers via the &lt;code class=&quot;highlighter-rouge&quot;&gt;.add()&lt;/code&gt; method:&lt;/p&gt;
+
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# create sequential model layer by layer&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Sequential&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# 1. hidden layer with 12 neurons expects 8 inputs and rectifier activation function&lt;/span&gt;
@@ -152,12 +438,22 @@
 
 &lt;h2 id=&quot;3-compile-model&quot;&gt;3. Compile Model&lt;/h2&gt;
 
+&lt;p&gt;Before training a model, you need to configure the learning process, which is done via the &lt;code class=&quot;highlighter-rouge&quot;&gt;compile&lt;/code&gt; method. It receives three arguments:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;An optimizer&lt;/li&gt;
+  &lt;li&gt;A loss function&lt;/li&gt;
+  &lt;li&gt;A list of metrics&lt;/li&gt;
+&lt;/ul&gt;
+
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Compile the model with binary crossentropy as the evaluation function and adam as the weights optimizer. Report the accuracy metri&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;compile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'binary_crossentropy'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;optimizer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'adam'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;metrics&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'accuracy'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;h2 id=&quot;4-fit-model&quot;&gt;4. Fit Model&lt;/h2&gt;
+
+&lt;p&gt;Keras models are trained on &lt;code class=&quot;highlighter-rouge&quot;&gt;numpy arrays&lt;/code&gt; of input data and labels which we already prepared with the &lt;code class=&quot;highlighter-rouge&quot;&gt;numpy.loadtxt()&lt;/code&gt; method. For training a model, you will typically use the &lt;code class=&quot;highlighter-rouge&quot;&gt;fit&lt;/code&gt; function:&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Fit the model using 150 epochs and the batch size (#instances that are evaluated before a weight update) of 10&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;epochs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;150&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;batch_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -502,11 +798,90 @@ acc: 77.99%
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0]
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;</content><author><name></name></author><summary type="html">In this post you will get to know how to define a simple Neural Network with the Keras package by solving a binary classification problem on the pima-indians-diabetes dataset.</summary></entry><entry><title type="html">Python and Deep Learning – Keras</title><link href="http://localhost:4000/Python-and-Deep-Learning-Keras/" rel="alternate" type="text/html" title="Python and Deep Learning – Keras" /><published>2017-04-18T00:00:00+02:00</published><updated>2017-04-18T00:00:00+02:00</updated><id>http://localhost:4000/Python-and-Deep-Learning-Keras</id><content type="html" xml:base="http://localhost:4000/Python-and-Deep-Learning-Keras/">&lt;p&gt;The difficulty of &lt;a href=&quot;../Python-and-Deep-Learning-Theano&quot;&gt;Theano&lt;/a&gt; and &lt;a href=&quot;../Python-and-Deep-Learning-Tensorflow&quot;&gt;TensorFlow&lt;/a&gt; is that it can take a lot of code to create even very simple neural network models.&lt;/p&gt;
+
+&lt;p&gt;These libraries were designed primarily as a platform for research and development more than for the practical concerns of applied deep learning.&lt;/p&gt;
+
+&lt;p&gt;The Keras library addresses these concerns by providing a wrapper for both Theano and TensorFlow. It provides a clean and simple API that allows you to define and evaluate deep learning models in just a few lines of code.&lt;/p&gt;
+
+&lt;p&gt;Because of the ease of use and because it leverages the power of Theano and TensorFlow, Keras is quickly becoming the go-to library for applied deep learning.&lt;/p&gt;
+
+&lt;p&gt;The focus of Keras is the concept of a model. The life-cycle of a model can be summarized as follows:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;em&gt;Define your model&lt;/em&gt; - Create a Sequential model and add configured layers.&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Compile your model&lt;/em&gt; - Specify loss function and optimizers and call the &lt;code class=&quot;highlighter-rouge&quot;&gt;compile()&lt;/code&gt; function on the model.&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Fit your model&lt;/em&gt; - Train the model on a sample of data by calling the &lt;code class=&quot;highlighter-rouge&quot;&gt;fit()&lt;/code&gt; function on the model.&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Make predictions&lt;/em&gt; - Use the model to generate predictions on new data by calling functions such as &lt;code class=&quot;highlighter-rouge&quot;&gt;evaluate()&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;predict()&lt;/code&gt; on the model.
+Your goal for this lesson is to install Keras.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;For example, you can install Keras using pip:
+But for a proper use please make sure you already installed &lt;a href=&quot;../Python-and-Deep-Learning-Theano&quot;&gt;Theano&lt;/a&gt; or &lt;a href=&quot;../Python-and-Deep-Learning-Tensorflow&quot;&gt;TensorFlow&lt;/a&gt;. By default Keras uses Tensorflow as its tensor manipulation library&lt;/p&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo pip install keras
+&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;p&gt;You can learn more about the Keras library on the &lt;a href=&quot;https://keras.io&quot;&gt;Keras homepage&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Or check out this &lt;a href=&quot;../Python-and-Deep-Learning-Building-an-ANN-with-Keras&quot;&gt;post&lt;/a&gt; to apply the 4 step life-cycle of a model on an example dataset.&lt;/p&gt;</content><author><name></name></author><summary type="html">The difficulty of Theano and TensorFlow is that it can take a lot of code to create even very simple neural network models.</summary></entry><entry><title type="html">Python and Deep Learning – Tensorflow</title><link href="http://localhost:4000/Python-and-Deep-Learning-Tensorflow/" rel="alternate" type="text/html" title="Python and Deep Learning – Tensorflow" /><published>2017-04-17T00:00:00+02:00</published><updated>2017-04-17T00:00:00+02:00</updated><id>http://localhost:4000/Python-and-Deep-Learning-Tensorflow</id><content type="html" xml:base="http://localhost:4000/Python-and-Deep-Learning-Tensorflow/">&lt;p&gt;TensorFlow is a Python library for fast numerical computing created and released by Google. Like Theano, TensorFlow is intended to be used to develop deep learning models.&lt;/p&gt;
+
+&lt;p&gt;With the backing of Google, perhaps used in some of its production systems and used by the Google DeepMind research group, it is a platform that we cannot ignore.&lt;/p&gt;
+
+&lt;p&gt;Unlike Theano, TensorFlow does have more of a production focus with a capability to run on CPUs, GPUs and even very large clusters.&lt;/p&gt;
+
+&lt;p&gt;The goal for this post is to install TensorFlow and become familiar with the syntax of the symbolic expressions used in TensorFlow programs.&lt;/p&gt;
+
+&lt;p&gt;For example, you can install TensorFlow using pip. There are many different versions of TensorFlow, specialized for each platform. Select the right version for your platform on the &lt;a href=&quot;https://www.tensorflow.org/install&quot;&gt;TensorFlow installation webpage&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;A small example of a TensorFlow program that you can use as a starting point is listed below:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;tensorflow&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;tf&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# declare two symbolic floating-point scalars&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;placeholder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;float32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;placeholder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;float32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# create a simple symbolic expression using the add function&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# bind 1.5 to ' a ' , 2.5 to ' b ' , and evaluate ' c '&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sess&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Session&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;binding&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;2.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sess&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;feed_dict&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;binding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;</content><author><name></name></author><summary type="html">In this post you will get to know how to define a simple Neural Network with the Keras package by solving a binary classification problem on the pima-indians-diabetes dataset.</summary></entry><entry><title type="html">Jupyter Notebook – Jupyter Notebook as a Jekyll blog post</title><link href="http://localhost:4000/Jupter-Notebook-as-a-Jekyll-Blog-Post/" rel="alternate" type="text/html" title="Jupyter Notebook – Jupyter Notebook as a Jekyll blog post" /><published>2017-04-15T00:00:00+02:00</published><updated>2017-04-15T00:00:00+02:00</updated><id>http://localhost:4000/Jupter-Notebook-as-a-Jekyll-Blog-Post</id><content type="html" xml:base="http://localhost:4000/Jupter-Notebook-as-a-Jekyll-Blog-Post/">&lt;p&gt;I was recently looking for a convenient way to integrate a jupyter notebook file into a jekyll blog post.
+&lt;/div&gt;
+
+&lt;p&gt;Learn more about TensorFlow on the &lt;a href=&quot;https://www.tensorflow.org&quot;&gt;TensorFlow homepage&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><summary type="html">TensorFlow is a Python library for fast numerical computing created and released by Google. Like Theano, TensorFlow is intended to be used to develop deep learning models.</summary></entry><entry><title type="html">Python and Deep Learning – Theano</title><link href="http://localhost:4000/Python-and-Deep-Learning-Theano/" rel="alternate" type="text/html" title="Python and Deep Learning – Theano" /><published>2017-04-15T00:00:00+02:00</published><updated>2017-04-15T00:00:00+02:00</updated><id>http://localhost:4000/Python-and-Deep-Learning-Theano</id><content type="html" xml:base="http://localhost:4000/Python-and-Deep-Learning-Theano/">&lt;p&gt;Theano is a Python library for fast numerical computation to aid in the development of deep learning models.&lt;/p&gt;
+
+&lt;p&gt;At its heart, Theano is a compiler for mathematical expressions in Python. It knows how to take your structures and turn them into very efficient code that uses NumPy and efficient native libraries to run as fast as possible on CPUs or GPUs.&lt;/p&gt;
+
+&lt;p&gt;The actual syntax of Theano expressions is symbolic, which can be off-putting to beginners used to normal software development. Specifically, expression are defined in the abstract sense, compiled and later actually used to make calculations.&lt;/p&gt;
+
+&lt;p&gt;In this lesson, your goal is to install Theano and write a small example that demonstrates the symbolic nature of Theano programs.&lt;/p&gt;
+
+&lt;p&gt;For example, you can install Theano using pip as follows:&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo pip install Theano
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;A small example of a Theano program that you can use as a starting point is listed below:&lt;/p&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;theano&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;theano&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tensor&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# declare two symbolic floating-point scalars&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tensor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dscalar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tensor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dscalar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# create a simple expression&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# convert the expression into a callable object that takes (a,b)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# values as input and computes a value for c&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;theano&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# bind 1.5 to 'a', 2.5 to 'b', and evaluate 'c'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;2.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Learn more about Theano on the &lt;a href=&quot;http://deeplearning.net/software/theano/?__s=rvasa3puiemv9zazwcff&quot;&gt;Theano homepage&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><summary type="html">Theano is a Python library for fast numerical computation to aid in the development of deep learning models.</summary></entry><entry><title type="html">Jupyter Notebook – Notebook as a Jekyll blog post</title><link href="http://localhost:4000/Jupter-Notebook-Notebook-as-a-Jekyll-Blog-Post/" rel="alternate" type="text/html" title="Jupyter Notebook – Notebook as a Jekyll blog post" /><published>2017-04-08T00:00:00+02:00</published><updated>2017-04-08T00:00:00+02:00</updated><id>http://localhost:4000/Jupter-Notebook-Notebook-as-a-Jekyll-Blog-Post</id><content type="html" xml:base="http://localhost:4000/Jupter-Notebook-Notebook-as-a-Jekyll-Blog-Post/">&lt;p&gt;I was recently looking for a convenient way to integrate a jupyter notebook file into a jekyll blog post.
 This would allow a faster workflow to publish code and work done in jupyter on a blog site powered by jekyll.&lt;/p&gt;
 
 &lt;p&gt;The key thing hereby is that jekyll uses markdown to create its website. Therefore the only thing you need to do is to convert your jupyter notebook into a markdown file and then putting this file into your posts directory of your blog site.&lt;/p&gt;
@@ -569,23 +944,23 @@ This would allow a faster workflow to publish code and work done in jupyter on a
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;../images/jekyll_test_post_files/jekyll_test_post_4_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">I was recently looking for a convenient way to integrate a jupyter notebook file into a jekyll blog post. This would allow a faster workflow to publish code and work done in jupyter on a blog site powered by jekyll.</summary></entry><entry><title type="html">R and Jupyter Notebook – Installation</title><link href="http://localhost:4000/R-And-Jupyter-Notebook-Installation/" rel="alternate" type="text/html" title="R and Jupyter Notebook – Installation" /><published>2017-04-01T00:00:00+02:00</published><updated>2017-04-01T00:00:00+02:00</updated><id>http://localhost:4000/R-And-Jupyter-Notebook-Installation</id><content type="html" xml:base="http://localhost:4000/R-And-Jupyter-Notebook-Installation/">&lt;p&gt;&lt;a href=&quot;http://jupyter.org&quot;&gt;Jupyter Notebook&lt;/a&gt; is a server-client application that allows editing and running notebook documents via a web browser. Notebook documents are documents produced by Jupyter Notebook which contain both computer code (e.g. python) and rich text elements (paragraph, equations, figures, links, etc.). They are both human-readable documents containing the analysis description and the results (figures, tables, etc.) as well as executable documents which can be run to perform data analysis.
-A notebook kernel is a computational engine that executes the code contained in a notebook document. The ipython kernel executes python code and the IRkernel runs R code which will be used later. But there are also kernels for many other languages.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../images/jekyll_test_post_files/jekyll_test_post_4_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">I was recently looking for a convenient way to integrate a jupyter notebook file into a jekyll blog post. This would allow a faster workflow to publish code and work done in jupyter on a blog site powered by jekyll.</summary></entry><entry><title type="html">New Project Started</title><link href="http://localhost:4000/New-Project-Started/" rel="alternate" type="text/html" title="New Project Started" /><published>2017-04-01T00:00:00+02:00</published><updated>2017-04-01T00:00:00+02:00</updated><id>http://localhost:4000/New-Project-Started</id><content type="html" xml:base="http://localhost:4000/New-Project-Started/">&lt;p&gt;This is my first blog post on my new blog. I decided to host it on GitHubs Pages. It is more convenient since I am already working with Git.&lt;/p&gt;
 
-&lt;h3 id=&quot;get-r-working-in-the-jupyter-notebook&quot;&gt;Get R working in the Jupyter Notebook&lt;/h3&gt;
+&lt;p&gt;I am also proud to announce a new Data Science project I am working on as part of my master thesis. It is about analyzing the operating reserve market in the german energy market. The aim is to enhance optimization algorithms input factors by predicting the call probability of work prices of reserve calls. For more information head over to &lt;a href=&quot;https://github.com/wagnertimo/rmarketcrawlR&quot;&gt;my latest GitHub project&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><summary type="html">This is my first blog post on my new blog. I decided to host it on GitHubs Pages. It is more convenient since I am already working with Git.</summary></entry><entry><title type="html">Jupyter Notebook – Using R</title><link href="http://localhost:4000/Jupyter-Notebook-Using-R/" rel="alternate" type="text/html" title="Jupyter Notebook – Using R" /><published>2017-04-01T00:00:00+02:00</published><updated>2017-04-01T00:00:00+02:00</updated><id>http://localhost:4000/Jupyter-Notebook-Using-R</id><content type="html" xml:base="http://localhost:4000/Jupyter-Notebook-Using-R/">&lt;p&gt;You can use the programming language &lt;code class=&quot;highlighter-rouge&quot;&gt;R&lt;/code&gt; in Jupyter Notebook by installing the &lt;code class=&quot;highlighter-rouge&quot;&gt;IRkernel&lt;/code&gt;.
+A notebook kernel is a computational engine that executes the code contained in a notebook document. The &lt;code class=&quot;highlighter-rouge&quot;&gt;ipython kernel&lt;/code&gt; executes python code and the &lt;code class=&quot;highlighter-rouge&quot;&gt;IRkernel&lt;/code&gt; runs R code which will be used later. But there are also kernels for many &lt;a href=&quot;https://github.com/jupyter/jupyter/wiki/Jupyter-kernels&quot;&gt;other languages&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Step 1:&lt;/strong&gt; Installation of the anaconda package.&lt;/p&gt;
+&lt;p&gt;Firstly, you need to install the latest anaconda package. If you haven’t done this before, walk through my post &lt;a href=&quot;../Jupyter-Notebook-Installation&quot;&gt;Jupyter Notebook – Installation&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;Download the newest &lt;a href=&quot;https://www.continuum.io/downloads&quot;&gt;anaconda installer&lt;/a&gt;. You can choose between the graphical interface or the command line version for installation.&lt;/p&gt;
+&lt;p&gt;Now you can get R working in Jupyter notebook by following simple command lines.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Step 2:&lt;/strong&gt; Install the IRkernel.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Step 1:&lt;/strong&gt; Install the IRkernel.&lt;/p&gt;
 
 &lt;p&gt;After downloading and installing anaconda, you need to install the IRkernel. This will do anaconda for you. Just type the following command in the terminal.&lt;/p&gt;
 &lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;conda install -c r ipython-notebook r-irkernel
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;strong&gt;Step 3:&lt;/strong&gt; Install required R packages.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Step 2:&lt;/strong&gt; Install required R packages.&lt;/p&gt;
 
 &lt;p&gt;Now you need some additional R packages to get everything running. Open RStudio or any other IDE and type in the following command in the console.&lt;/p&gt;
 &lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;install.packages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'repr'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'IRdisplay'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'evaluate'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'crayon'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'pbdZMQ'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'devtools'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'uuid'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'digest'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
@@ -593,23 +968,32 @@ A notebook kernel is a computational engine that executes the code contained in 
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;strong&gt;Step 4:&lt;/strong&gt; Loading the IRkernel.
+&lt;p&gt;&lt;strong&gt;Step 3:&lt;/strong&gt; Loading the IRkernel.
 After installing the packages, you have to load the IRkernel. Therefore call the &lt;code class=&quot;highlighter-rouge&quot;&gt;installspec()&lt;/code&gt; function of the IRkernel package in the R console.&lt;/p&gt;
 &lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;IRkernel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;installspec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;strong&gt;Step 5:&lt;/strong&gt; Install the Essentials.
+&lt;p&gt;&lt;strong&gt;Step 4:&lt;/strong&gt; Install the Essentials.
 Before you are able to run R in Jupyter Notebook, you will need some essentials to be installed. Use again the &lt;code class=&quot;highlighter-rouge&quot;&gt;conda&lt;/code&gt;command in the shell.&lt;/p&gt;
 &lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;conda install -c r r-essentials
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;strong&gt;Step 6:&lt;/strong&gt; Launch Jupyter Notebook.
+&lt;p&gt;&lt;strong&gt;Step 5:&lt;/strong&gt; Launch Jupyter Notebook.
 Now you should be able to open Jupyter Notebook and select R as the notebook kernel.&lt;/p&gt;
 &lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jupyter notebook
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;p&gt;A session should start in your terminal and automatically open the browser with Jupyter Notebook. You can create a new file by selecting the &lt;em&gt;New&lt;/em&gt; button and choosing R as the Notebook.&lt;/p&gt;</content><author><name></name></author><summary type="html">Jupyter Notebook is a server-client application that allows editing and running notebook documents via a web browser. Notebook documents are documents produced by Jupyter Notebook which contain both computer code (e.g. python) and rich text elements (paragraph, equations, figures, links, etc.). They are both human-readable documents containing the analysis description and the results (figures, tables, etc.) as well as executable documents which can be run to perform data analysis. A notebook kernel is a computational engine that executes the code contained in a notebook document. The ipython kernel executes python code and the IRkernel runs R code which will be used later. But there are also kernels for many other languages.</summary></entry><entry><title type="html">New Project Started</title><link href="http://localhost:4000/New-Project-Started/" rel="alternate" type="text/html" title="New Project Started" /><published>2017-04-01T00:00:00+02:00</published><updated>2017-04-01T00:00:00+02:00</updated><id>http://localhost:4000/New-Project-Started</id><content type="html" xml:base="http://localhost:4000/New-Project-Started/">&lt;p&gt;This is my first blog post on my new blog. I decided to host it on GitHubs Pages. It is more convenient since I am already working with Git.&lt;/p&gt;
+&lt;p&gt;A session should start in your terminal and automatically open the browser with Jupyter Notebook. You can create a new file by selecting the &lt;em&gt;New&lt;/em&gt; button and choosing R as the Notebook.&lt;/p&gt;</content><author><name></name></author><summary type="html">You can use the programming language R in Jupyter Notebook by installing the IRkernel. A notebook kernel is a computational engine that executes the code contained in a notebook document. The ipython kernel executes python code and the IRkernel runs R code which will be used later. But there are also kernels for many other languages.</summary></entry><entry><title type="html">Jupyter Notebook – Installation</title><link href="http://localhost:4000/Jupyter-Notebook-Installation/" rel="alternate" type="text/html" title="Jupyter Notebook – Installation" /><published>2017-04-01T00:00:00+02:00</published><updated>2017-04-01T00:00:00+02:00</updated><id>http://localhost:4000/Jupyter-Notebook-Installation</id><content type="html" xml:base="http://localhost:4000/Jupyter-Notebook-Installation/">&lt;p&gt;&lt;a href=&quot;http://jupyter.org&quot;&gt;Jupyter Notebook&lt;/a&gt; is a server-client application that allows editing and running notebook documents via a web browser. Notebook documents are documents produced by Jupyter Notebook which contain both computer code (e.g. python) and rich text elements (paragraph, equations, figures, links, etc.). They are both human-readable documents containing the analysis description and the results (figures, tables, etc.) as well as executable documents which can be run to perform data analysis.&lt;/p&gt;
 
-&lt;p&gt;I am also proud to announce a new Data Science project I am working on as part of my master thesis. It is about analyzing the operating reserve market in the german energy market. The aim is to enhance optimization algorithms input factors by predicting the call probability of work prices of reserve calls. For more information head over to &lt;a href=&quot;https://github.com/wagnertimo/rmarketcrawlR&quot;&gt;my latest GitHub project&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><summary type="html">This is my first blog post on my new blog. I decided to host it on GitHubs Pages. It is more convenient since I am already working with Git.</summary></entry></feed>
+&lt;p&gt;&lt;strong&gt;Step 1:&lt;/strong&gt; Installation of the anaconda package.&lt;/p&gt;
+
+&lt;p&gt;Download the newest &lt;a href=&quot;https://www.continuum.io/downloads&quot;&gt;anaconda installer&lt;/a&gt;. You can choose between the graphical interface or the command line version for installation.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 2:&lt;/strong&gt; Launch Jupyter Notebook.
+Now you should be able to open Jupyter Notebook and select R as the notebook kernel.&lt;/p&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jupyter notebook
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;A session should start in your terminal and automatically open the browser with Jupyter Notebook. You can create a new file by selecting the &lt;em&gt;New&lt;/em&gt; button and choosing R as the Notebook.&lt;/p&gt;</content><author><name></name></author><summary type="html">Jupyter Notebook is a server-client application that allows editing and running notebook documents via a web browser. Notebook documents are documents produced by Jupyter Notebook which contain both computer code (e.g. python) and rich text elements (paragraph, equations, figures, links, etc.). They are both human-readable documents containing the analysis description and the results (figures, tables, etc.) as well as executable documents which can be run to perform data analysis.</summary></entry></feed>

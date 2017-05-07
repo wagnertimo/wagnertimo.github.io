@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Python and Deep Learning – Keras – Timo Wager – Yet Another Data Science Blog.</title>
+
+        <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="The difficulty of Theano and TensorFlow is that it can take a lot of code to create even very simple neural network models.
+
+" />
+    <meta property="og:description" content="The difficulty of Theano and TensorFlow is that it can take a lot of code to create even very simple neural network models.
+
+" />
+    
+    <meta name="author" content="Timo Wager" />
+
+    
+    <meta property="og:title" content="Python and Deep Learning – Keras" />
+    <meta property="twitter:title" content="Python and Deep Learning – Keras" />
+    
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    <link rel="alternate" type="application/rss+xml" title="Timo Wager - Yet Another Data Science Blog." href="/feed.xml" />
+
+    <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+  </head>
+
+  <body>
+    <div class="wrapper-masthead">
+      <div class="container">
+        <header class="masthead clearfix">
+          <a href="/" class="site-avatar"><img src="https://avatars2.githubusercontent.com/u/26152358?v=3&u=3ce04d6d58ef6f11be830f4b1c59ce2db97cfec2&s=400" /></a>
+
+          <div class="site-info">
+            <h1 class="site-name"><a href="/">Timo Wager</a></h1>
+            <p class="site-description">Yet Another Data Science Blog.</p>
+          </div>
+
+          <nav>
+            <a href="/">Blog</a>
+            <a href="/about">About</a>
+          </nav>
+        </header>
+      </div>
+    </div>
+
+    <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>Python and Deep Learning – Keras</h1>
+
+  <div class="entry">
+    <p>The difficulty of <a href="../Python-and-Deep-Learning-Theano">Theano</a> and <a href="../Python-and-Deep-Learning-Tensorflow">TensorFlow</a> is that it can take a lot of code to create even very simple neural network models.</p>
+
+<p>These libraries were designed primarily as a platform for research and development more than for the practical concerns of applied deep learning.</p>
+
+<p>The Keras library addresses these concerns by providing a wrapper for both Theano and TensorFlow. It provides a clean and simple API that allows you to define and evaluate deep learning models in just a few lines of code.</p>
+
+<p>Because of the ease of use and because it leverages the power of Theano and TensorFlow, Keras is quickly becoming the go-to library for applied deep learning.</p>
+
+<p>The focus of Keras is the concept of a model. The life-cycle of a model can be summarized as follows:</p>
+
+<ol>
+  <li><em>Define your model</em> - Create a Sequential model and add configured layers.</li>
+  <li><em>Compile your model</em> - Specify loss function and optimizers and call the <code class="highlighter-rouge">compile()</code> function on the model.</li>
+  <li><em>Fit your model</em> - Train the model on a sample of data by calling the <code class="highlighter-rouge">fit()</code> function on the model.</li>
+  <li><em>Make predictions</em> - Use the model to generate predictions on new data by calling functions such as <code class="highlighter-rouge">evaluate()</code> or <code class="highlighter-rouge">predict()</code> on the model.
+Your goal for this lesson is to install Keras.</li>
+</ol>
+
+<p>For example, you can install Keras using pip:
+But for a proper use please make sure you already installed <a href="../Python-and-Deep-Learning-Theano">Theano</a> or <a href="../Python-and-Deep-Learning-Tensorflow">TensorFlow</a>. By default Keras uses Tensorflow as its tensor manipulation library</p>
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>sudo pip install keras
+</code></pre>
+</div>
+
+<p>You can learn more about the Keras library on the <a href="https://keras.io">Keras homepage</a>.</p>
+
+<p>Or check out this <a href="../Python-and-Deep-Learning-Building-an-ANN-with-Keras">post</a> to apply the 4 step life-cycle of a model on an example dataset.</p>
+
+  </div>
+
+  <div class="date">
+    Written on April 18, 2017
+  </div>
+
+  
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+
+	    var disqus_shortname = '{"shortname"=>"disqus_9qVzDjGyqM"}';
+
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          
+<a href="mailto:wagnertimo@gmx.de"><i class="svg-icon email"></i></a>
+
+
+<a href="https://github.com/wagnertimo"><i class="svg-icon github"></i></a>
+
+<a href="https://www.linkedin.com/in/timo-wagner-95168213a/"><i class="svg-icon linkedin"></i></a>
+
+
+
+
+
+
+        </footer>
+      </div>
+    </div>
+
+    
+
+  </body>
+</html>

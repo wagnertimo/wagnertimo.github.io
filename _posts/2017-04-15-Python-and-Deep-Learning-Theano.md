@@ -1,7 +1,8 @@
 ---
 published: true
-title: Python and Machine Learning – Theano
+title: Python and Deep Learning – Theano
 layout: post
+comments: true
 ---
 
 Theano is a Python library for fast numerical computation to aid in the development of deep learning models.
