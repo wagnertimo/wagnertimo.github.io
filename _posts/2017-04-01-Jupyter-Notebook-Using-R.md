@@ -2,6 +2,7 @@
 published: true
 title: Jupyter Notebook – Using R
 layout: post
+comments: true
 ---
 
 You can use the programming language `R` in Jupyter Notebook by installing the `IRkernel`.

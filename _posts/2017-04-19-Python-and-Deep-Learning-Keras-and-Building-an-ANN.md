@@ -2,6 +2,7 @@
 published: true
 title: Python and Deep Learning – Keras and Building an ANN
 layout: post
+comments: true
 ---
 
 In this post you will get to know how to define a simple Neural Network with the Keras package by solving a binary classification problem on the pima-indians-diabetes dataset.
