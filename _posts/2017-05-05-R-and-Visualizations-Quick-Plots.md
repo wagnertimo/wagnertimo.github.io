@@ -4,6 +4,7 @@ title: R and Visualizations – Quick Plots
 layout: post
 use_math: true
 comments: true
+tags: [R, plot, quickplot, ggplot2]
 ---
 
 In this post, I wanna talk about how you can make quick visualizations  with R. This series will be continued with advanced plotting using the neat R package `ggplot2` or interactive graphics with `plotly`. But at first let's start with some quick and dirty techniques to get a first glance at your data. As you know, every data analysis should start with summaries of exploratory statistics and most important a holistic glimpse into your data set. Let's face it, human are visual living beings.

@@ -1,5 +1,5 @@
 ---
-published: true
+published: false
 title: Python and Deep Learning – Tensorflow
 layout: post
 comments: true

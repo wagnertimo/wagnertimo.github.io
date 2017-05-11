@@ -1,5 +1,5 @@
 ---
-published: true
+published: false
 title: Python and Deep Learning – Keras
 layout: post
 comments: true

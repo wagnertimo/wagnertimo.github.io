@@ -3,6 +3,7 @@ published: true
 title: Jupyter Notebook – Notebook as a Jekyll blog post
 layout: post
 comments: true
+tags: [jupyter_notebook, jekyll]
 ---
 
 I was recently looking for a convenient way to integrate a jupyter notebook file into a jekyll blog post.
