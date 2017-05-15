@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 title: Python and Deep Learning – Theano
 layout: post
 comments: true
