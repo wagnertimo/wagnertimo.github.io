@@ -1,11 +1,14 @@
 ---
-published: false
+published: true
 title: Python and Deep Learning – Keras
 layout: post
+image:
+  feature: keras.svg
 comments: true
+categories: [Python, Keras, Deep Learning]
 ---
 
-The difficulty of [Theano](../Python-and-Deep-Learning-Theano) and [TensorFlow](../Python-and-Deep-Learning-Tensorflow) is that it can take a lot of code to create even very simple neural network models.
+The difficulty of [Theano](/Python-and-Deep-Learning-Theano) and [TensorFlow](/Python-and-Deep-Learning-Tensorflow) is that it can take a lot of code to create even very simple neural network models.
 
 These libraries were designed primarily as a platform for research and development more than for the practical concerns of applied deep learning.
 

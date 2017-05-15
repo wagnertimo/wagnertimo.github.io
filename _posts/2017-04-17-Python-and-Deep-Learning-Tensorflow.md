@@ -1,8 +1,11 @@
 ---
-published: false
+published: true
 title: Python and Deep Learning – Tensorflow
 layout: post
+image:
+  feature: tensorflow.svg
 comments: true
+categories: [Python, TensorFlow, Deep Learning]
 ---
 
 TensorFlow is a Python library for fast numerical computing created and released by Google. Like Theano, TensorFlow is intended to be used to develop deep learning models.
