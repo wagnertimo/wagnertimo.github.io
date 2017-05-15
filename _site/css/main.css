@@ -531,7 +531,7 @@ a {
   transition: all 0.1s ease; }
 
 footer {
-  text-align: center;
+  text-align: left;
   padding: 3em 0; }
   footer .heart-icon {
     color: #FF8380;
