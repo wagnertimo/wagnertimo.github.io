@@ -1,9 +1,12 @@
 ---
 published: true
 title: Jupyter Notebook – Notebook as a Jekyll blog post
+excerpt: "Convert and easily integrate your Jupyter Notebook file into a Jekyll blog post."
+image:
+  feature: http://www.girliemac.com/assets/images/articles/2013/12/jekyll.png
 layout: post
 comments: true
-tags: [jupyter_notebook, jekyll]
+categories: [Jupyter Notebook, Jekyll]
 ---
 
 I was recently looking for a convenient way to integrate a jupyter notebook file into a jekyll blog post.
@@ -73,4 +76,4 @@ Here is the result of the `jekyll_test_post.ipynb` file:
  ```
 
 
- ![png](../images/jekyll_test_post_files/jekyll_test_post_4_0.png)
+ ![png](/images/jekyll_test_post_files/jekyll_test_post_4_0.png)

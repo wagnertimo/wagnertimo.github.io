@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Jupyter Notebook – Notebook as a Jekyll blog post</title>
+  <meta name="description" content="Convert and easily integrate your Jupyter Notebook file into a Jekyll blog post.">
+
+  <!-- CSS files -->
+  <link rel="stylesheet" href="http://localhost:4000/css/font-awesome.min.css">
+  <link rel="stylesheet" href="http://localhost:4000/css/main.css">
+
+  <link rel="canonical" href="http://localhost:4000/articles/2017-04/Jupter-Notebook-Notebook-as-a-Jekyll-Blog-Post">
+  <link rel="alternate" type="application/rss+xml" title="Timo Wagner" href="http://localhost:4000/feed.xml" />
+
+  <!-- Icons -->
+  <!-- 16x16 -->
+  <link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+  <!-- 32x32 -->
+  <link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+</head>
+
+
+<body>
+  <div class="row">
+    <div class="col s12 m3">
+      <div class="table cover">
+        
+
+<div class="cover-card table-cell table-middle">
+  
+  <img src="https://avatars2.githubusercontent.com/u/26152358?v=3&u=3ce04d6d58ef6f11be830f4b1c59ce2db97cfec2&s=400" alt="" class="avatar">
+  
+  <a href="http://localhost:4000/home/" class="author_name">Timo Wagner</a>
+  <span class="author_job">Yet Another Data Something Blog.</span>
+  <span class="author_bio mbm">I am currently a master student at the Karlsruher Institute of Technology (KIT). I am passionated about Data Science. I like to crawl the web for data and I am also keen on machine learning algorithms.</span>
+  <nav class="nav">
+    <ul class="nav-list">
+      <!--
+      <li class="nav-item">
+        <a href="http://localhost:4000/home/">home</a>
+      </li>
+      -->
+      <li class="nav-item">
+        <a href="http://localhost:4000/">blog</a>
+      </li>
+      <li class="nav-item">
+        <a href="http://localhost:4000/categories/">categories</a>
+      </li>
+      <li class="nav-item">
+        <a href="http://localhost:4000/archive/">archive</a>
+      </li>
+      <!--
+      <li class="nav-item">
+        <a href="http://localhost:4000/CV/">CV</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <script type="text/javascript">
+  // based on http://stackoverflow.com/a/10300743/280842
+  function gen_mail_to_link(hs, subject) {
+    var lhs,rhs;
+    var p = hs.split('@');
+    lhs = p[0];
+    rhs = p[1];
+    document.write("<a class=\"social-link-item\" target=\"_blank\" href=\"mailto");
+    document.write(":" + lhs + "@");
+    document.write(rhs + "?subject=" + subject + "\"><i class=\"fa fa-fw fa-envelope\"></i><\/a>");
+  }
+</script>
+<div class="social-links">
+  <ul>
+    
+      <li>
+      <script>gen_mail_to_link('wagnertimo@gmx.de', 'Hello from website');</script>
+      </li>
+    
+    
+    
+    
+    <li><a href="http://linkedin.com/in/timo-wagner-95168213a/" class="social-link-item" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a></li>
+    
+    <li><a href="http://www.xing.com/profile/Timo_Wagner44" class="social-link-item" target="_blank"><i class="fa fa-fw fa-xing"></i></a></li>
+    
+    
+    <li><a href="http://github.com/wagnertimo" class="social-link-item" target="_blank"><i class="fa fa-fw fa-github"></i></a></li>
+    
+    <li><a href="http://stackoverflow.com/users/7810379/timo-wagner?tab=profile" class="social-link-item" target="_blank"><i class="fa fa-fw fa-stack-overflow"></i></a></li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <a href="http://stackoverflow.com/7810379/timo-wagner?tab=profile"><i class="social-link-item" target="_blank"><i class="fa fa-fw fa-stackoverflow"></i></a></li>
+
+  </ul>
+</div>
+
+</div>
+
+      </div>
+    </div>
+    <div class="col s12 m9">
+      <div class="post-listing">
+        <a class="btn" href= "http://localhost:4000/" >
+  Home
+</a>
+
+<div class="post-image-feature">
+  <img class="feature-image" src=
+  
+  "http://www.girliemac.com/assets/images/articles/2013/12/jekyll.png"
+  
+  alt="Jupyter Notebook – Notebook as a Jekyll blog post feature image">
+
+  
+</div><!-- /.image-wrap -->
+
+
+
+<div id="post">
+  <header class="post-header">
+    <h1 title="Jupyter Notebook – Notebook as a Jekyll blog post">Jupyter Notebook – Notebook as a Jekyll blog post</h1>
+    <span class="post-meta">
+      <span class="post-date">
+        8 APR 2017
+      </span>
+      •
+      <span class="read-time" title="Estimated read time">
+  
+  
+    2 mins read
+  
+</span>
+
+    </span>
+
+  </header>
+
+  <article class="post-content">
+    <p>I was recently looking for a convenient way to integrate a jupyter notebook file into a jekyll blog post.
+This would allow a faster workflow to publish code and work done in jupyter on a blog site powered by jekyll.</p>
+
+<p>The key thing hereby is that jekyll uses markdown to create its website. Therefore the only thing you need to do is to convert your jupyter notebook into a markdown file and then putting this file into your posts directory of your blog site.</p>
+
+<p>Open the shell and move to the directory of your jupyter notebook file - i called it <code class="highlighter-rouge">jekyll_test_post</code>. Then use the following command to convert it into a markdown file:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>jupyter nbconvert jekyll_test_post.ipynb --to markdown
+</code></pre>
+</div>
+<p>The output should look like:</p>
+
+<pre><code class="language-`">[NbConvertApp] Converting notebook jekyll_test_post.ipynb to markdown
+[NbConvertApp] Support files will be in jekyll_test_post_files/
+[NbConvertApp] Making directory jekyll_test_post_files
+[NbConvertApp] Writing 527 bytes to jekyll_test_post.md
+</code></pre>
+
+<p>This creates an <code class="highlighter-rouge">jekyll_test_post.md</code> file and if you have graphics in your notebook it also creates a folder extended by <em>_files</em> (<code class="highlighter-rouge">jekyll_test_post_files</code>). As I have organized my graphics in the <code class="highlighter-rouge">images</code> folder of the jekyll folder structure, i move the files directory into this image folder. To properly show the plots, you now have to modify the source path to the plots.</p>
+
+<div class="language-md highlighter-rouge"><pre class="highlight"><code> !<span class="p">[</span><span class="nv">png</span><span class="p">](</span><span class="sx">../images/jekyll_test_post_files/jekyll_test_post_4_0.png</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Here is the result of the <code class="highlighter-rouge">jekyll_test_post.ipynb</code> file:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+ <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code> <span class="n">Fs</span> <span class="o">=</span> <span class="mi">8000</span>
+ <span class="n">f</span> <span class="o">=</span> <span class="mi">5</span>
+ <span class="n">sample</span> <span class="o">=</span> <span class="mi">8000</span>
+ <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+ <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">f</span> <span class="o">*</span> <span class="n">x</span> <span class="o">/</span> <span class="n">Fs</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code> <span class="n">x</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code> array([   0,    1,    2, ..., 7997, 7998, 7999])
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code> <span class="n">y</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code> array([ 0.        ,  0.00392698,  0.0078539 , ..., -0.0117807 ,
+        -0.0078539 , -0.00392698])
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+ <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'voltage(V)'</span><span class="p">)</span>
+ <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'sample(n)'</span><span class="p">)</span>
+ <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p><img src="/images/jekyll_test_post_files/jekyll_test_post_4_0.png" alt="png" /></p>
+
+  </article>
+</div>
+
+<div class="share-buttons">
+  <h6>Share on: </h6>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=http://localhost:4000/articles/2017-04/Jupter-Notebook-Notebook-as-a-Jekyll-Blog-Post" class="twitter btn" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/articles/2017-04/Jupter-Notebook-Notebook-as-a-Jekyll-Blog-Post" class="facebook btn" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url=http://localhost:4000/articles/2017-04/Jupter-Notebook-Notebook-as-a-Jekyll-Blog-Post" class="google-plus btn" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
+    <li>
+      <a href="https://news.ycombinator.com/submitlink?u=http://localhost:4000/articles/2017-04/Jupter-Notebook-Notebook-as-a-Jekyll-Blog-Post" class="hacker-news btn" title="Share on Hacker News"><i class="fa fa-hacker-news"></i><span> Hacker News</span></a>
+    </li>
+    <li>
+      <a href="https://www.reddit.com/submit?url=http://localhost:4000/articles/2017-04/Jupter-Notebook-Notebook-as-a-Jekyll-Blog-Post" class="reddit btn" title="Share on Reddit"><i class="fa fa-reddit"></i><span> Reddit</span></a>
+    </li>
+  </ul>
+</div><!-- end share-buttons -->
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'https-wagnertimo-github-io';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
+        <footer>
+  &copy; 2017 Timo Wagner. Data Science made with <i class="fa fa-heart heart-icon"></i>
+</footer>
+
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="http://localhost:4000/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="http://localhost:4000/js/main.js"></script>
+
+
+</body>
+</html>

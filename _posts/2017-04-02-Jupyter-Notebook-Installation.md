@@ -1,9 +1,12 @@
 ---
 published: true
 title: Jupyter Notebook – Installation
+excerpt: "How to install Jupyter Notebook with the anaconda package."
+image:
+  feature: http://jupyter.org/assets/nav_logo.svg
 layout: post
 comments: true
-tags: [jupyter_notebook]
+categories: [Jupyter Notebook]
 ---
 
 [Jupyter Notebook](http://jupyter.org) is a server-client application that allows editing and running notebook documents via a web browser. Notebook documents are documents produced by Jupyter Notebook which contain both computer code (e.g. python) and rich text elements (paragraph, equations, figures, links, etc.). They are both human-readable documents containing the analysis description and the results (figures, tables, etc.) as well as executable documents which can be run to perform data analysis.

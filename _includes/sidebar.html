@@ -1,0 +1,34 @@
+{% if page.author %} {% assign author = site.data.authors[page.author] %}{% else %}{% assign author = site.owner %} {% endif %}
+
+<div class="cover-card table-cell table-middle">
+  {% if site.owner.avatar %}
+  <img src="{{ site.owner.avatar }}" alt="" class="avatar">
+  {% endif %}
+  <a href="{{ site.url }}/home/" class="author_name">{{ site.owner.name }}</a>
+  <span class="author_job">{{ site.owner.job }}</span>
+  <span class="author_bio mbm">{{ site.owner.bio }}</span>
+  <nav class="nav">
+    <ul class="nav-list">
+      <!--
+      <li class="nav-item">
+        <a href="{{ site.url }}/home/">home</a>
+      </li>
+      -->
+      <li class="nav-item">
+        <a href="{{ site.url }}/">blog</a>
+      </li>
+      <li class="nav-item">
+        <a href="{{ site.url }}/categories/">categories</a>
+      </li>
+      <li class="nav-item">
+        <a href="{{ site.url }}/archive/">archive</a>
+      </li>
+      <!--
+      <li class="nav-item">
+        <a href="{{ site.url }}/CV/">CV</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  {% include social-links.html %}
+</div>

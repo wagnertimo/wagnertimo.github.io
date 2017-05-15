@@ -1,9 +1,12 @@
 ---
 published: true
 title: Jupyter Notebook – Using R
+excerpt: "Extend Jupyter Notebook with R."
+image:
+  feature: http://jupyter.org/assets/nav_logo.svg
 layout: post
 comments: true
-tags: [R, jupyter_notebook]
+categories: [R, Jupyter Notebook]
 ---
 
 You can use the programming language `R` in Jupyter Notebook by installing the `IRkernel`.

@@ -2,37 +2,66 @@
 layout: default
 ---
 
+<a class="btn" href= "{{ site.url }}/" >
+  Home
+</a>
+{% if page.image.feature %}
+<div class="post-image-feature">
+  <img class="feature-image" src=
+  {% if page.image.feature contains 'https' or page.image.feature contains 'http' %}
+  "{{ page.image.feature }}"
+  {% else %}
+  "{{ site.url }}/img/{{ page.image.feature }}"
+  {% endif %}
+  alt="{{ page.title }} feature image">
 
-{% assign post = page %}
-{% if post.tags.size > 0 %}
-    {% capture tags_content %}{% if post.tags.size == 1 %}<i class="fa fa-tag"></i>{% else %}<i class="fa fa-tags"></i>{% endif %}{% endcapture %}
-    {% for post_tag in post.tags %}
-        {% for data_tag in site.data.tags %}
-            {% if data_tag.slug == post_tag %}
-                {% assign tag = data_tag %}
-            {% endif %}
-        {% endfor %}
-        {% if tag %}
-            {% capture tags_content_temp %}{{ tags_content }}<a href="/tag/{{ tag.slug }}/">{{ tag.name }}</a>{% if forloop.last == false %} // {% endif %}{% endcapture %}
-            {% assign tags_content = tags_content_temp %}
-        {% endif %}
-    {% endfor %}
-{% else %}
-    {% assign tags_content = '' %}
+  {% if page.image.credit %}
+  <span class="image-credit">Photo Credit: <a href="{{ page.image.creditlink }}">{{ page.image.credit }}</a></span>
+  {% endif %}
+</div><!-- /.image-wrap -->
 {% endif %}
 
 
-<article class="post">
-  <h1>{{ page.title }}</h1>
+<div id="post">
+  <header class="post-header">
+    <h1 title="{{ page.title }}">{{ page.title }}</h1>
+    <span class="post-meta">
+      <span class="post-date">
+        {{ page.date | date: "%-d %b %Y" | upcase }}
+      </span>
+      •
+      {% include read_time.html %}
+    </span>
 
-  <div class="date">
-    {{ page.date | date: "%B %e, %Y" }}
-  </div>
+  </header>
 
-  <p id="post-meta">{{ tags_content }}</p>
-
-  <div class="entry">
+  <article class="post-content">
     {{ content }}
-  </div>
-  {% include disqus.html %}
-</article>
+  </article>
+</div>
+
+<div class="share-buttons">
+  <h6>Share on: </h6>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text={{ site.url }}{{ page.url }}" class="twitter btn" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u={{ site.url }}{{ page.url }}" class="facebook btn" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url={{ site.url }}{{ page.url }}" class="google-plus btn" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
+    <li>
+      <a href="https://news.ycombinator.com/submitlink?u={{ site.url }}{{ page.url }}" class="hacker-news btn" title="Share on Hacker News"><i class="fa fa-hacker-news"></i><span> Hacker News</span></a>
+    </li>
+    <li>
+      <a href="https://www.reddit.com/submit?url={{ site.url }}{{ page.url }}" class="reddit btn" title="Share on Reddit"><i class="fa fa-reddit"></i><span> Reddit</span></a>
+    </li>
+  </ul>
+</div><!-- end share-buttons -->
+
+{% if site.owner.disqus-shortname and page.comments == true %}
+<div id="disqus_thread"></div>
+{% include disqus.html %}
+{% endif %}

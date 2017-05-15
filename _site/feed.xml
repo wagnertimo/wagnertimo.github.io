@@ -1,4 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2017-05-11T14:44:08+02:00</updated><id>http://localhost:4000/</id><title type="html">Timo Wager</title><subtitle>Yet Another Data Something Blog.</subtitle><entry><title type="html">R and Visualizations – Quick Plots</title><link href="http://localhost:4000/R-and-Visualizations-Quick-Plots/" rel="alternate" type="text/html" title="R and Visualizations – Quick Plots" /><published>2017-05-05T00:00:00+02:00</published><updated>2017-05-05T00:00:00+02:00</updated><id>http://localhost:4000/R-and-Visualizations-Quick-Plots</id><content type="html" xml:base="http://localhost:4000/R-and-Visualizations-Quick-Plots/">&lt;p&gt;In this post, I wanna talk about how you can make quick visualizations  with R. This series will be continued with advanced plotting using the neat R package &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; or interactive graphics with &lt;code class=&quot;highlighter-rouge&quot;&gt;plotly&lt;/code&gt;. But at first let’s start with some quick and dirty techniques to get a first glance at your data. As you know, every data analysis should start with summaries of exploratory statistics and most important a holistic glimpse into your data set. Let’s face it, human are visual living beings.&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Timo Wagner</title>
+    <description>Yet Another Data Something Blog.</description>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Mon, 15 May 2017 17:59:11 +0200</pubDate>
+    <lastBuildDate>Mon, 15 May 2017 17:59:11 +0200</lastBuildDate>
+    <generator>Jekyll v3.4.3</generator>
+    
+      <item>
+        <title>R and Visualizations – Quick Plots</title>
+        <description>&lt;p&gt;In this post, I wanna talk about how you can make quick visualizations  with R. This series will be continued with advanced plotting using the neat R package &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; or interactive graphics with &lt;code class=&quot;highlighter-rouge&quot;&gt;plotly&lt;/code&gt;. But at first let’s start with some quick and dirty techniques to get a first glance at your data. As you know, every data analysis should start with summaries of exploratory statistics and most important a holistic glimpse into your data set. Let’s face it, human are visual living beings.&lt;/p&gt;
 
 &lt;p&gt;I will briefly capture the basic graphic types:&lt;/p&gt;
 
@@ -40,7 +53,7 @@
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_5_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_5_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;As expected, we can see a clear negative correlation. The heavier the car the less miles per gallon are driven, hence the gasoline consumption for a given distance rises.&lt;/p&gt;
 
@@ -52,7 +65,7 @@ Now we can activate the library and use its quick plot function &lt;code class=&
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_7_1.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_7_1.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Looks cool right? … And if your two variables are in the same data set you can leave out the &lt;code class=&quot;highlighter-rouge&quot;&gt;$&lt;/code&gt; declaration and call &lt;code class=&quot;highlighter-rouge&quot;&gt;qplot(wt, mpg, data = mtcars)&lt;/code&gt;&lt;/p&gt;
 
@@ -82,7 +95,7 @@ Now we can activate the library and use its quick plot function &lt;code class=&
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_13_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_13_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;If we want to modify the line, you can simply call e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;points()&lt;/code&gt; in the next line with the same data to add points to the lines. When you want to display other line graphs in the same plot, just call &lt;code class=&quot;highlighter-rouge&quot;&gt;lines()&lt;/code&gt;. To distinguish between the two lines, use the &lt;code class=&quot;highlighter-rouge&quot;&gt;col&lt;/code&gt; parameter to define the color.&lt;/p&gt;
 
@@ -95,7 +108,7 @@ Now we can activate the library and use its quick plot function &lt;code class=&
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_15_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_15_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Now let’s look again at the &lt;code class=&quot;highlighter-rouge&quot;&gt;qplot()&lt;/code&gt; function of the &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; library.&lt;/p&gt;
 
@@ -103,7 +116,7 @@ Now we can activate the library and use its quick plot function &lt;code class=&
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_17_1.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_17_1.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Like in the case of the base &lt;code class=&quot;highlighter-rouge&quot;&gt;plot()&lt;/code&gt; function you can simply add modification options or other lines.&lt;/p&gt;
 
@@ -114,7 +127,7 @@ Now we can activate the library and use its quick plot function &lt;code class=&
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_19_1.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_19_1.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;To add another line to the quick plot of &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt;, you have to use the plus sign &lt;code class=&quot;highlighter-rouge&quot;&gt;+&lt;/code&gt;. This is a common procedure, also for the &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot()&lt;/code&gt; function. You basically add other options, lines etc. to the active plot. The &lt;code class=&quot;highlighter-rouge&quot;&gt;aes&lt;/code&gt; parameter builds the aesthetic mappings and describe how variables in the data are mapped to visual properties (aesthetics) of &lt;code class=&quot;highlighter-rouge&quot;&gt;geoms&lt;/code&gt; (geometric forms: lines, points etc.). The arguments for &lt;code class=&quot;highlighter-rouge&quot;&gt;aes&lt;/code&gt; are the &lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;y&lt;/code&gt; axis. Optionally you can set a &lt;code class=&quot;highlighter-rouge&quot;&gt;color&lt;/code&gt; parameter for differentiation.&lt;/p&gt;
 
@@ -143,7 +156,7 @@ Now we can activate the library and use its quick plot function &lt;code class=&
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_23_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_23_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;For every discrete Timestamp the demand value is plotted. Sometimes the &lt;code class=&quot;highlighter-rouge&quot;&gt;y axis&lt;/code&gt; (or bars) shows the discrete counts for each category on the &lt;code class=&quot;highlighter-rouge&quot;&gt;x axis&lt;/code&gt;. This is similar to a histogram, but with a discrete instead of continuous &lt;code class=&quot;highlighter-rouge&quot;&gt;x axis&lt;/code&gt;. To generate the count of each unique value in a vector, call the &lt;code class=&quot;highlighter-rouge&quot;&gt;table()&lt;/code&gt; function.&lt;/p&gt;
 
@@ -164,7 +177,7 @@ Now we can activate the library and use its quick plot function &lt;code class=&
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_27_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_27_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;In &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; you can use the &lt;code class=&quot;highlighter-rouge&quot;&gt;qplot()&lt;/code&gt; function for a fast way to show a count-based bar chart. Notice the difference between a continous and a discrete &lt;code class=&quot;highlighter-rouge&quot;&gt;x axis&lt;/code&gt;. Call the &lt;code class=&quot;highlighter-rouge&quot;&gt;factor()&lt;/code&gt; method to discretize the &lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt; values.&lt;/p&gt;
 
@@ -175,9 +188,9 @@ Now we can activate the library and use its quick plot function &lt;code class=&
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_29_3.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_29_3.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_29_4.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_29_4.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;histogram&quot;&gt;Histogram&lt;/h2&gt;
 
@@ -189,9 +202,9 @@ Now we can activate the library and use its quick plot function &lt;code class=&
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_31_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_31_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_31_1.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_31_1.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The chart at the bottom has more bins. Notice that because the bins are narrower, there are fewer items in each bin.&lt;/p&gt;
 
@@ -206,9 +219,9 @@ Now we can activate the library and use its quick plot function &lt;code class=&
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_33_3.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_33_3.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_33_4.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_33_4.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;box-plots&quot;&gt;Box Plots&lt;/h2&gt;
 
@@ -231,7 +244,7 @@ Now we can activate the library and use its quick plot function &lt;code class=&
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_37_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_37_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;As we can see, the group of guinea pigs which got the orange juice (&lt;code class=&quot;highlighter-rouge&quot;&gt;OJ&lt;/code&gt;) have a higher median and quartiles as well as the spread of lengths is narrower.&lt;/p&gt;
 
@@ -244,9 +257,9 @@ Now we can activate the library and use its quick plot function &lt;code class=&
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_39_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_39_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_39_1.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_39_1.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Not surprisingly, as the dose of vitamine C rises the tooth length does too. And with 2 mg/day the medians of the two supplement groups are the same. But the &lt;code class=&quot;highlighter-rouge&quot;&gt;VC&lt;/code&gt; group has more variance. The lowest variance (except of one outlier) is achieved with 1 mg/day of ascorbic acid (a form of vitamin C and coded as &lt;code class=&quot;highlighter-rouge&quot;&gt;VC&lt;/code&gt;).&lt;/p&gt;
 
@@ -260,9 +273,9 @@ Now we can activate the library and use its quick plot function &lt;code class=&
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_41_2.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_41_2.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_41_3.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_41_3.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;You may noticed that the box plots from the base graphics are slightly different from &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt;. This is because they use different methods for calculating quantiles. See &lt;code class=&quot;highlighter-rouge&quot;&gt;?geom_boxplot&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;?boxplot.stats&lt;/code&gt; for more information.&lt;/p&gt;
@@ -276,7 +289,7 @@ Now we can activate the library and use its quick plot function &lt;code class=&
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_44_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_44_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;You can also define your own function. It just has to output a numeric vector. Using &lt;code class=&quot;highlighter-rouge&quot;&gt;add = TRUE&lt;/code&gt; will add a curve to the previously created plot. We will show this by plotting the inverse function.&lt;/p&gt;
 
@@ -291,7 +304,7 @@ Now we can activate the library and use its quick plot function &lt;code class=&
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_46_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_46_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;For the &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; package equivilent, one used &lt;code class=&quot;highlighter-rouge&quot;&gt;qplot(c(0,2), fun=myfun, stat=&quot;function&quot;, geom=&quot;line&quot;)&lt;/code&gt; But now &lt;code class=&quot;highlighter-rouge&quot;&gt;stat&lt;/code&gt; is deprecated in 2016 and &lt;code class=&quot;highlighter-rouge&quot;&gt;fun&lt;/code&gt; is no longer an acceptable parameter.&lt;/p&gt;
 
@@ -309,9 +322,24 @@ Now we can activate the library and use its quick plot function &lt;code class=&
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;../images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_48_1.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_48_1.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;So now you should have a basic understanding to plot some quick graphs to get a first look into your data. I will try to continue this series with more detailed explanations on how to use the &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; package with the &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot()&lt;/code&gt; function since this is more powerful for making expressive charts.&lt;/p&gt;</content><author><name></name></author><category term="R" /><category term="plot" /><category term="quickplot" /><category term="ggplot2" /><summary type="html">In this post, I wanna talk about how you can make quick visualizations with R. This series will be continued with advanced plotting using the neat R package ggplot2 or interactive graphics with plotly. But at first let’s start with some quick and dirty techniques to get a first glance at your data. As you know, every data analysis should start with summaries of exploratory statistics and most important a holistic glimpse into your data set. Let’s face it, human are visual living beings.</summary></entry><entry><title type="html">Python and Deep Learning – Keras and Building an ANN</title><link href="http://localhost:4000/Python-and-Deep-Learning-Keras-and-Building-an-ANN/" rel="alternate" type="text/html" title="Python and Deep Learning – Keras and Building an ANN" /><published>2017-04-19T00:00:00+02:00</published><updated>2017-04-19T00:00:00+02:00</updated><id>http://localhost:4000/Python-and-Deep-Learning-Keras-and-Building-an-ANN</id><content type="html" xml:base="http://localhost:4000/Python-and-Deep-Learning-Keras-and-Building-an-ANN/">&lt;p&gt;In this post you will get to know how to define a simple Neural Network with the Keras package by solving a binary classification problem on the pima-indians-diabetes dataset.&lt;/p&gt;
+&lt;p&gt;So now you should have a basic understanding to plot some quick graphs to get a first look into your data. I will try to continue this series with more detailed explanations on how to use the &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; package with the &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot()&lt;/code&gt; function since this is more powerful for making expressive charts.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 05 May 2017 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/articles/2017-05/R-and-Visualizations-Quick-Plots</link>
+        <guid isPermaLink="true">http://localhost:4000/articles/2017-05/R-and-Visualizations-Quick-Plots</guid>
+        
+        
+        <category>R</category>
+        
+        <category>ggplot2</category>
+        
+      </item>
+    
+      <item>
+        <title>Python and Deep Learning – Keras and Building an ANN</title>
+        <description>&lt;p&gt;In this post you will get to know how to define a simple Neural Network with the Keras package by solving a binary classification problem on the pima-indians-diabetes dataset.&lt;/p&gt;
 
 &lt;p&gt;If you haven’t installed Keras, please walk through my general &lt;a href=&quot;../Python-and-Deep-Learning-Keras&quot;&gt;post&lt;/a&gt; about Keras.&lt;/p&gt;
 
@@ -798,7 +826,26 @@ acc: 77.99%
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0]
 &lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;</content><author><name></name></author><category term="python" /><category term="deep_learning" /><category term="keras" /><category term="ann" /><summary type="html">In this post you will get to know how to define a simple Neural Network with the Keras package by solving a binary classification problem on the pima-indians-diabetes dataset.</summary></entry><entry><title type="html">Jupyter Notebook – Notebook as a Jekyll blog post</title><link href="http://localhost:4000/Jupter-Notebook-Notebook-as-a-Jekyll-Blog-Post/" rel="alternate" type="text/html" title="Jupyter Notebook – Notebook as a Jekyll blog post" /><published>2017-04-08T00:00:00+02:00</published><updated>2017-04-08T00:00:00+02:00</updated><id>http://localhost:4000/Jupter-Notebook-Notebook-as-a-Jekyll-Blog-Post</id><content type="html" xml:base="http://localhost:4000/Jupter-Notebook-Notebook-as-a-Jekyll-Blog-Post/">&lt;p&gt;I was recently looking for a convenient way to integrate a jupyter notebook file into a jekyll blog post.
+&lt;/div&gt;
+</description>
+        <pubDate>Wed, 19 Apr 2017 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/articles/2017-04/Python-and-Deep-Learning-Keras-and-Building-an-ANN</link>
+        <guid isPermaLink="true">http://localhost:4000/articles/2017-04/Python-and-Deep-Learning-Keras-and-Building-an-ANN</guid>
+        
+        
+        <category>Python</category>
+        
+        <category>Deep Learning</category>
+        
+        <category>Keras</category>
+        
+        <category>ANN</category>
+        
+      </item>
+    
+      <item>
+        <title>Jupyter Notebook – Notebook as a Jekyll blog post</title>
+        <description>&lt;p&gt;I was recently looking for a convenient way to integrate a jupyter notebook file into a jekyll blog post.
 This would allow a faster workflow to publish code and work done in jupyter on a blog site powered by jekyll.&lt;/p&gt;
 
 &lt;p&gt;The key thing hereby is that jekyll uses markdown to create its website. Therefore the only thing you need to do is to convert your jupyter notebook into a markdown file and then putting this file into your posts directory of your blog site.&lt;/p&gt;
@@ -861,7 +908,22 @@ This would allow a faster workflow to publish code and work done in jupyter on a
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;../images/jekyll_test_post_files/jekyll_test_post_4_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><category term="jupyter_notebook" /><category term="jekyll" /><summary type="html">I was recently looking for a convenient way to integrate a jupyter notebook file into a jekyll blog post. This would allow a faster workflow to publish code and work done in jupyter on a blog site powered by jekyll.</summary></entry><entry><title type="html">Jupyter Notebook – Using R</title><link href="http://localhost:4000/Jupyter-Notebook-Using-R/" rel="alternate" type="text/html" title="Jupyter Notebook – Using R" /><published>2017-04-04T00:00:00+02:00</published><updated>2017-04-04T00:00:00+02:00</updated><id>http://localhost:4000/Jupyter-Notebook-Using-R</id><content type="html" xml:base="http://localhost:4000/Jupyter-Notebook-Using-R/">&lt;p&gt;You can use the programming language &lt;code class=&quot;highlighter-rouge&quot;&gt;R&lt;/code&gt; in Jupyter Notebook by installing the &lt;code class=&quot;highlighter-rouge&quot;&gt;IRkernel&lt;/code&gt;.
+&lt;p&gt;&lt;img src=&quot;/images/jekyll_test_post_files/jekyll_test_post_4_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Sat, 08 Apr 2017 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/articles/2017-04/Jupter-Notebook-Notebook-as-a-Jekyll-Blog-Post</link>
+        <guid isPermaLink="true">http://localhost:4000/articles/2017-04/Jupter-Notebook-Notebook-as-a-Jekyll-Blog-Post</guid>
+        
+        
+        <category>Jupyter Notebook</category>
+        
+        <category>Jekyll</category>
+        
+      </item>
+    
+      <item>
+        <title>Jupyter Notebook – Using R</title>
+        <description>&lt;p&gt;You can use the programming language &lt;code class=&quot;highlighter-rouge&quot;&gt;R&lt;/code&gt; in Jupyter Notebook by installing the &lt;code class=&quot;highlighter-rouge&quot;&gt;IRkernel&lt;/code&gt;.
 A notebook kernel is a computational engine that executes the code contained in a notebook document. The &lt;code class=&quot;highlighter-rouge&quot;&gt;ipython kernel&lt;/code&gt; executes python code and the &lt;code class=&quot;highlighter-rouge&quot;&gt;IRkernel&lt;/code&gt; runs R code which will be used later. But there are also kernels for many &lt;a href=&quot;https://github.com/jupyter/jupyter/wiki/Jupyter-kernels&quot;&gt;other languages&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;Firstly, you need to install the latest anaconda package. If you haven’t done this before, walk through my post &lt;a href=&quot;../Jupyter-Notebook-Installation&quot;&gt;Jupyter Notebook – Installation&lt;/a&gt;.&lt;/p&gt;
@@ -900,7 +962,22 @@ Now you should be able to open Jupyter Notebook and select R as the notebook ker
 &lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jupyter notebook
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;p&gt;A session should start in your terminal and automatically open the browser with Jupyter Notebook. You can create a new file by selecting the &lt;em&gt;New&lt;/em&gt; button and choosing R as the Notebook.&lt;/p&gt;</content><author><name></name></author><category term="R" /><category term="jupyter_notebook" /><summary type="html">You can use the programming language R in Jupyter Notebook by installing the IRkernel. A notebook kernel is a computational engine that executes the code contained in a notebook document. The ipython kernel executes python code and the IRkernel runs R code which will be used later. But there are also kernels for many other languages.</summary></entry><entry><title type="html">Jupyter Notebook – Installation</title><link href="http://localhost:4000/Jupyter-Notebook-Installation/" rel="alternate" type="text/html" title="Jupyter Notebook – Installation" /><published>2017-04-02T00:00:00+02:00</published><updated>2017-04-02T00:00:00+02:00</updated><id>http://localhost:4000/Jupyter-Notebook-Installation</id><content type="html" xml:base="http://localhost:4000/Jupyter-Notebook-Installation/">&lt;p&gt;&lt;a href=&quot;http://jupyter.org&quot;&gt;Jupyter Notebook&lt;/a&gt; is a server-client application that allows editing and running notebook documents via a web browser. Notebook documents are documents produced by Jupyter Notebook which contain both computer code (e.g. python) and rich text elements (paragraph, equations, figures, links, etc.). They are both human-readable documents containing the analysis description and the results (figures, tables, etc.) as well as executable documents which can be run to perform data analysis.&lt;/p&gt;
+&lt;p&gt;A session should start in your terminal and automatically open the browser with Jupyter Notebook. You can create a new file by selecting the &lt;em&gt;New&lt;/em&gt; button and choosing R as the Notebook.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 04 Apr 2017 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/articles/2017-04/Jupyter-Notebook-Using-R</link>
+        <guid isPermaLink="true">http://localhost:4000/articles/2017-04/Jupyter-Notebook-Using-R</guid>
+        
+        
+        <category>R</category>
+        
+        <category>Jupyter Notebook</category>
+        
+      </item>
+    
+      <item>
+        <title>Jupyter Notebook – Installation</title>
+        <description>&lt;p&gt;&lt;a href=&quot;http://jupyter.org&quot;&gt;Jupyter Notebook&lt;/a&gt; is a server-client application that allows editing and running notebook documents via a web browser. Notebook documents are documents produced by Jupyter Notebook which contain both computer code (e.g. python) and rich text elements (paragraph, equations, figures, links, etc.). They are both human-readable documents containing the analysis description and the results (figures, tables, etc.) as well as executable documents which can be run to perform data analysis.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Step 1:&lt;/strong&gt; Installation of the anaconda package.&lt;/p&gt;
 
@@ -911,6 +988,29 @@ Now you should be able to open Jupyter Notebook and select R as the notebook ker
 &lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jupyter notebook
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;p&gt;A session should start in your terminal and automatically open the browser with Jupyter Notebook. You can create a new file by selecting the &lt;em&gt;New&lt;/em&gt; button and choosing R as the Notebook.&lt;/p&gt;</content><author><name></name></author><category term="jupyter_notebook" /><summary type="html">Jupyter Notebook is a server-client application that allows editing and running notebook documents via a web browser. Notebook documents are documents produced by Jupyter Notebook which contain both computer code (e.g. python) and rich text elements (paragraph, equations, figures, links, etc.). They are both human-readable documents containing the analysis description and the results (figures, tables, etc.) as well as executable documents which can be run to perform data analysis.</summary></entry><entry><title type="html">New Project Started</title><link href="http://localhost:4000/New-Project-Started/" rel="alternate" type="text/html" title="New Project Started" /><published>2017-04-01T00:00:00+02:00</published><updated>2017-04-01T00:00:00+02:00</updated><id>http://localhost:4000/New-Project-Started</id><content type="html" xml:base="http://localhost:4000/New-Project-Started/">&lt;p&gt;This is my first blog post on my new blog. I decided to host it on GitHubs Pages. It is more convenient since I am already working with Git.&lt;/p&gt;
+&lt;p&gt;A session should start in your terminal and automatically open the browser with Jupyter Notebook. You can create a new file by selecting the &lt;em&gt;New&lt;/em&gt; button and choosing R as the Notebook.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 02 Apr 2017 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/articles/2017-04/Jupyter-Notebook-Installation</link>
+        <guid isPermaLink="true">http://localhost:4000/articles/2017-04/Jupyter-Notebook-Installation</guid>
+        
+        
+        <category>Jupyter Notebook</category>
+        
+      </item>
+    
+      <item>
+        <title>New Project Started</title>
+        <description>&lt;p&gt;This is my first blog post on my new blog. I decided to host it on GitHubs Pages. It is more convenient since I am already working with Git.&lt;/p&gt;
 
-&lt;p&gt;I am also proud to announce a new Data Science project I am working on as part of my master thesis. It is about analyzing the operating reserve market in the german energy market. The aim is to enhance optimization algorithms input factors by predicting the call probability of work prices of reserve calls. For more information head over to &lt;a href=&quot;https://github.com/wagnertimo/rmarketcrawlR&quot;&gt;my latest GitHub project&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><summary type="html">This is my first blog post on my new blog. I decided to host it on GitHubs Pages. It is more convenient since I am already working with Git.</summary></entry></feed>
+&lt;p&gt;I am also proud to announce a new Data Science project I am working on as part of my master thesis. It is about analyzing the operating reserve market in the german energy market. The aim is to enhance optimization algorithms input factors by predicting the call probability of work prices of reserve calls. For more information head over to &lt;a href=&quot;https://github.com/wagnertimo/rmarketcrawlR&quot;&gt;my latest GitHub project&lt;/a&gt;.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 01 Apr 2017 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/articles/2017-04/New-Project-Started</link>
+        <guid isPermaLink="true">http://localhost:4000/articles/2017-04/New-Project-Started</guid>
+        
+        
+      </item>
+    
+  </channel>
+</rss>
