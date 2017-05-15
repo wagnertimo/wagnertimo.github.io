@@ -3,16 +3,14 @@
 # Site wide configuration
 ####################################
 #
-<<<<<<< HEAD
+
 title: Timo Wagner
 email: wagnertimo@gmx.de
-=======
 
 # Name of your site (displayed in the header)
 name: Timo Wagner
 
 # Short bio or description (displayed in the header)
->>>>>>> 06cc3fd6d3b5f423d8cc0f459e2e26d7eca940d9
 description: Yet Another Data Something Blog.
 url: # the base hostname & protocol for your site
 

@@ -1,6 +1,6 @@
 ---
 published: true
-title: Python and Deep Learning – Keras and Building an ANN
+title: Python and Deep Learning – Building an ANN with Keras
 excerpt: "Learn how to build a simple artificial neural network with  the Keras framework of Python."
 image:
   feature: keras.svg
