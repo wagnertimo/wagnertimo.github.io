@@ -6,6 +6,7 @@ image:
   feature: theano.svg
 comments: true
 categories: [Python, Theano, Deep Learning]
+excerpt: "General Introduction to the Deep Learning framework Theano."
 ---
 
 Theano is a Python library for fast numerical computation to aid in the development of deep learning models.
