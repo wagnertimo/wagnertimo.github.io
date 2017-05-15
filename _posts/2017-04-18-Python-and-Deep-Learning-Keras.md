@@ -6,6 +6,7 @@ image:
   feature: keras.svg
 comments: true
 categories: [Python, Keras, Deep Learning]
+excerpt: "General Introduction to the Deep Learning API Keras."
 ---
 
 The difficulty of [Theano](/Python-and-Deep-Learning-Theano) and [TensorFlow](/Python-and-Deep-Learning-Tensorflow) is that it can take a lot of code to create even very simple neural network models.

@@ -19,6 +19,14 @@
   }
 }
 
+.post {
+  width: 75%;
+}
+
+.post-content{
+  width: 75%;
+}
+
 .image-credit {
   float: right;
   font-weight: bold;
@@ -46,6 +54,11 @@ section.post {
 
 // Post title
 .post-title {
+
+}
+
+// Post description
+.post-description {
 
 }
 
@@ -149,6 +162,7 @@ a.read-more {
 }
 .post-image-feature {
   margin-bottom: 40px;
+  width: 75%;
   .feature-image {
     width: 100%;
     max-height: 500px;

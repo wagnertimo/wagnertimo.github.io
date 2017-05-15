@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Python and Deep Learning – Keras</title>
+  <meta name="description" content="General Introduction to the Deep Learning API Keras.">
+
+  <!-- CSS files -->
+  <link rel="stylesheet" href="http://localhost:4000/css/font-awesome.min.css">
+  <link rel="stylesheet" href="http://localhost:4000/css/main.css">
+
+  <link rel="canonical" href="http://localhost:4000/articles/2017-04/Python-and-Deep-Learning-Keras">
+  <link rel="alternate" type="application/rss+xml" title="Timo Wagner" href="http://localhost:4000/feed.xml" />
+
+  <!-- Icons -->
+  <!-- 16x16 -->
+  <link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+  <!-- 32x32 -->
+  <link rel="shortcut icon" href="http://localhost:4000/favicon.png">
+</head>
+
+
+<body>
+  <div class="row">
+    <div class="col s12 m3">
+      <div class="table cover">
+        
+
+<div class="cover-card table-cell table-middle">
+  
+  <img src="https://avatars2.githubusercontent.com/u/26152358?v=3&u=3ce04d6d58ef6f11be830f4b1c59ce2db97cfec2&s=400" alt="" class="avatar">
+  
+  <a href="http://localhost:4000/home/" class="author_name">Timo Wagner</a>
+  <span class="author_job">Yet Another Data Something Blog.</span>
+  <span class="author_bio mbm">I am currently a master student at the Karlsruher Institute of Technology (KIT). I am passionated about Data Science. I like to crawl the web for data and I am also keen on machine learning algorithms.</span>
+  <nav class="nav">
+    <ul class="nav-list">
+      <!--
+      <li class="nav-item">
+        <a href="http://localhost:4000/home/">home</a>
+      </li>
+      -->
+      <li class="nav-item">
+        <a href="http://localhost:4000/">blog</a>
+      </li>
+      <li class="nav-item">
+        <a href="http://localhost:4000/categories/">categories</a>
+      </li>
+      <li class="nav-item">
+        <a href="http://localhost:4000/archive/">archive</a>
+      </li>
+      <!--
+      <li class="nav-item">
+        <a href="http://localhost:4000/CV/">CV</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <script type="text/javascript">
+  // based on http://stackoverflow.com/a/10300743/280842
+  function gen_mail_to_link(hs, subject) {
+    var lhs,rhs;
+    var p = hs.split('@');
+    lhs = p[0];
+    rhs = p[1];
+    document.write("<a class=\"social-link-item\" target=\"_blank\" href=\"mailto");
+    document.write(":" + lhs + "@");
+    document.write(rhs + "?subject=" + subject + "\"><i class=\"fa fa-fw fa-envelope\"></i><\/a>");
+  }
+</script>
+<div class="social-links">
+  <ul>
+    
+      <li>
+      <script>gen_mail_to_link('wagnertimo@gmx.de', 'Hello from website');</script>
+      </li>
+    
+    
+    
+    
+    <li><a href="http://linkedin.com/in/timo-wagner-95168213a/" class="social-link-item" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a></li>
+    
+    <li><a href="http://www.xing.com/profile/Timo_Wagner44" class="social-link-item" target="_blank"><i class="fa fa-fw fa-xing"></i></a></li>
+    
+    
+    <li><a href="http://github.com/wagnertimo" class="social-link-item" target="_blank"><i class="fa fa-fw fa-github"></i></a></li>
+    
+    <li><a href="http://stackoverflow.com/users/7810379/timo-wagner?tab=profile" class="social-link-item" target="_blank"><i class="fa fa-fw fa-stack-overflow"></i></a></li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <a href="http://stackoverflow.com/7810379/timo-wagner?tab=profile"><i class="social-link-item" target="_blank"><i class="fa fa-fw fa-stackoverflow"></i></a></li>
+
+  </ul>
+</div>
+
+</div>
+
+      </div>
+    </div>
+    <div class="col s12 m9">
+      <div class="post-listing">
+        <a class="btn" href= "http://localhost:4000/" >
+  Home
+</a>
+
+<div class="post-image-feature">
+  <img class="feature-image" src=
+  
+  "http://localhost:4000/img/keras.svg"
+  
+  alt="Python and Deep Learning – Keras feature image">
+
+  
+</div><!-- /.image-wrap -->
+
+
+
+<div id="post">
+  <header class="post-header">
+    <h1 title="Python and Deep Learning – Keras">Python and Deep Learning – Keras</h1>
+    <span class="post-meta">
+      <span class="post-date">
+        18 APR 2017
+      </span>
+      •
+      <span class="read-time" title="Estimated read time">
+  
+  
+    1 min read
+  
+</span>
+
+    </span>
+
+  </header>
+
+  <article class="post-content">
+    <p>The difficulty of <a href="/Python-and-Deep-Learning-Theano">Theano</a> and <a href="/Python-and-Deep-Learning-Tensorflow">TensorFlow</a> is that it can take a lot of code to create even very simple neural network models.</p>
+
+<p>These libraries were designed primarily as a platform for research and development more than for the practical concerns of applied deep learning.</p>
+
+<p>The Keras library addresses these concerns by providing a wrapper for both Theano and TensorFlow. It provides a clean and simple API that allows you to define and evaluate deep learning models in just a few lines of code.</p>
+
+<p>Because of the ease of use and because it leverages the power of Theano and TensorFlow, Keras is quickly becoming the go-to library for applied deep learning.</p>
+
+<p>The focus of Keras is the concept of a model. The life-cycle of a model can be summarized as follows:</p>
+
+<ol>
+  <li><em>Define your model</em> - Create a Sequential model and add configured layers.</li>
+  <li><em>Compile your model</em> - Specify loss function and optimizers and call the <code class="highlighter-rouge">compile()</code> function on the model.</li>
+  <li><em>Fit your model</em> - Train the model on a sample of data by calling the <code class="highlighter-rouge">fit()</code> function on the model.</li>
+  <li><em>Make predictions</em> - Use the model to generate predictions on new data by calling functions such as <code class="highlighter-rouge">evaluate()</code> or <code class="highlighter-rouge">predict()</code> on the model.
+Your goal for this lesson is to install Keras.</li>
+</ol>
+
+<p>For example, you can install Keras using pip:
+But for a proper use please make sure you already installed <a href="../Python-and-Deep-Learning-Theano">Theano</a> or <a href="../Python-and-Deep-Learning-Tensorflow">TensorFlow</a>. By default Keras uses Tensorflow as its tensor manipulation library</p>
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>sudo pip install keras
+</code></pre>
+</div>
+
+<p>You can learn more about the Keras library on the <a href="https://keras.io">Keras homepage</a>.</p>
+
+<p>Or check out this <a href="../Python-and-Deep-Learning-Building-an-ANN-with-Keras">post</a> to apply the 4 step life-cycle of a model on an example dataset.</p>
+
+  </article>
+</div>
+
+<div class="share-buttons">
+  <h6>Share on: </h6>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=http://localhost:4000/articles/2017-04/Python-and-Deep-Learning-Keras" class="twitter btn" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/articles/2017-04/Python-and-Deep-Learning-Keras" class="facebook btn" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url=http://localhost:4000/articles/2017-04/Python-and-Deep-Learning-Keras" class="google-plus btn" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
+    <li>
+      <a href="https://news.ycombinator.com/submitlink?u=http://localhost:4000/articles/2017-04/Python-and-Deep-Learning-Keras" class="hacker-news btn" title="Share on Hacker News"><i class="fa fa-hacker-news"></i><span> Hacker News</span></a>
+    </li>
+    <li>
+      <a href="https://www.reddit.com/submit?url=http://localhost:4000/articles/2017-04/Python-and-Deep-Learning-Keras" class="reddit btn" title="Share on Reddit"><i class="fa fa-reddit"></i><span> Reddit</span></a>
+    </li>
+  </ul>
+</div><!-- end share-buttons -->
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'https-wagnertimo-github-io';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
+        <footer>
+  &copy; 2017 Timo Wagner. Data Science made with <i class="fa fa-heart heart-icon"></i>
+</footer>
+
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="http://localhost:4000/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="http://localhost:4000/js/main.js"></script>
+
+
+</body>
+</html>
