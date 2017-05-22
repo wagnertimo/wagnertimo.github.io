@@ -11,7 +11,7 @@ categories: [Python, Deep Learning, Keras, ANN]
 
 In this post you will get to know how to define a simple Neural Network with the Keras package by solving a binary classification problem on the pima-indians-diabetes dataset.
 
-If you haven't installed Keras, please walk through my general [post](../2017-04-18-Python-and-Deep-Learning-Keras) about Keras.
+If you haven't installed Keras, please walk through my general [post](../2017-04/Python-and-Deep-Learning-Keras) about Keras.
 
 ## 1. Load the data
 
