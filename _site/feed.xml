@@ -5,8 +5,8 @@
     <description>Yet Another Data Something Blog.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 16 May 2017 00:03:13 +0200</pubDate>
-    <lastBuildDate>Tue, 16 May 2017 00:03:13 +0200</lastBuildDate>
+    <pubDate>Thu, 18 May 2017 13:31:49 +0200</pubDate>
+    <lastBuildDate>Thu, 18 May 2017 13:31:49 +0200</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
     
       <item>
@@ -1056,6 +1056,62 @@ This would allow a faster workflow to publish code and work done in jupyter on a
       </item>
     
       <item>
+        <title>Jupyter Notebook – Using R and Python</title>
+        <description>&lt;p&gt;You can use the programming language &lt;code class=&quot;highlighter-rouge&quot;&gt;R&lt;/code&gt; in Jupyter Notebook by installing the &lt;code class=&quot;highlighter-rouge&quot;&gt;IRkernel&lt;/code&gt;.
+A notebook kernel is a computational engine that executes the code contained in a notebook document. The &lt;code class=&quot;highlighter-rouge&quot;&gt;ipython kernel&lt;/code&gt; executes python code and the &lt;code class=&quot;highlighter-rouge&quot;&gt;IRkernel&lt;/code&gt; runs R code which will be used later. But there are also kernels for many &lt;a href=&quot;https://github.com/jupyter/jupyter/wiki/Jupyter-kernels&quot;&gt;other languages&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Firstly, you need to install the latest anaconda package. If you haven’t done this before, walk through my post &lt;a href=&quot;../Jupyter-Notebook-Installation&quot;&gt;Jupyter Notebook – Installation&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Now you can get R working in Jupyter notebook by following simple command lines.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 1:&lt;/strong&gt; Install the IRkernel.&lt;/p&gt;
+
+&lt;p&gt;After downloading and installing anaconda, you need to install the IRkernel. This will do anaconda for you. Just type the following command in the terminal.&lt;/p&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;conda install -c r ipython-notebook r-irkernel
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 2:&lt;/strong&gt; Install required R packages.&lt;/p&gt;
+
+&lt;p&gt;Now you need some additional R packages to get everything running. Open RStudio or any other IDE and type in the following command in the console.&lt;/p&gt;
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;install.packages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'repr'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'IRdisplay'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'evaluate'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'crayon'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'pbdZMQ'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'devtools'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'uuid'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'digest'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;devtools&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;install_github&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'IRkernel/IRkernel'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 3:&lt;/strong&gt; Loading the IRkernel.
+After installing the packages, you have to load the IRkernel. Therefore call the &lt;code class=&quot;highlighter-rouge&quot;&gt;installspec()&lt;/code&gt; function of the IRkernel package in the R console.&lt;/p&gt;
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;IRkernel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;installspec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 4:&lt;/strong&gt; Install the Essentials.
+Before you are able to run R in Jupyter Notebook, you will need some essentials to be installed. Use again the &lt;code class=&quot;highlighter-rouge&quot;&gt;conda&lt;/code&gt;command in the shell.&lt;/p&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;conda install -c r r-essentials
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 5:&lt;/strong&gt; Launch Jupyter Notebook.
+Now you should be able to open Jupyter Notebook and select R as the notebook kernel.&lt;/p&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jupyter notebook
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;A session should start in your terminal and automatically open the browser with Jupyter Notebook. You can create a new file by selecting the &lt;em&gt;New&lt;/em&gt; button and choosing R as the Notebook.&lt;/p&gt;
+</description>
+        <pubDate>Thu, 06 Apr 2017 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/articles/2017-04/Jupyter-Notebook-Using-R-and-Python</link>
+        <guid isPermaLink="true">http://localhost:4000/articles/2017-04/Jupyter-Notebook-Using-R-and-Python</guid>
+        
+        
+        <category>R</category>
+        
+        <category>Jupyter Notebook</category>
+        
+        <category>Python</category>
+        
+      </item>
+    
+      <item>
         <title>Jupyter Notebook – Using R</title>
         <description>&lt;p&gt;You can use the programming language &lt;code class=&quot;highlighter-rouge&quot;&gt;R&lt;/code&gt; in Jupyter Notebook by installing the &lt;code class=&quot;highlighter-rouge&quot;&gt;IRkernel&lt;/code&gt;.
 A notebook kernel is a computational engine that executes the code contained in a notebook document. The &lt;code class=&quot;highlighter-rouge&quot;&gt;ipython kernel&lt;/code&gt; executes python code and the &lt;code class=&quot;highlighter-rouge&quot;&gt;IRkernel&lt;/code&gt; runs R code which will be used later. But there are also kernels for many &lt;a href=&quot;https://github.com/jupyter/jupyter/wiki/Jupyter-kernels&quot;&gt;other languages&lt;/a&gt;.&lt;/p&gt;
@@ -1110,23 +1166,51 @@ Now you should be able to open Jupyter Notebook and select R as the notebook ker
       </item>
     
       <item>
-        <title>Jupyter Notebook – Installation</title>
-        <description>&lt;p&gt;&lt;a href=&quot;http://jupyter.org&quot;&gt;Jupyter Notebook&lt;/a&gt; is a server-client application that allows editing and running notebook documents via a web browser. Notebook documents are documents produced by Jupyter Notebook which contain both computer code (e.g. python) and rich text elements (paragraph, equations, figures, links, etc.). They are both human-readable documents containing the analysis description and the results (figures, tables, etc.) as well as executable documents which can be run to perform data analysis.&lt;/p&gt;
+        <title>Jupyter Notebook – How to use it</title>
+        <description>&lt;p&gt;You can use the programming language &lt;code class=&quot;highlighter-rouge&quot;&gt;R&lt;/code&gt; in Jupyter Notebook by installing the &lt;code class=&quot;highlighter-rouge&quot;&gt;IRkernel&lt;/code&gt;.
+A notebook kernel is a computational engine that executes the code contained in a notebook document. The &lt;code class=&quot;highlighter-rouge&quot;&gt;ipython kernel&lt;/code&gt; executes python code and the &lt;code class=&quot;highlighter-rouge&quot;&gt;IRkernel&lt;/code&gt; runs R code which will be used later. But there are also kernels for many &lt;a href=&quot;https://github.com/jupyter/jupyter/wiki/Jupyter-kernels&quot;&gt;other languages&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Step 1:&lt;/strong&gt; Installation of the anaconda package.&lt;/p&gt;
+&lt;p&gt;Firstly, you need to install the latest anaconda package. If you haven’t done this before, walk through my post &lt;a href=&quot;../Jupyter-Notebook-Installation&quot;&gt;Jupyter Notebook – Installation&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;Download the newest &lt;a href=&quot;https://www.continuum.io/downloads&quot;&gt;anaconda installer&lt;/a&gt;. You can choose between the graphical interface or the command line version for installation.&lt;/p&gt;
+&lt;p&gt;Now you can get R working in Jupyter notebook by following simple command lines.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Step 2:&lt;/strong&gt; Launch Jupyter Notebook.
+&lt;p&gt;&lt;strong&gt;Step 1:&lt;/strong&gt; Install the IRkernel.&lt;/p&gt;
+
+&lt;p&gt;After downloading and installing anaconda, you need to install the IRkernel. This will do anaconda for you. Just type the following command in the terminal.&lt;/p&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;conda install -c r ipython-notebook r-irkernel
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 2:&lt;/strong&gt; Install required R packages.&lt;/p&gt;
+
+&lt;p&gt;Now you need some additional R packages to get everything running. Open RStudio or any other IDE and type in the following command in the console.&lt;/p&gt;
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;install.packages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'repr'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'IRdisplay'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'evaluate'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'crayon'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'pbdZMQ'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'devtools'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'uuid'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'digest'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;devtools&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;install_github&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'IRkernel/IRkernel'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 3:&lt;/strong&gt; Loading the IRkernel.
+After installing the packages, you have to load the IRkernel. Therefore call the &lt;code class=&quot;highlighter-rouge&quot;&gt;installspec()&lt;/code&gt; function of the IRkernel package in the R console.&lt;/p&gt;
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;IRkernel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;installspec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 4:&lt;/strong&gt; Install the Essentials.
+Before you are able to run R in Jupyter Notebook, you will need some essentials to be installed. Use again the &lt;code class=&quot;highlighter-rouge&quot;&gt;conda&lt;/code&gt;command in the shell.&lt;/p&gt;
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;conda install -c r r-essentials
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 5:&lt;/strong&gt; Launch Jupyter Notebook.
 Now you should be able to open Jupyter Notebook and select R as the notebook kernel.&lt;/p&gt;
 &lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jupyter notebook
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;A session should start in your terminal and automatically open the browser with Jupyter Notebook. You can create a new file by selecting the &lt;em&gt;New&lt;/em&gt; button and choosing R as the Notebook.&lt;/p&gt;
 </description>
-        <pubDate>Sun, 02 Apr 2017 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/articles/2017-04/Jupyter-Notebook-Installation</link>
-        <guid isPermaLink="true">http://localhost:4000/articles/2017-04/Jupyter-Notebook-Installation</guid>
+        <pubDate>Mon, 03 Apr 2017 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/articles/2017-04/Jupyter-Notebook-How-to-Use</link>
+        <guid isPermaLink="true">http://localhost:4000/articles/2017-04/Jupyter-Notebook-How-to-Use</guid>
         
         
         <category>Jupyter Notebook</category>
@@ -1134,15 +1218,168 @@ Now you should be able to open Jupyter Notebook and select R as the notebook ker
       </item>
     
       <item>
-        <title>New Project Started</title>
-        <description>&lt;p&gt;This is my first blog post on my new blog. I decided to host it on GitHubs Pages. It is more convenient since I am already working with Git.&lt;/p&gt;
+        <title>Machine Learning 101 - The Basics</title>
+        <description>&lt;p&gt;Here you should get an overview about the most common terms and techniques in Machine Learning.&lt;/p&gt;
 
-&lt;p&gt;I am also proud to announce a new Data Science project I am working on as part of my master thesis. It is about analyzing the operating reserve market in the german energy market. The aim is to enhance optimization algorithms input factors by predicting the call probability of work prices of reserve calls. For more information head over to &lt;a href=&quot;https://github.com/wagnertimo/rmarketcrawlR&quot;&gt;my latest GitHub project&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://donaldwhyte.co.uk/intro-to-ml/images/machinelearningalgorithms.png&quot; alt=&quot;Machine Learning Algorithms - Overview&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;the-statisticians-and-computer-scientists-point-of-view&quot;&gt;The statisticians and computer scientists point-of-view&lt;/h2&gt;
+
+&lt;p&gt;The statistical perspective of machine learning frames data in the context of a hypothetical function (f) that the machine learning algorithm aims to learn. Given some input variables (Input)  the function answer the question as to what is the predicted output variable (Output).&lt;/p&gt;
+
+&lt;p&gt;Output = f(Input)&lt;/p&gt;
+
+&lt;p&gt;The inputs and outputs can be referred to as variables or vectors.&lt;/p&gt;
+
+&lt;p&gt;The computer science perspective uses a row of data to describe an entity (like a person) or an observation about an entity. As such, the columns for a row are often referred to as attributes of the observation and the rows themselves are called instances.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-underlying-assumption&quot;&gt;The underlying assumption&lt;/h2&gt;
+
+&lt;p&gt;There is a common principle that underlies all supervised machine learning algorithms for predictive modeling.
+Machine learning algorithms are described as learning a target function (f) that best maps input variables (X) to an output variable (Y).&lt;/p&gt;
+
+&lt;p&gt;Y = f(X)&lt;/p&gt;
+
+&lt;p&gt;This is a general learning task where we would like to make predictions in the future (Y) given new examples of input variables (X). We don’t know what the function (f) looks like or its form. If we did, we would use it directly and we would not need to learn it from data using machine learning algorithms.&lt;/p&gt;
+
+&lt;p&gt;The most common type of machine learning is to learn the mapping Y = f(X) to make predictions of Y for new X. This is called predictive modeling or predictive analytics and our goal is to make the most accurate predictions possible.&lt;/p&gt;
+
+&lt;h2 id=&quot;parametric-vs-non-parametric-algorithms&quot;&gt;Parametric vs. non-parametric algorithms&lt;/h2&gt;
+
+&lt;p&gt;what is a parametric machine learning algorithm and how is it different from a nonparametric machine learning algorithm?&lt;/p&gt;
+
+&lt;p&gt;Assumptions can greatly simplify the learning process, but can also limit what can be learned. Algorithms that simplify the function to a known form are called parametric machine learning algorithms.&lt;/p&gt;
+
+&lt;p&gt;The algorithms involve two steps:&lt;/p&gt;
+
+&lt;p&gt;Select a form for the function.
+Learn the coefficients for the function from the training data.
+Some examples of parametric machine learning algorithms are Linear Regression and Logistic Regression.&lt;/p&gt;
+
+&lt;p&gt;Algorithms that do not make strong assumptions about the form of the mapping function are called nonparametric machine learning algorithms. By not making assumptions, they are free to learn any functional form from the training data.&lt;/p&gt;
+
+&lt;p&gt;Non-parametric methods are often more flexible, achieve better accuracy but require a lot more data and training time.&lt;/p&gt;
+
+&lt;p&gt;Examples of nonparametric algorithms include Support Vector Machines, Neural Networks and Decision Trees.&lt;/p&gt;
+
+&lt;h2 id=&quot;cross-validation&quot;&gt;Cross-Validation&lt;/h2&gt;
+
+&lt;p&gt;our goal with applied machine learning is to develop a model to make predictions on new data.&lt;/p&gt;
+
+&lt;p&gt;That is, given new inputs like an unlabeled photo or a day of the week, we want to know if it is a picture of a dog or the estimated sales figures.&lt;/p&gt;
+
+&lt;p&gt;We want predictions.&lt;/p&gt;
+
+&lt;p&gt;On a project, we:
+Try lots of data preparation schemes in order to best present the signal in the underlying problem to the learning algorithms.
+We try suites of learning algorithms to best capture the relationship between the input and the outputs.
+And we use resampling methods like train-test splits and k-fold cross validation to estimate the skill of models when making predictions on new data.
+It is only after we have chosen our best combination of data prep, algorithm, and configurations that we can train a final model on all available data and start actually making predictions on unseen data.&lt;/p&gt;
+
+&lt;p&gt;New practitioners in the field often confuse the steps of resampling and model finalization asking questions like:&lt;/p&gt;
+
+&lt;p&gt;How do I make predictions with cross validation?
+or
+Which cross-validation model do I keep?&lt;/p&gt;
+
+&lt;p&gt;This is not surprising as the literature almost universally does not talk about it.&lt;/p&gt;
+
+&lt;p&gt;I hope this note has made things clearer for you. You can learn more in my post:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://machinelearningmastery.com/train-final-machine-learning-model/&quot;&gt;How to Train a Final Machine Learning Model&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;bias-and-variance-trade-off&quot;&gt;Bias and Variance Trade-Off&lt;/h2&gt;
+
+&lt;p&gt;Machine learning algorithms can best be understood through the lens of the bias-variance trade-off.&lt;/p&gt;
+
+&lt;p&gt;Bias are the simplifying assumptions made by a model to make the target function easier to learn.&lt;/p&gt;
+
+&lt;p&gt;Generally, parametric algorithms have a high bias making them fast to learn and easier to understand but generally less flexible. In turn, they have lower predictive performance on complex problems that fail to meet the simplifying assumptions of the algorithms bias.&lt;/p&gt;
+
+&lt;p&gt;Decision trees are an example of a low bias algorithm, whereas linear regression is an example of a high-bias algorithm.&lt;/p&gt;
+
+&lt;p&gt;Variance is the amount that the estimate of the target function will change if different training data was used. The target function is estimated from the training data by a machine learning algorithm, so we should expect the algorithm to have some variance, not zero variance.&lt;/p&gt;
+
+&lt;p&gt;The k-Nearest Neighbors algorithm is an example of a high-variance algorithm, whereas Linear Discriminant Analysis is an example of a low variance algorithm.&lt;/p&gt;
+
+&lt;p&gt;The goal of any predictive modeling machine learning algorithm is to achieve low bias and low variance. In turn, the algorithm should achieve good prediction performance. The parameterization of machine learning algorithms is often a battle to balance out bias and variance.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Increasing the bias will decrease the variance.&lt;/li&gt;
+  &lt;li&gt;Increasing the variance will decrease the bias.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;linear-regression&quot;&gt;Linear regression&lt;/h2&gt;
+
+&lt;p&gt;Linear regression is perhaps one of the most well-known and well-understood algorithms in statistics and machine learning.&lt;/p&gt;
+
+&lt;p&gt;Isn’t it a technique from statistics?&lt;/p&gt;
+
+&lt;p&gt;Predictive modeling is primarily concerned with minimizing the error of a model or making the most accurate predictions possible, at the expense of explainability. We will borrow, reuse and steal algorithms from many different fields, including statistics and use them towards these ends.&lt;/p&gt;
+
+&lt;p&gt;The representation of linear regression is an equation that describes a line that best fits the relationship between the input variables (x) and the output variables (y), by finding specific weightings for the input variables called coefficients (B).&lt;/p&gt;
+
+&lt;p&gt;For example:&lt;/p&gt;
+
+&lt;p&gt;y = B0 + B1 * x&lt;/p&gt;
+
+&lt;p&gt;We will predict y given the input x and the goal of the linear regression learning algorithm is to find the values for the coefficients B0 and B1.&lt;/p&gt;
+
+&lt;p&gt;Different techniques can be used to learn the linear regression model from data, such as a linear algebra solution for ordinary least squares and gradient descent optimization.&lt;/p&gt;
+
+&lt;p&gt;Linear regression has been around for more than 200 years and has been extensively studied. Some good rules of thumb when using this technique are to remove variables that are very similar (correlated) and to remove noise from your data, if possible.&lt;/p&gt;
+
+&lt;p&gt;It is a fast and simple technique and good first algorithm to try.&lt;/p&gt;
+
+&lt;h2 id=&quot;logistic-regression&quot;&gt;Logistic regression&lt;/h2&gt;
+
+&lt;p&gt;logistic regression is another technique borrowed by machine learning from the field of statistics. It is the go-to method for binary classification problems (problems with two class values).&lt;/p&gt;
+
+&lt;p&gt;Logistic regression is like linear regression in that the goal is to find the values for the coefficients that weight each input variable.&lt;/p&gt;
+
+&lt;p&gt;Unlike linear regression, the prediction for the output is transformed using a non-linear function called the logistic function.&lt;/p&gt;
+
+&lt;p&gt;The logistic function looks like a big S and will transform any value into the range 0 to 1. This is useful because we can apply a rule to the output of the logistic function to snap values to 0 and 1 (e.g. IF less than 0.5 then output 1) and predict a class value.&lt;/p&gt;
+
+&lt;p&gt;Because of the way that the model is learned, the predictions made by logistic regression can also be used as the probability of a given data instance belonging to class 0 or class 1. This can be useful for problems where you need to give more rationale for a prediction.&lt;/p&gt;
+
+&lt;p&gt;Like linear regression, logistic regression does work better when you remove attributes that are unrelated to the output variable as well as attributes that are very similar (correlated) to each other.&lt;/p&gt;
+
+&lt;p&gt;It’s a fast model to learn and effective on binary classification problems.&lt;/p&gt;
+
+&lt;h2 id=&quot;linear-discriminant-analysis&quot;&gt;Linear Discriminant Analysis&lt;/h2&gt;
+
+&lt;p&gt;Logistic Regression is a classification algorithm traditionally limited to only two-class classification problems.&lt;/p&gt;
+
+&lt;p&gt;If you have more than two classes then the Linear Discriminant Analysis algorithm is the preferred linear classification technique.
+The representation of LDA is pretty straight forward. It consists of statistical properties of your data, calculated for each class. For a single input variable this includes:&lt;/p&gt;
+
+&lt;p&gt;The mean value for each class.
+The variance calculated across all classes.
+Predictions are made by calculating a discriminate value for each class and making a prediction for the class with the largest value.&lt;/p&gt;
+
+&lt;p&gt;The technique assumes that the data has a Gaussian distribution (bell curve), so it is a good idea to remove outliers from your data before hand.&lt;/p&gt;
+
+&lt;p&gt;It’s a simple and powerful method for classification predictive modeling problems.&lt;/p&gt;
+
+&lt;h2 id=&quot;decision-trees&quot;&gt;Decision Trees&lt;/h2&gt;
+
+&lt;p&gt;Decision Trees are an important type of algorithm for predictive modeling machine learning.&lt;/p&gt;
+
+&lt;p&gt;The representation of the decision tree model is a binary tree. This is your binary tree from algorithms and data structures, nothing too fancy. Each node represents a single input variable (x) and a split point on that variable (assuming the variable is numeric).&lt;/p&gt;
+
+&lt;p&gt;The leaf nodes of the tree contain an output variable (y) which is used to make a prediction.  Predictions are made by walking the splits of the tree until arriving at a leaf node and output the class value at that leaf node.&lt;/p&gt;
+
+&lt;p&gt;Trees are fast to learn and very fast for making predictions. They are also often accurate for a broad range of problems and do not require any special preparation for your data.&lt;/p&gt;
+
+&lt;p&gt;Decision trees have a high variance and can yield more accurate predictions when used in an ensemble. For more infos about ensemble technique, look for appropriate ensemble section in this post further down.&lt;/p&gt;
 </description>
-        <pubDate>Sat, 01 Apr 2017 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/articles/2017-04/New-Project-Started</link>
-        <guid isPermaLink="true">http://localhost:4000/articles/2017-04/New-Project-Started</guid>
+        <pubDate>Sun, 02 Apr 2017 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/articles/2017-04/Machine-Learning-101</link>
+        <guid isPermaLink="true">http://localhost:4000/articles/2017-04/Machine-Learning-101</guid>
         
+        
+        <category>Machine Learning</category>
         
       </item>
     

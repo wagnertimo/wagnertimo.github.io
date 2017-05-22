@@ -2,10 +2,15 @@
 published: false
 comments: true
 layout: post
+image:
+  feature: brain.svg
 title: Machine Learning 101 - The Basics
+excerpt: "An Introduction to basic notions and techniques in Machine Learning. Get a fast overview of what is out there and when to use what in which way."
+categories: [Machine Learning]
 ---
 Here you should get an overview about the most common terms and techniques in Machine Learning.
 
+![Machine Learning Algorithms - Overview](http://donaldwhyte.co.uk/intro-to-ml/images/machinelearningalgorithms.png)
 
 ## The statisticians and computer scientists point-of-view
 
@@ -114,3 +119,67 @@ Different techniques can be used to learn the linear regression model from data,
 Linear regression has been around for more than 200 years and has been extensively studied. Some good rules of thumb when using this technique are to remove variables that are very similar (correlated) and to remove noise from your data, if possible.
 
 It is a fast and simple technique and good first algorithm to try.
+
+
+## Logistic regression
+
+logistic regression is another technique borrowed by machine learning from the field of statistics. It is the go-to method for binary classification problems (problems with two class values).
+
+Logistic regression is like linear regression in that the goal is to find the values for the coefficients that weight each input variable.
+
+Unlike linear regression, the prediction for the output is transformed using a non-linear function called the logistic function.
+
+The logistic function looks like a big S and will transform any value into the range 0 to 1. This is useful because we can apply a rule to the output of the logistic function to snap values to 0 and 1 (e.g. IF less than 0.5 then output 1) and predict a class value.
+
+Because of the way that the model is learned, the predictions made by logistic regression can also be used as the probability of a given data instance belonging to class 0 or class 1. This can be useful for problems where you need to give more rationale for a prediction.
+
+Like linear regression, logistic regression does work better when you remove attributes that are unrelated to the output variable as well as attributes that are very similar (correlated) to each other.
+
+It's a fast model to learn and effective on binary classification problems.
+
+
+## Linear Discriminant Analysis
+
+Logistic Regression is a classification algorithm traditionally limited to only two-class classification problems.
+
+If you have more than two classes then the Linear Discriminant Analysis algorithm is the preferred linear classification technique.
+The representation of LDA is pretty straight forward. It consists of statistical properties of your data, calculated for each class. For a single input variable this includes:
+
+The mean value for each class.
+The variance calculated across all classes.
+Predictions are made by calculating a discriminate value for each class and making a prediction for the class with the largest value.
+
+The technique assumes that the data has a Gaussian distribution (bell curve), so it is a good idea to remove outliers from your data before hand.
+
+It's a simple and powerful method for classification predictive modeling problems.
+
+
+## Decision Trees
+
+Decision Trees are an important type of algorithm for predictive modeling machine learning.
+
+The representation of the decision tree model is a binary tree. This is your binary tree from algorithms and data structures, nothing too fancy. Each node represents a single input variable (x) and a split point on that variable (assuming the variable is numeric).
+
+The leaf nodes of the tree contain an output variable (y) which is used to make a prediction.  Predictions are made by walking the splits of the tree until arriving at a leaf node and output the class value at that leaf node.
+
+Trees are fast to learn and very fast for making predictions. They are also often accurate for a broad range of problems and do not require any special preparation for your data.
+
+Decision trees have a high variance and can yield more accurate predictions when used in an ensemble. For more infos about ensemble technique, look for appropriate ensemble section in this post further down.
+
+
+
+
+## Naive Bayes
+
+Naive Bayes is a simple but surprisingly powerful algorithm for predictive modeling.
+
+The model is comprised of two types of probabilities that can be calculated directly from your training data:
+
+ 1. The probability of each class.
+ 2. The conditional probability for each class given each x value.
+
+Once calculated, the probability model can be used to make predictions for new data using Bayes Theorem.
+
+When your data is real-valued it is common to assume a Gaussian distribution (bell curve) so that you can easily estimate these probabilities.
+
+Naive Bayes is called naive because it assumes that each input variable is independent. This is a strong assumption and unrealistic for real data, nevertheless, the technique is very effective on a large range of complex problems.

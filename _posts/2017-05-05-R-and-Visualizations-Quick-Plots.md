@@ -14,12 +14,12 @@ In this post, I wanna talk about how you can make quick visualizations  with R. 
 
 I will briefly capture the basic graphic types:
 
-- *Scatter Plots*
-- *Line Graphs*
-- *Bar Graphs*
-- *Histograms*
-- *Box Plots*
-- *Function Curves*
+- *[Scatter Plots](#scatter-plot)*
+- *[Line Graphs](#line-graphs)*
+- *[Bar Graphs](#bar-graphs)*
+- *[Histograms](#histograms)*
+- *[Box Plots](#box-plot)*
+- *[Function Curves](#function-curves)*
 
 ### Scatter Plot
 
@@ -77,7 +77,7 @@ Looks cool right? ... And if your two variables are in the same data set you can
 
 I will go more in depth with the individual plotting function `ggplot()` in later blog posts of this series. So let's move forward to line graphs.
 
-## Line Graph
+## Line Graphs
 
 For this demonstrations the build in `pressure` data set suits perfectly. Let's have a look...
 
@@ -151,7 +151,7 @@ To add another line to the quick plot of `ggplot2`, you have to use the plus sig
 
 > Note that the `color` argument in the `qplot()` function is not equivilent to the `col` argument in the base `plot()` function. `Color` is a group parameter and sets automatically the colors. If you want to determine the used colors in the plot manually you have also to add `scale_color_manual()` to the plot function. You will see that in another post.
 
-## Bar Graph
+## Bar Graphs
 
 To make a bar chart you can use the base function `barplot()` and pass it a vector of values for the height of each bar and (optionally) a vector of labels for each bar (`names.arg` parameter).
 
@@ -220,7 +220,7 @@ qplot(factor(mtcars$cyl))
 ![png](/images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_29_4.png)
 
 
-## Histogram
+## Histograms
 
 Now we will view the distribution of one-dimensional data with a histogram. Let's see how the gasoline consumption of the cars in the `mtcars` data set is distributed.
 

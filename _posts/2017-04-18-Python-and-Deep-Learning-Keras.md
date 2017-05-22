@@ -9,7 +9,7 @@ categories: [Python, Keras, Deep Learning]
 excerpt: "General Introduction to the Deep Learning API Keras."
 ---
 
-The difficulty of [Theano](/Python-and-Deep-Learning-Theano) and [TensorFlow](/Python-and-Deep-Learning-Tensorflow) is that it can take a lot of code to create even very simple neural network models.
+The difficulty of [Theano](../2017-04-15-Python-and-Deep-Learning-Theano) and [TensorFlow](../2017-04-17-Python-and-Deep-Learning-Tensorflow) is that it can take a lot of code to create even very simple neural network models.
 
 These libraries were designed primarily as a platform for research and development more than for the practical concerns of applied deep learning.
 
@@ -26,11 +26,11 @@ The focus of Keras is the concept of a model. The life-cycle of a model can be s
 Your goal for this lesson is to install Keras.
 
 For example, you can install Keras using pip:
-But for a proper use please make sure you already installed [Theano](../Python-and-Deep-Learning-Theano) or [TensorFlow](../Python-and-Deep-Learning-Tensorflow). By default Keras uses Tensorflow as its tensor manipulation library
+But for a proper use please make sure you already installed [Theano](../2017-04-15-Python-and-Deep-Learning-Theano) or [TensorFlow](../2017-04-17-Python-and-Deep-Learning-Tensorflow). By default Keras uses Tensorflow as its tensor manipulation library
 ```sh
 sudo pip install keras
 ```
 
 You can learn more about the Keras library on the [Keras homepage](https://keras.io).
 
-Or check out this [post](../Python-and-Deep-Learning-Building-an-ANN-with-Keras) to apply the 4 step life-cycle of a model on an example dataset.
+Or check out this [post](../2017-04-19-Python-and-Deep-Learning-Keras-and-Building-an-ANN) to apply the 4 step life-cycle of a model on an example dataset.

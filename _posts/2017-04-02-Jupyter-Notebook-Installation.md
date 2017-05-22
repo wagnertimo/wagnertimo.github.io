@@ -18,7 +18,8 @@ Download the newest [anaconda installer](https://www.continuum.io/downloads). Y
 
 
 **Step 2:** Launch Jupyter Notebook.
-Now you should be able to open Jupyter Notebook and select R as the notebook kernel.
+
+Now you should be able to open Jupyter Notebook.
 ```sh
 jupyter notebook
 ```
