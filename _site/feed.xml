@@ -5,9 +5,357 @@
     <description>Yet Another Data Something Blog.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 18 May 2017 13:31:49 +0200</pubDate>
-    <lastBuildDate>Thu, 18 May 2017 13:31:49 +0200</lastBuildDate>
+    <pubDate>Sun, 11 Jun 2017 20:15:41 +0200</pubDate>
+    <lastBuildDate>Sun, 11 Jun 2017 20:15:41 +0200</lastBuildDate>
     <generator>Jekyll v3.4.3</generator>
+    
+      <item>
+        <title>R and Visualizations – The Basics of ggplot2</title>
+        <description>&lt;p&gt;This is the introductionary part of a series of blog posts which will focus on data visualizations with R. It extends my first post about &lt;a href=&quot;../2017-05/R-and-Visualizations-Quick-Plots&quot;&gt;quick plotting techniques in R&lt;/a&gt;. Now it is time to dive into the structure of &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;First we are going to load (or install if not done yet) the &lt;code class=&quot;highlighter-rouge&quot;&gt;tidyverse&lt;/code&gt; package. It is a nice collection of R packages which include useful pre-defined function for the workflow of data wrangling and visualization. It e.g. contains &lt;code class=&quot;highlighter-rouge&quot;&gt;dplyr&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;tidyr&lt;/code&gt; which allow you to work with &lt;code class=&quot;highlighter-rouge&quot;&gt;data.frames&lt;/code&gt; in a nice and easy (natural) way (we will cover data wrangling in other blog posts). And of course we have &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; loaded.&lt;/p&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# If not installed already: install.packages(&quot;tidyverse&quot;)
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tidyverse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;## Loading tidyverse: ggplot2
+## Loading tidyverse: tibble
+## Loading tidyverse: tidyr
+## Loading tidyverse: readr
+## Loading tidyverse: purrr
+## Loading tidyverse: dplyr
+
+## Conflicts with tidy packages ----------------------------------------------
+
+## filter(): dplyr, stats
+## lag():    dplyr, stats
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;data-set&quot;&gt;Data Set&lt;/h2&gt;
+
+&lt;p&gt;Now everything is setup, let’s look at some data. &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; contains a data set called &lt;code class=&quot;highlighter-rouge&quot;&gt;mpg&lt;/code&gt; which consits of observations from the US Environment Protection Agency on 38 models of car.&lt;/p&gt;
+
+&lt;p&gt;To get a first peek into the data use the &lt;code class=&quot;highlighter-rouge&quot;&gt;str()&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;head()&lt;/code&gt; function to see what the structure and the first observations look like. All in all we have 11 variables with numerical and character values. If you want to get more information what the variables actually mean, use the help command &lt;code class=&quot;highlighter-rouge&quot;&gt;?mpg&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mpg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;## Classes 'tbl_df', 'tbl' and 'data.frame':    234 obs. of  11 variables:
+##  $ manufacturer: chr  &quot;audi&quot; &quot;audi&quot; &quot;audi&quot; &quot;audi&quot; ...
+##  $ model       : chr  &quot;a4&quot; &quot;a4&quot; &quot;a4&quot; &quot;a4&quot; ...
+##  $ displ       : num  1.8 1.8 2 2 2.8 2.8 3.1 1.8 1.8 2 ...
+##  $ year        : int  1999 1999 2008 2008 1999 1999 2008 1999 1999 2008 ...
+##  $ cyl         : int  4 4 4 4 6 6 6 4 4 4 ...
+##  $ trans       : chr  &quot;auto(l5)&quot; &quot;manual(m5)&quot; &quot;manual(m6)&quot; &quot;auto(av)&quot; ...
+##  $ drv         : chr  &quot;f&quot; &quot;f&quot; &quot;f&quot; &quot;f&quot; ...
+##  $ cty         : int  18 21 20 21 16 18 18 18 16 20 ...
+##  $ hwy         : int  29 29 31 30 26 26 27 26 25 28 ...
+##  $ fl          : chr  &quot;p&quot; &quot;p&quot; &quot;p&quot; &quot;p&quot; ...
+##  $ class       : chr  &quot;compact&quot; &quot;compact&quot; &quot;compact&quot; &quot;compact&quot; ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mpg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;## # A tibble: 6 x 11
+##   manufacturer model displ  year   cyl      trans   drv   cty   hwy    fl
+##          &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;int&amp;gt; &amp;lt;int&amp;gt;      &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt; &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;
+## 1         audi    a4   1.8  1999     4   auto(l5)     f    18    29     p
+## 2         audi    a4   1.8  1999     4 manual(m5)     f    21    29     p
+## 3         audi    a4   2.0  2008     4 manual(m6)     f    20    31     p
+## 4         audi    a4   2.0  2008     4   auto(av)     f    21    30     p
+## 5         audi    a4   2.8  1999     6   auto(l5)     f    16    26     p
+## 6         audi    a4   2.8  1999     6 manual(m5)     f    18    26     p
+## # ... with 1 more variables: class &amp;lt;chr&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;basic-ggplot-elements&quot;&gt;Basic ggplot elements&lt;/h2&gt;
+
+&lt;h3 id=&quot;first-plot&quot;&gt;First Plot&lt;/h3&gt;
+
+&lt;p&gt;Now that we know what variables we have in the data set we can build our first plot. Let us investigate the relationship between the size of the car engine &lt;code class=&quot;highlighter-rouge&quot;&gt;displ&lt;/code&gt; and the fuel efficency &lt;code class=&quot;highlighter-rouge&quot;&gt;hwy&lt;/code&gt; (highway miles per gallon, the higher the number the more efficient).&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; has its &lt;em&gt;base function&lt;/em&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot()&lt;/code&gt; which just returns an empty plot. The base function takes in the &lt;code class=&quot;highlighter-rouge&quot;&gt;data&lt;/code&gt; parameter. Later every variable call is refered to that data set (no assignment like e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;data$column&lt;/code&gt; is needed).&lt;/p&gt;
+
+&lt;p&gt;To enrich the plot with data, you can then literally add (with the &lt;code class=&quot;highlighter-rouge&quot;&gt;+&lt;/code&gt; sign) other graphical elements to the plot. In our case, we will add now points (&lt;code class=&quot;highlighter-rouge&quot;&gt;geom_point()&lt;/code&gt;) to the plot with the &lt;code class=&quot;highlighter-rouge&quot;&gt;displ&lt;/code&gt; variable &lt;strong&gt;mapped&lt;/strong&gt; to the &lt;strong&gt;x&lt;/strong&gt; axis and the value of the respective &lt;code class=&quot;highlighter-rouge&quot;&gt;hwy&lt;/code&gt; &lt;strong&gt;mapped&lt;/strong&gt; on the &lt;strong&gt;y&lt;/strong&gt; axis. Such mappings where you connect a variable with a visual property are &lt;em&gt;sumed up&lt;/em&gt; in an aesthetic (&lt;code class=&quot;highlighter-rouge&quot;&gt;aes()&lt;/code&gt; function). You will see later that you can also map e.g. the color of a graphical element to the value of a variable.&lt;/p&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ggplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mpg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_point&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mapping&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;displ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hwy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-4-1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This is the standard plot. Therefore &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; adjust automatically the scales and labels the axis in a nice visual format. We will see later how one can manually modify those graph properties.&lt;/p&gt;
+
+&lt;p&gt;You can clearly see a negative correlation. This means that, the bigger the engine the more fuel is needed. But on the far right you can notice a few points lying a bit above the trend. What could those cars be? Hybrids? To answer that question we have to look at the type or &lt;code class=&quot;highlighter-rouge&quot;&gt;class&lt;/code&gt; of the car. So let’s continue and add another visual property to our plot.&lt;/p&gt;
+
+&lt;h3 id=&quot;aesthetics&quot;&gt;Aesthetics&lt;/h3&gt;
+
+&lt;p&gt;As I described earlier &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; uses &lt;strong&gt;aesthetic mappings&lt;/strong&gt; to map the value of variables to a visual property like position of &lt;strong&gt;x&lt;/strong&gt; and &lt;strong&gt;y&lt;/strong&gt; axis on the grid. But you can also map to a &lt;strong&gt;color&lt;/strong&gt; (or british english: colour), &lt;strong&gt;shape&lt;/strong&gt; or &lt;strong&gt;size&lt;/strong&gt; (see bottom for a list of aesthetics) which adds somehow a 3rd dimension. So let us now extend our aesthetics in the plot with &lt;code class=&quot;highlighter-rouge&quot;&gt;aes(x = displ, y = hwy, color = class)&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ggplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mpg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_point&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mapping&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;displ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hwy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-5-1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now we can see what observations belong to which type of car. So our &lt;em&gt;hybrid&lt;/em&gt; cars are actually two seaters, smaller or lighter cars which need less fuel. The big SUV and Pickup cars are as suspected on the lower edge.&lt;/p&gt;
+
+&lt;p&gt;Again &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; chooses automatically an appropriate color scheme. Try out the two other aesthetics (shape and size) by yourself. Notice that for color and shape it makes sense to map them to a categorical variable where as size is appropriate for continuous variables. The shape aesthetic has also a maximum of 6 values. But if your data should have more than 6 levels, you must specify them manually (R has 25 built in shapes that are identified by numbers).&lt;/p&gt;
+
+&lt;p&gt;You can also use logical expression for an aesthetic like color. Try e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;aes(x = displ, y = hwy, color = displ &amp;gt; 5)&lt;/code&gt;. This will seperate your data in red and blue observations based on the logical expression.&lt;/p&gt;
+
+&lt;p&gt;List of aesthetics:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;x (required)&lt;/li&gt;
+  &lt;li&gt;y (required)&lt;/li&gt;
+  &lt;li&gt;alpha&lt;/li&gt;
+  &lt;li&gt;colour&lt;/li&gt;
+  &lt;li&gt;fill&lt;/li&gt;
+  &lt;li&gt;group&lt;/li&gt;
+  &lt;li&gt;shape&lt;/li&gt;
+  &lt;li&gt;size&lt;/li&gt;
+  &lt;li&gt;stroke&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For further information about aesthetics take a look at the &lt;a href=&quot;https://cran.r-project.org/web/packages/ggplot2/vignettes/ggplot2-specs.html&quot;&gt;cran specification&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;facets&quot;&gt;Facets&lt;/h3&gt;
+
+&lt;p&gt;Let us now learn more about a cool feature of &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; which suits perfectly to look at categorical variables, the &lt;strong&gt;facets&lt;/strong&gt;. Facets are basically subplots within a plot. So for each level of a categorical variable you get a plot.&lt;/p&gt;
+
+&lt;p&gt;Therefore you need to add the &lt;code class=&quot;highlighter-rouge&quot;&gt;facet_wrap()&lt;/code&gt; function to your plot and specify by a &lt;strong&gt;formula&lt;/strong&gt; object (name of a data structure in R, not a synonym for &lt;em&gt;equation&lt;/em&gt;. Formulas use the tilt sign &lt;code class=&quot;highlighter-rouge&quot;&gt;~&lt;/code&gt;. They can also be used to build models). The formula defines on which variable the subplots are created.&lt;/p&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ggplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mpg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_point&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mapping&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;displ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hwy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;facet_wrap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-6-1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;As always &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; automatically aligns the subplots. But you can also specify the number of rows or columns, e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;facet_wrap(~ class, nrow = 2)&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;The use of formula expression along with &lt;code class=&quot;highlighter-rouge&quot;&gt;facet_grid()&lt;/code&gt; allows you to combine two variables. Let us look on all subplots of combinations of drive type (&lt;code class=&quot;highlighter-rouge&quot;&gt;drv&lt;/code&gt;) and cylinders (&lt;code class=&quot;highlighter-rouge&quot;&gt;cyl&lt;/code&gt;)&lt;/p&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ggplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mpg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_point&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mapping&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;displ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hwy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;facet_grid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;drv&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cyl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-7-1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;geometric-objects&quot;&gt;Geometric Objects&lt;/h3&gt;
+
+&lt;p&gt;You can use different visual objects to represent data. Till now we used points as a geometrical object to create a scatterplot. In &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; such objects are called &lt;strong&gt;geom&lt;/strong&gt;. There are different types of geoms. Here is an excerpt of the most important:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;geom_point()&lt;/code&gt; - plot a scatterplot&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;geom_line()&lt;/code&gt; - plot a line graph&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;geom_smooth&lt;/code&gt; - plot a smooth line fitted to the data&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;geom_bar()&lt;/code&gt; - plots bars like a histogram&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;geom_density()&lt;/code&gt; - plots a density graph for continuous data&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;geom_boxplot()&lt;/code&gt; - plots a boxplot&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;All in all over 30 geoms are provided and extension packages provide even more (see &lt;a href=&quot;https://www.ggplot2-exts.org&quot;&gt;https://www.ggplot2-exts.org&lt;/a&gt; for a sampling). Similarily, look at the &lt;a href=&quot;http://ggplot2.tidyverse.org/reference/#section-layer-geoms&quot;&gt;ggplot2 reference&lt;/a&gt; or check out the &lt;a href=&quot;http://rstudio.com/cheatsheets&quot;&gt;cheatsheet&lt;/a&gt; for further information.&lt;/p&gt;
+
+&lt;p&gt;Let’s have a look how differently our scatterplot is represented as a smoothed line plot.&lt;/p&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ggplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mpg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_smooth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mapping&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;displ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hwy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-8-1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Here you clearly see the upspike at the end which again is due to our two seater cars.&lt;/p&gt;
+
+&lt;p&gt;Note that each geom in ggplot2 takes a mapping argument. However, not every aesthetic works with every geom. The shape aaesthetic makes sense for a point geom, but for a line geom. On the other hand, you can set the &lt;strong&gt;linetype&lt;/strong&gt; of a line, not of a point.&lt;/p&gt;
+
+&lt;p&gt;So let us plot different line styles for each drive type (&lt;code class=&quot;highlighter-rouge&quot;&gt;drv&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;4&lt;/code&gt; = four-wheel drive, &lt;code class=&quot;highlighter-rouge&quot;&gt;f&lt;/code&gt; = front-wheel drive and &lt;code class=&quot;highlighter-rouge&quot;&gt;r&lt;/code&gt; = rear-wheel drive):&lt;/p&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ggplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mpg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_smooth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mapping&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;displ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hwy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;linetype&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;drv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-9-1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;As you maybe notice, the lines do not all go from begining till end. This is due to the fact that there is not enough data for this combinations.&lt;/p&gt;
+
+&lt;p&gt;Another way to distinguish the line plot between the drivetrain types (&lt;code class=&quot;highlighter-rouge&quot;&gt;drv&lt;/code&gt;) would be to use the color aesthetic again. But there is also the so called &lt;strong&gt;group&lt;/strong&gt; aesthetic which groups the data according to the factor levels. The difference lies in the coloring scheme. There is also no legend provided with group.&lt;/p&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ggplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mpg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_smooth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mapping&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;displ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hwy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;group&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;drv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-10-1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Try out the color aesthetic yourself to see the difference&lt;/p&gt;
+
+&lt;h3 id=&quot;multiple-geoms&quot;&gt;Multiple geoms&lt;/h3&gt;
+
+&lt;p&gt;Now it is time to enrich our plot even further and use multiple geoms. How about combining &lt;code class=&quot;highlighter-rouge&quot;&gt;geom_point()&lt;/code&gt; with &lt;code class=&quot;highlighter-rouge&quot;&gt;geom_smooth&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ggplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mpg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_point&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mapping&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;displ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hwy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_smooth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mapping&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;displ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hwy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-11-1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;As explained earlier, the structure of &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; is to add graphical elements to your base function (empty plot: &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot()&lt;/code&gt;). Here we simply add the two geoms to the plot. You might ask yourself, but what if i want to change the aesthetics, then i have to change them in both geom objects. You are right, and this duplication can be avoided by defining the mappings already in the base function of &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot()&lt;/code&gt;. So we will treat these mappings as &lt;em&gt;global mappings&lt;/em&gt; that apply to each geom in the graph. Hence,&lt;/p&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ggplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mpg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mapping&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;displ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hwy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_point&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_smooth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;will create the same plot. If you add now mappings into the geom objects, they will be treated as &lt;em&gt;local mappings&lt;/em&gt;. They extend or overwrite the global mappings for that &lt;em&gt;layer&lt;/em&gt; only.&lt;/p&gt;
+
+&lt;p&gt;You can go even further and define new data for a &lt;em&gt;layer&lt;/em&gt; in the geom object: &lt;code class=&quot;highlighter-rouge&quot;&gt;geom_smooth(data = filter(mpg, class == &quot;subcompact&quot;))&lt;/code&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Note: &lt;code class=&quot;highlighter-rouge&quot;&gt;filter()&lt;/code&gt; is a function of the &lt;code class=&quot;highlighter-rouge&quot;&gt;dplyr&lt;/code&gt; package.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ggplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mpg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mapping&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;displ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hwy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_point&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mapping&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_smooth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mpg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;==&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;subcompact&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;se&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-12-1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;statistical-charts&quot;&gt;Statistical charts&lt;/h3&gt;
+
+&lt;p&gt;One of the plots which can give a nice and easy overview about the frequency of variables are bar charts. In &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; we can use &lt;code class=&quot;highlighter-rouge&quot;&gt;geom_bar()&lt;/code&gt;. To go further into the details of the functionality we will use the &lt;code class=&quot;highlighter-rouge&quot;&gt;diamonds&lt;/code&gt; data set contained in the &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; package. There are about 54,000 diamonds, including the price, carat, color, clarity, and cut of each diamond.&lt;/p&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ggplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;diamonds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mapping&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cut&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-13-1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You can see that there are a lot more diamonds with great cut quality than with bad quality. You may notice that this time, there is now &lt;strong&gt;y&lt;/strong&gt; aesthetic mapped to a variable. Despite, there is a &lt;strong&gt;count&lt;/strong&gt; variable as y axis. This variable is automatically generated by &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt;. New values are also calculated by other plots like e.g. histograms and frequency polygons bin your data and then plot bin counts. Or the already seen smooth geom object fit a model to your data and then plots the predictions.&lt;/p&gt;
+
+&lt;p&gt;The method behind that generation of new values is &lt;strong&gt;stat&lt;/strong&gt;. This leads us to the notion of &lt;strong&gt;statistical transformation&lt;/strong&gt;. For &lt;code class=&quot;highlighter-rouge&quot;&gt;geom_bar()&lt;/code&gt; the default &lt;code class=&quot;highlighter-rouge&quot;&gt;stat&lt;/code&gt; argument is &lt;em&gt;count&lt;/em&gt; (see &lt;code class=&quot;highlighter-rouge&quot;&gt;?geom_bar&lt;/code&gt;). So it uses the &lt;code class=&quot;highlighter-rouge&quot;&gt;stat_count()&lt;/code&gt; method. Vice versa, ever stat method has also by default a geom object. Hence,&lt;/p&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ggplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;diamonds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stat_count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mapping&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cut&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;would generate the same bar chart. But sometimes it is nicer to see the proportions rather than the absulute counts. Therefore, we can specify the y aesthetic with &lt;code class=&quot;highlighter-rouge&quot;&gt;..prop..&lt;/code&gt;. This overrides the default mapping from transformed variables to aesthetics.&lt;/p&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ggplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;diamonds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mapping&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cut&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;..prop..&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;group&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-14-1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; you have over 20 stat functions (see &lt;code class=&quot;highlighter-rouge&quot;&gt;?stat_bin&lt;/code&gt; or the &lt;a href=&quot;https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf&quot;&gt;cheatsheet&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;Another example would be to use &lt;code class=&quot;highlighter-rouge&quot;&gt;stat_summary()&lt;/code&gt;. We will specify some of its parameters to mimic a boxplot with min, max and median values of the total depth of the diamonds (y axis) grouped by their cut quality (x axis).&lt;/p&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ggplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;diamonds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stat_summary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mapping&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cut&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;depth&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fun.ymin&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fun.ymax&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fun.y&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;median&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-15-1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now let’s bring some color into the game. We already know that we can use the color aesthetic to map a color for points or lines to a variable. This is also possible for bar geom objects. Just set the same varible of the x aesthetic to the color aesthetic, e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;aes(x = cut, color = cut)&lt;/code&gt;. But this will give the bars a colored frame and will not fill them with colors. Try your own…&lt;/p&gt;
+
+&lt;p&gt;For bar charts it is better to use &lt;strong&gt;fill&lt;/strong&gt; aesthetic. So it is even possible to visualize more variables. Let us look at the different distribution of the &lt;code class=&quot;highlighter-rouge&quot;&gt;clarity&lt;/code&gt;(&lt;em&gt;I1&lt;/em&gt; = worst, …, IF = best) meassures within each cut quality:&lt;/p&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ggplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;diamonds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mapping&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cut&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fill&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clarity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-16-1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We see that the best quality diamonds, also have the most clear diamonds. Such bar charts are called &lt;strong&gt;stacked bar charts&lt;/strong&gt;. This leads us again to another notion of &lt;strong&gt;position adjustment&lt;/strong&gt; which is specified by the &lt;strong&gt;position&lt;/strong&gt; argument in the &lt;code class=&quot;highlighter-rouge&quot;&gt;bar_geom()&lt;/code&gt; (like the stat argument). By default the position parameter is set to &lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;stack&quot;&lt;/code&gt;. Hence,&lt;/p&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ggplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;diamonds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mapping&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cut&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fill&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clarity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;stack&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;would produce the same stacked bar chart. But there are also other position adjustments like e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;position = &quot;fill&quot;&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;position = &quot;dodge&quot;&lt;/code&gt;. Try them out yourself.&lt;/p&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ggplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;diamonds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mapping&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cut&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fill&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clarity&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;dodge&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-17-1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;coordinate-functions&quot;&gt;Coordinate functions&lt;/h3&gt;
+
+&lt;p&gt;Almost done… Now we will cover coordinate functions to complement the structural template of building plots with &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt;. By default the Cartesian coordinate system is used. The x and y positions determine the location of the points on the plot. There are several other coordinate systems that helpful for different use cases.&lt;/p&gt;
+
+&lt;p&gt;With &lt;code class=&quot;highlighter-rouge&quot;&gt;coord_flip()&lt;/code&gt; you are able to change the x and y axis. This can be useful if the labels on the x axis of your original plot are too big. Look at this boxplot. If the axis where flipped the labels would be impossible to read.&lt;/p&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ggplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mpg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mapping&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hwy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_boxplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;coord_flip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-18-1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;template-and-structure-of-ggplot&quot;&gt;Template and Structure of ggplot&lt;/h3&gt;
+
+&lt;p&gt;Below in the code snippet you can see the general template for building plots in &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt;. The values in brackets (&lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;...&amp;gt;&lt;/code&gt;) are variables which the user has to define. Not all are needed to be specified, &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; provides useful default values; except for the data, geoms, and mappings.&lt;/p&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ggplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DATA&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GEOM_FUNCTION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+     &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mapping&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MAPPINGS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+     &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stat&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;STAT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+     &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;POSITION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;COORDINATE_FUNCTION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FACET_FUNCTION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;If you follow this formal system, you can describe any plot as a combination of a dataset, a geom, a set of mappings, a stat, a position adjustment, a coordinate system, and a faceting scheme.&lt;/p&gt;
+
+&lt;p&gt;I hope the examples could give you a basic understanding about the structure of &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt;. In further blog posts we will go more in depth on how to custumize plots and we will look at specific plot types.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 11 Jun 2017 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/articles/2017-06/R-and-Visualizations-The-Basics-ggplot2</link>
+        <guid isPermaLink="true">http://localhost:4000/articles/2017-06/R-and-Visualizations-The-Basics-ggplot2</guid>
+        
+        
+        <category>R</category>
+        
+        <category>ggplot2</category>
+        
+      </item>
     
       <item>
         <title>R and Visualizations – Quick Plots</title>
@@ -16,12 +364,12 @@
 &lt;p&gt;I will briefly capture the basic graphic types:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;em&gt;Scatter Plots&lt;/em&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;em&gt;Line Graphs&lt;/em&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;em&gt;Bar Graphs&lt;/em&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;em&gt;Histograms&lt;/em&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;em&gt;Box Plots&lt;/em&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;em&gt;Function Curves&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;&lt;a href=&quot;#scatter-plot&quot;&gt;Scatter Plots&lt;/a&gt;&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;&lt;a href=&quot;#line-graphs&quot;&gt;Line Graphs&lt;/a&gt;&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;&lt;a href=&quot;#bar-graphs&quot;&gt;Bar Graphs&lt;/a&gt;&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;&lt;a href=&quot;#histograms&quot;&gt;Histograms&lt;/a&gt;&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;&lt;a href=&quot;#box-plot&quot;&gt;Box Plots&lt;/a&gt;&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;&lt;a href=&quot;#function-curves&quot;&gt;Function Curves&lt;/a&gt;&lt;/em&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&quot;scatter-plot&quot;&gt;Scatter Plot&lt;/h3&gt;
@@ -75,7 +423,7 @@ Now we can activate the library and use its quick plot function &lt;code class=&
 
 &lt;p&gt;I will go more in depth with the individual plotting function &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot()&lt;/code&gt; in later blog posts of this series. So let’s move forward to line graphs.&lt;/p&gt;
 
-&lt;h2 id=&quot;line-graph&quot;&gt;Line Graph&lt;/h2&gt;
+&lt;h2 id=&quot;line-graphs&quot;&gt;Line Graphs&lt;/h2&gt;
 
 &lt;p&gt;For this demonstrations the build in &lt;code class=&quot;highlighter-rouge&quot;&gt;pressure&lt;/code&gt; data set suits perfectly. Let’s have a look…&lt;/p&gt;
 
@@ -135,7 +483,7 @@ Now we can activate the library and use its quick plot function &lt;code class=&
   &lt;p&gt;Note that the &lt;code class=&quot;highlighter-rouge&quot;&gt;color&lt;/code&gt; argument in the &lt;code class=&quot;highlighter-rouge&quot;&gt;qplot()&lt;/code&gt; function is not equivilent to the &lt;code class=&quot;highlighter-rouge&quot;&gt;col&lt;/code&gt; argument in the base &lt;code class=&quot;highlighter-rouge&quot;&gt;plot()&lt;/code&gt; function. &lt;code class=&quot;highlighter-rouge&quot;&gt;Color&lt;/code&gt; is a group parameter and sets automatically the colors. If you want to determine the used colors in the plot manually you have also to add &lt;code class=&quot;highlighter-rouge&quot;&gt;scale_color_manual()&lt;/code&gt; to the plot function. You will see that in another post.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;bar-graph&quot;&gt;Bar Graph&lt;/h2&gt;
+&lt;h2 id=&quot;bar-graphs&quot;&gt;Bar Graphs&lt;/h2&gt;
 
 &lt;p&gt;To make a bar chart you can use the base function &lt;code class=&quot;highlighter-rouge&quot;&gt;barplot()&lt;/code&gt; and pass it a vector of values for the height of each bar and (optionally) a vector of labels for each bar (&lt;code class=&quot;highlighter-rouge&quot;&gt;names.arg&lt;/code&gt; parameter).&lt;/p&gt;
 
@@ -192,7 +540,7 @@ Now we can activate the library and use its quick plot function &lt;code class=&
 
 &lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_29_4.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;histogram&quot;&gt;Histogram&lt;/h2&gt;
+&lt;h2 id=&quot;histograms&quot;&gt;Histograms&lt;/h2&gt;
 
 &lt;p&gt;Now we will view the distribution of one-dimensional data with a histogram. Let’s see how the gasoline consumption of the cars in the &lt;code class=&quot;highlighter-rouge&quot;&gt;mtcars&lt;/code&gt; data set is distributed.&lt;/p&gt;
 
@@ -325,6 +673,8 @@ Now we can activate the library and use its quick plot function &lt;code class=&
 &lt;p&gt;&lt;img src=&quot;/images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_48_1.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;So now you should have a basic understanding to plot some quick graphs to get a first look into your data. I will try to continue this series with more detailed explanations on how to use the &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot2&lt;/code&gt; package with the &lt;code class=&quot;highlighter-rouge&quot;&gt;ggplot()&lt;/code&gt; function since this is more powerful for making expressive charts.&lt;/p&gt;
+
+&lt;p&gt;The series continues with basics of &lt;a href=&quot;../2017-06/R-and-Visualizations-The-Basics-ggplot2&quot;&gt;ggplot2 …&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 05 May 2017 00:00:00 +0200</pubDate>
         <link>http://localhost:4000/articles/2017-05/R-and-Visualizations-Quick-Plots</link>
@@ -341,7 +691,7 @@ Now we can activate the library and use its quick plot function &lt;code class=&
         <title>Python and Deep Learning – Building an ANN with Keras</title>
         <description>&lt;p&gt;In this post you will get to know how to define a simple Neural Network with the Keras package by solving a binary classification problem on the pima-indians-diabetes dataset.&lt;/p&gt;
 
-&lt;p&gt;If you haven’t installed Keras, please walk through my general &lt;a href=&quot;/Python-and-Deep-Learning-Keras&quot;&gt;post&lt;/a&gt; about Keras.&lt;/p&gt;
+&lt;p&gt;If you haven’t installed Keras, please walk through my general &lt;a href=&quot;../2017-04/Python-and-Deep-Learning-Keras&quot;&gt;post&lt;/a&gt; about Keras.&lt;/p&gt;
 
 &lt;h2 id=&quot;1-load-the-data&quot;&gt;1. Load the data&lt;/h2&gt;
 
@@ -845,7 +1195,7 @@ acc: 77.99%
     
       <item>
         <title>Python and Deep Learning – Keras</title>
-        <description>&lt;p&gt;The difficulty of &lt;a href=&quot;/Python-and-Deep-Learning-Theano&quot;&gt;Theano&lt;/a&gt; and &lt;a href=&quot;/Python-and-Deep-Learning-Tensorflow&quot;&gt;TensorFlow&lt;/a&gt; is that it can take a lot of code to create even very simple neural network models.&lt;/p&gt;
+        <description>&lt;p&gt;The difficulty of &lt;a href=&quot;../2017-04/Python-and-Deep-Learning-Theano&quot;&gt;Theano&lt;/a&gt; and &lt;a href=&quot;../2017-04/Python-and-Deep-Learning-Tensorflow&quot;&gt;TensorFlow&lt;/a&gt; is that it can take a lot of code to create even very simple neural network models.&lt;/p&gt;
 
 &lt;p&gt;These libraries were designed primarily as a platform for research and development more than for the practical concerns of applied deep learning.&lt;/p&gt;
 
@@ -864,14 +1214,14 @@ Your goal for this lesson is to install Keras.&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;p&gt;For example, you can install Keras using pip:
-But for a proper use please make sure you already installed &lt;a href=&quot;../Python-and-Deep-Learning-Theano&quot;&gt;Theano&lt;/a&gt; or &lt;a href=&quot;../Python-and-Deep-Learning-Tensorflow&quot;&gt;TensorFlow&lt;/a&gt;. By default Keras uses Tensorflow as its tensor manipulation library&lt;/p&gt;
+But for a proper use please make sure you already installed &lt;a href=&quot;../2017-04/Python-and-Deep-Learning-Theano&quot;&gt;Theano&lt;/a&gt; or &lt;a href=&quot;../2017-04/Python-and-Deep-Learning-Tensorflow&quot;&gt;TensorFlow&lt;/a&gt;. By default Keras uses Tensorflow as its tensor manipulation library&lt;/p&gt;
 &lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo pip install keras
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;p&gt;You can learn more about the Keras library on the &lt;a href=&quot;https://keras.io&quot;&gt;Keras homepage&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;Or check out this &lt;a href=&quot;../Python-and-Deep-Learning-Building-an-ANN-with-Keras&quot;&gt;post&lt;/a&gt; to apply the 4 step life-cycle of a model on an example dataset.&lt;/p&gt;
+&lt;p&gt;Or check out this &lt;a href=&quot;../2017-04-19-Python-and-Deep-Learning-Keras-and-Building-an-ANN&quot;&gt;post&lt;/a&gt; to apply the 4 step life-cycle of a model on an example dataset.&lt;/p&gt;
 </description>
         <pubDate>Tue, 18 Apr 2017 00:00:00 +0200</pubDate>
         <link>http://localhost:4000/articles/2017-04/Python-and-Deep-Learning-Keras</link>
@@ -1056,67 +1406,11 @@ This would allow a faster workflow to publish code and work done in jupyter on a
       </item>
     
       <item>
-        <title>Jupyter Notebook – Using R and Python</title>
-        <description>&lt;p&gt;You can use the programming language &lt;code class=&quot;highlighter-rouge&quot;&gt;R&lt;/code&gt; in Jupyter Notebook by installing the &lt;code class=&quot;highlighter-rouge&quot;&gt;IRkernel&lt;/code&gt;.
-A notebook kernel is a computational engine that executes the code contained in a notebook document. The &lt;code class=&quot;highlighter-rouge&quot;&gt;ipython kernel&lt;/code&gt; executes python code and the &lt;code class=&quot;highlighter-rouge&quot;&gt;IRkernel&lt;/code&gt; runs R code which will be used later. But there are also kernels for many &lt;a href=&quot;https://github.com/jupyter/jupyter/wiki/Jupyter-kernels&quot;&gt;other languages&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Firstly, you need to install the latest anaconda package. If you haven’t done this before, walk through my post &lt;a href=&quot;../Jupyter-Notebook-Installation&quot;&gt;Jupyter Notebook – Installation&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Now you can get R working in Jupyter notebook by following simple command lines.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 1:&lt;/strong&gt; Install the IRkernel.&lt;/p&gt;
-
-&lt;p&gt;After downloading and installing anaconda, you need to install the IRkernel. This will do anaconda for you. Just type the following command in the terminal.&lt;/p&gt;
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;conda install -c r ipython-notebook r-irkernel
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 2:&lt;/strong&gt; Install required R packages.&lt;/p&gt;
-
-&lt;p&gt;Now you need some additional R packages to get everything running. Open RStudio or any other IDE and type in the following command in the console.&lt;/p&gt;
-&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;install.packages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'repr'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'IRdisplay'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'evaluate'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'crayon'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'pbdZMQ'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'devtools'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'uuid'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'digest'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;devtools&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;install_github&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'IRkernel/IRkernel'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 3:&lt;/strong&gt; Loading the IRkernel.
-After installing the packages, you have to load the IRkernel. Therefore call the &lt;code class=&quot;highlighter-rouge&quot;&gt;installspec()&lt;/code&gt; function of the IRkernel package in the R console.&lt;/p&gt;
-&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;IRkernel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;installspec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 4:&lt;/strong&gt; Install the Essentials.
-Before you are able to run R in Jupyter Notebook, you will need some essentials to be installed. Use again the &lt;code class=&quot;highlighter-rouge&quot;&gt;conda&lt;/code&gt;command in the shell.&lt;/p&gt;
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;conda install -c r r-essentials
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 5:&lt;/strong&gt; Launch Jupyter Notebook.
-Now you should be able to open Jupyter Notebook and select R as the notebook kernel.&lt;/p&gt;
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jupyter notebook
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;A session should start in your terminal and automatically open the browser with Jupyter Notebook. You can create a new file by selecting the &lt;em&gt;New&lt;/em&gt; button and choosing R as the Notebook.&lt;/p&gt;
-</description>
-        <pubDate>Thu, 06 Apr 2017 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/articles/2017-04/Jupyter-Notebook-Using-R-and-Python</link>
-        <guid isPermaLink="true">http://localhost:4000/articles/2017-04/Jupyter-Notebook-Using-R-and-Python</guid>
-        
-        
-        <category>R</category>
-        
-        <category>Jupyter Notebook</category>
-        
-        <category>Python</category>
-        
-      </item>
-    
-      <item>
         <title>Jupyter Notebook – Using R</title>
         <description>&lt;p&gt;You can use the programming language &lt;code class=&quot;highlighter-rouge&quot;&gt;R&lt;/code&gt; in Jupyter Notebook by installing the &lt;code class=&quot;highlighter-rouge&quot;&gt;IRkernel&lt;/code&gt;.
 A notebook kernel is a computational engine that executes the code contained in a notebook document. The &lt;code class=&quot;highlighter-rouge&quot;&gt;ipython kernel&lt;/code&gt; executes python code and the &lt;code class=&quot;highlighter-rouge&quot;&gt;IRkernel&lt;/code&gt; runs R code which will be used later. But there are also kernels for many &lt;a href=&quot;https://github.com/jupyter/jupyter/wiki/Jupyter-kernels&quot;&gt;other languages&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;Firstly, you need to install the latest anaconda package. If you haven’t done this before, walk through my post &lt;a href=&quot;../Jupyter-Notebook-Installation&quot;&gt;Jupyter Notebook – Installation&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Firstly, you need to install the latest anaconda package. If you haven’t done this before, walk through my post &lt;a href=&quot;../2017-04/Jupyter-Notebook-Installation&quot;&gt;Jupyter Notebook – Installation&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;Now you can get R working in Jupyter notebook by following simple command lines.&lt;/p&gt;
 
@@ -1135,20 +1429,23 @@ A notebook kernel is a computational engine that executes the code contained in 
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;strong&gt;Step 3:&lt;/strong&gt; Loading the IRkernel.
-After installing the packages, you have to load the IRkernel. Therefore call the &lt;code class=&quot;highlighter-rouge&quot;&gt;installspec()&lt;/code&gt; function of the IRkernel package in the R console.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Step 3:&lt;/strong&gt; Loading the IRkernel.&lt;/p&gt;
+
+&lt;p&gt;After installing the packages, you have to load the IRkernel. Therefore call the &lt;code class=&quot;highlighter-rouge&quot;&gt;installspec()&lt;/code&gt; function of the IRkernel package in the R console.&lt;/p&gt;
 &lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;IRkernel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;installspec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;strong&gt;Step 4:&lt;/strong&gt; Install the Essentials.
-Before you are able to run R in Jupyter Notebook, you will need some essentials to be installed. Use again the &lt;code class=&quot;highlighter-rouge&quot;&gt;conda&lt;/code&gt;command in the shell.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Step 4:&lt;/strong&gt; Install the Essentials.&lt;/p&gt;
+
+&lt;p&gt;Before you are able to run R in Jupyter Notebook, you will need some essentials to be installed. Use again the &lt;code class=&quot;highlighter-rouge&quot;&gt;conda&lt;/code&gt;command in the shell.&lt;/p&gt;
 &lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;conda install -c r r-essentials
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;strong&gt;Step 5:&lt;/strong&gt; Launch Jupyter Notebook.
-Now you should be able to open Jupyter Notebook and select R as the notebook kernel.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Step 5:&lt;/strong&gt; Launch Jupyter Notebook.&lt;/p&gt;
+
+&lt;p&gt;Now you should be able to open Jupyter Notebook and select R as the notebook kernel.&lt;/p&gt;
 &lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jupyter notebook
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
@@ -1166,51 +1463,24 @@ Now you should be able to open Jupyter Notebook and select R as the notebook ker
       </item>
     
       <item>
-        <title>Jupyter Notebook – How to use it</title>
-        <description>&lt;p&gt;You can use the programming language &lt;code class=&quot;highlighter-rouge&quot;&gt;R&lt;/code&gt; in Jupyter Notebook by installing the &lt;code class=&quot;highlighter-rouge&quot;&gt;IRkernel&lt;/code&gt;.
-A notebook kernel is a computational engine that executes the code contained in a notebook document. The &lt;code class=&quot;highlighter-rouge&quot;&gt;ipython kernel&lt;/code&gt; executes python code and the &lt;code class=&quot;highlighter-rouge&quot;&gt;IRkernel&lt;/code&gt; runs R code which will be used later. But there are also kernels for many &lt;a href=&quot;https://github.com/jupyter/jupyter/wiki/Jupyter-kernels&quot;&gt;other languages&lt;/a&gt;.&lt;/p&gt;
+        <title>Jupyter Notebook – Installation</title>
+        <description>&lt;p&gt;&lt;a href=&quot;http://jupyter.org&quot;&gt;Jupyter Notebook&lt;/a&gt; is a server-client application that allows editing and running notebook documents via a web browser. Notebook documents are documents produced by Jupyter Notebook which contain both computer code (e.g. python) and rich text elements (paragraph, equations, figures, links, etc.). They are both human-readable documents containing the analysis description and the results (figures, tables, etc.) as well as executable documents which can be run to perform data analysis.&lt;/p&gt;
 
-&lt;p&gt;Firstly, you need to install the latest anaconda package. If you haven’t done this before, walk through my post &lt;a href=&quot;../Jupyter-Notebook-Installation&quot;&gt;Jupyter Notebook – Installation&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Step 1:&lt;/strong&gt; Installation of the anaconda package.&lt;/p&gt;
 
-&lt;p&gt;Now you can get R working in Jupyter notebook by following simple command lines.&lt;/p&gt;
+&lt;p&gt;Download the newest &lt;a href=&quot;https://www.continuum.io/downloads&quot;&gt;anaconda installer&lt;/a&gt;. You can choose between the graphical interface or the command line version for installation.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Step 1:&lt;/strong&gt; Install the IRkernel.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Step 2:&lt;/strong&gt; Launch Jupyter Notebook.&lt;/p&gt;
 
-&lt;p&gt;After downloading and installing anaconda, you need to install the IRkernel. This will do anaconda for you. Just type the following command in the terminal.&lt;/p&gt;
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;conda install -c r ipython-notebook r-irkernel
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 2:&lt;/strong&gt; Install required R packages.&lt;/p&gt;
-
-&lt;p&gt;Now you need some additional R packages to get everything running. Open RStudio or any other IDE and type in the following command in the console.&lt;/p&gt;
-&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;install.packages&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'repr'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'IRdisplay'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'evaluate'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'crayon'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'pbdZMQ'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'devtools'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'uuid'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'digest'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;devtools&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;install_github&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'IRkernel/IRkernel'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; &lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 3:&lt;/strong&gt; Loading the IRkernel.
-After installing the packages, you have to load the IRkernel. Therefore call the &lt;code class=&quot;highlighter-rouge&quot;&gt;installspec()&lt;/code&gt; function of the IRkernel package in the R console.&lt;/p&gt;
-&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;IRkernel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;installspec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 4:&lt;/strong&gt; Install the Essentials.
-Before you are able to run R in Jupyter Notebook, you will need some essentials to be installed. Use again the &lt;code class=&quot;highlighter-rouge&quot;&gt;conda&lt;/code&gt;command in the shell.&lt;/p&gt;
-&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;conda install -c r r-essentials
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Step 5:&lt;/strong&gt; Launch Jupyter Notebook.
-Now you should be able to open Jupyter Notebook and select R as the notebook kernel.&lt;/p&gt;
+&lt;p&gt;Now you should be able to open Jupyter Notebook.&lt;/p&gt;
 &lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jupyter notebook
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;A session should start in your terminal and automatically open the browser with Jupyter Notebook. You can create a new file by selecting the &lt;em&gt;New&lt;/em&gt; button and choosing R as the Notebook.&lt;/p&gt;
 </description>
-        <pubDate>Mon, 03 Apr 2017 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/articles/2017-04/Jupyter-Notebook-How-to-Use</link>
-        <guid isPermaLink="true">http://localhost:4000/articles/2017-04/Jupyter-Notebook-How-to-Use</guid>
+        <pubDate>Sun, 02 Apr 2017 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/articles/2017-04/Jupyter-Notebook-Installation</link>
+        <guid isPermaLink="true">http://localhost:4000/articles/2017-04/Jupyter-Notebook-Installation</guid>
         
         
         <category>Jupyter Notebook</category>
@@ -1218,168 +1488,15 @@ Now you should be able to open Jupyter Notebook and select R as the notebook ker
       </item>
     
       <item>
-        <title>Machine Learning 101 - The Basics</title>
-        <description>&lt;p&gt;Here you should get an overview about the most common terms and techniques in Machine Learning.&lt;/p&gt;
+        <title>New Project Started</title>
+        <description>&lt;p&gt;This is my first blog post on my new blog. I decided to host it on GitHubs Pages. It is more convenient since I am already working with Git.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://donaldwhyte.co.uk/intro-to-ml/images/machinelearningalgorithms.png&quot; alt=&quot;Machine Learning Algorithms - Overview&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;the-statisticians-and-computer-scientists-point-of-view&quot;&gt;The statisticians and computer scientists point-of-view&lt;/h2&gt;
-
-&lt;p&gt;The statistical perspective of machine learning frames data in the context of a hypothetical function (f) that the machine learning algorithm aims to learn. Given some input variables (Input)  the function answer the question as to what is the predicted output variable (Output).&lt;/p&gt;
-
-&lt;p&gt;Output = f(Input)&lt;/p&gt;
-
-&lt;p&gt;The inputs and outputs can be referred to as variables or vectors.&lt;/p&gt;
-
-&lt;p&gt;The computer science perspective uses a row of data to describe an entity (like a person) or an observation about an entity. As such, the columns for a row are often referred to as attributes of the observation and the rows themselves are called instances.&lt;/p&gt;
-
-&lt;h2 id=&quot;the-underlying-assumption&quot;&gt;The underlying assumption&lt;/h2&gt;
-
-&lt;p&gt;There is a common principle that underlies all supervised machine learning algorithms for predictive modeling.
-Machine learning algorithms are described as learning a target function (f) that best maps input variables (X) to an output variable (Y).&lt;/p&gt;
-
-&lt;p&gt;Y = f(X)&lt;/p&gt;
-
-&lt;p&gt;This is a general learning task where we would like to make predictions in the future (Y) given new examples of input variables (X). We don’t know what the function (f) looks like or its form. If we did, we would use it directly and we would not need to learn it from data using machine learning algorithms.&lt;/p&gt;
-
-&lt;p&gt;The most common type of machine learning is to learn the mapping Y = f(X) to make predictions of Y for new X. This is called predictive modeling or predictive analytics and our goal is to make the most accurate predictions possible.&lt;/p&gt;
-
-&lt;h2 id=&quot;parametric-vs-non-parametric-algorithms&quot;&gt;Parametric vs. non-parametric algorithms&lt;/h2&gt;
-
-&lt;p&gt;what is a parametric machine learning algorithm and how is it different from a nonparametric machine learning algorithm?&lt;/p&gt;
-
-&lt;p&gt;Assumptions can greatly simplify the learning process, but can also limit what can be learned. Algorithms that simplify the function to a known form are called parametric machine learning algorithms.&lt;/p&gt;
-
-&lt;p&gt;The algorithms involve two steps:&lt;/p&gt;
-
-&lt;p&gt;Select a form for the function.
-Learn the coefficients for the function from the training data.
-Some examples of parametric machine learning algorithms are Linear Regression and Logistic Regression.&lt;/p&gt;
-
-&lt;p&gt;Algorithms that do not make strong assumptions about the form of the mapping function are called nonparametric machine learning algorithms. By not making assumptions, they are free to learn any functional form from the training data.&lt;/p&gt;
-
-&lt;p&gt;Non-parametric methods are often more flexible, achieve better accuracy but require a lot more data and training time.&lt;/p&gt;
-
-&lt;p&gt;Examples of nonparametric algorithms include Support Vector Machines, Neural Networks and Decision Trees.&lt;/p&gt;
-
-&lt;h2 id=&quot;cross-validation&quot;&gt;Cross-Validation&lt;/h2&gt;
-
-&lt;p&gt;our goal with applied machine learning is to develop a model to make predictions on new data.&lt;/p&gt;
-
-&lt;p&gt;That is, given new inputs like an unlabeled photo or a day of the week, we want to know if it is a picture of a dog or the estimated sales figures.&lt;/p&gt;
-
-&lt;p&gt;We want predictions.&lt;/p&gt;
-
-&lt;p&gt;On a project, we:
-Try lots of data preparation schemes in order to best present the signal in the underlying problem to the learning algorithms.
-We try suites of learning algorithms to best capture the relationship between the input and the outputs.
-And we use resampling methods like train-test splits and k-fold cross validation to estimate the skill of models when making predictions on new data.
-It is only after we have chosen our best combination of data prep, algorithm, and configurations that we can train a final model on all available data and start actually making predictions on unseen data.&lt;/p&gt;
-
-&lt;p&gt;New practitioners in the field often confuse the steps of resampling and model finalization asking questions like:&lt;/p&gt;
-
-&lt;p&gt;How do I make predictions with cross validation?
-or
-Which cross-validation model do I keep?&lt;/p&gt;
-
-&lt;p&gt;This is not surprising as the literature almost universally does not talk about it.&lt;/p&gt;
-
-&lt;p&gt;I hope this note has made things clearer for you. You can learn more in my post:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://machinelearningmastery.com/train-final-machine-learning-model/&quot;&gt;How to Train a Final Machine Learning Model&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;bias-and-variance-trade-off&quot;&gt;Bias and Variance Trade-Off&lt;/h2&gt;
-
-&lt;p&gt;Machine learning algorithms can best be understood through the lens of the bias-variance trade-off.&lt;/p&gt;
-
-&lt;p&gt;Bias are the simplifying assumptions made by a model to make the target function easier to learn.&lt;/p&gt;
-
-&lt;p&gt;Generally, parametric algorithms have a high bias making them fast to learn and easier to understand but generally less flexible. In turn, they have lower predictive performance on complex problems that fail to meet the simplifying assumptions of the algorithms bias.&lt;/p&gt;
-
-&lt;p&gt;Decision trees are an example of a low bias algorithm, whereas linear regression is an example of a high-bias algorithm.&lt;/p&gt;
-
-&lt;p&gt;Variance is the amount that the estimate of the target function will change if different training data was used. The target function is estimated from the training data by a machine learning algorithm, so we should expect the algorithm to have some variance, not zero variance.&lt;/p&gt;
-
-&lt;p&gt;The k-Nearest Neighbors algorithm is an example of a high-variance algorithm, whereas Linear Discriminant Analysis is an example of a low variance algorithm.&lt;/p&gt;
-
-&lt;p&gt;The goal of any predictive modeling machine learning algorithm is to achieve low bias and low variance. In turn, the algorithm should achieve good prediction performance. The parameterization of machine learning algorithms is often a battle to balance out bias and variance.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Increasing the bias will decrease the variance.&lt;/li&gt;
-  &lt;li&gt;Increasing the variance will decrease the bias.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;linear-regression&quot;&gt;Linear regression&lt;/h2&gt;
-
-&lt;p&gt;Linear regression is perhaps one of the most well-known and well-understood algorithms in statistics and machine learning.&lt;/p&gt;
-
-&lt;p&gt;Isn’t it a technique from statistics?&lt;/p&gt;
-
-&lt;p&gt;Predictive modeling is primarily concerned with minimizing the error of a model or making the most accurate predictions possible, at the expense of explainability. We will borrow, reuse and steal algorithms from many different fields, including statistics and use them towards these ends.&lt;/p&gt;
-
-&lt;p&gt;The representation of linear regression is an equation that describes a line that best fits the relationship between the input variables (x) and the output variables (y), by finding specific weightings for the input variables called coefficients (B).&lt;/p&gt;
-
-&lt;p&gt;For example:&lt;/p&gt;
-
-&lt;p&gt;y = B0 + B1 * x&lt;/p&gt;
-
-&lt;p&gt;We will predict y given the input x and the goal of the linear regression learning algorithm is to find the values for the coefficients B0 and B1.&lt;/p&gt;
-
-&lt;p&gt;Different techniques can be used to learn the linear regression model from data, such as a linear algebra solution for ordinary least squares and gradient descent optimization.&lt;/p&gt;
-
-&lt;p&gt;Linear regression has been around for more than 200 years and has been extensively studied. Some good rules of thumb when using this technique are to remove variables that are very similar (correlated) and to remove noise from your data, if possible.&lt;/p&gt;
-
-&lt;p&gt;It is a fast and simple technique and good first algorithm to try.&lt;/p&gt;
-
-&lt;h2 id=&quot;logistic-regression&quot;&gt;Logistic regression&lt;/h2&gt;
-
-&lt;p&gt;logistic regression is another technique borrowed by machine learning from the field of statistics. It is the go-to method for binary classification problems (problems with two class values).&lt;/p&gt;
-
-&lt;p&gt;Logistic regression is like linear regression in that the goal is to find the values for the coefficients that weight each input variable.&lt;/p&gt;
-
-&lt;p&gt;Unlike linear regression, the prediction for the output is transformed using a non-linear function called the logistic function.&lt;/p&gt;
-
-&lt;p&gt;The logistic function looks like a big S and will transform any value into the range 0 to 1. This is useful because we can apply a rule to the output of the logistic function to snap values to 0 and 1 (e.g. IF less than 0.5 then output 1) and predict a class value.&lt;/p&gt;
-
-&lt;p&gt;Because of the way that the model is learned, the predictions made by logistic regression can also be used as the probability of a given data instance belonging to class 0 or class 1. This can be useful for problems where you need to give more rationale for a prediction.&lt;/p&gt;
-
-&lt;p&gt;Like linear regression, logistic regression does work better when you remove attributes that are unrelated to the output variable as well as attributes that are very similar (correlated) to each other.&lt;/p&gt;
-
-&lt;p&gt;It’s a fast model to learn and effective on binary classification problems.&lt;/p&gt;
-
-&lt;h2 id=&quot;linear-discriminant-analysis&quot;&gt;Linear Discriminant Analysis&lt;/h2&gt;
-
-&lt;p&gt;Logistic Regression is a classification algorithm traditionally limited to only two-class classification problems.&lt;/p&gt;
-
-&lt;p&gt;If you have more than two classes then the Linear Discriminant Analysis algorithm is the preferred linear classification technique.
-The representation of LDA is pretty straight forward. It consists of statistical properties of your data, calculated for each class. For a single input variable this includes:&lt;/p&gt;
-
-&lt;p&gt;The mean value for each class.
-The variance calculated across all classes.
-Predictions are made by calculating a discriminate value for each class and making a prediction for the class with the largest value.&lt;/p&gt;
-
-&lt;p&gt;The technique assumes that the data has a Gaussian distribution (bell curve), so it is a good idea to remove outliers from your data before hand.&lt;/p&gt;
-
-&lt;p&gt;It’s a simple and powerful method for classification predictive modeling problems.&lt;/p&gt;
-
-&lt;h2 id=&quot;decision-trees&quot;&gt;Decision Trees&lt;/h2&gt;
-
-&lt;p&gt;Decision Trees are an important type of algorithm for predictive modeling machine learning.&lt;/p&gt;
-
-&lt;p&gt;The representation of the decision tree model is a binary tree. This is your binary tree from algorithms and data structures, nothing too fancy. Each node represents a single input variable (x) and a split point on that variable (assuming the variable is numeric).&lt;/p&gt;
-
-&lt;p&gt;The leaf nodes of the tree contain an output variable (y) which is used to make a prediction.  Predictions are made by walking the splits of the tree until arriving at a leaf node and output the class value at that leaf node.&lt;/p&gt;
-
-&lt;p&gt;Trees are fast to learn and very fast for making predictions. They are also often accurate for a broad range of problems and do not require any special preparation for your data.&lt;/p&gt;
-
-&lt;p&gt;Decision trees have a high variance and can yield more accurate predictions when used in an ensemble. For more infos about ensemble technique, look for appropriate ensemble section in this post further down.&lt;/p&gt;
+&lt;p&gt;I am also proud to announce a new Data Science project I am working on as part of my master thesis. It is about analyzing the operating reserve market in the german energy market. The aim is to enhance optimization algorithms input factors by predicting the call probability of work prices of reserve calls. For more information head over to &lt;a href=&quot;https://github.com/wagnertimo/rmarketcrawlR&quot;&gt;my latest GitHub project&lt;/a&gt;.&lt;/p&gt;
 </description>
-        <pubDate>Sun, 02 Apr 2017 00:00:00 +0200</pubDate>
-        <link>http://localhost:4000/articles/2017-04/Machine-Learning-101</link>
-        <guid isPermaLink="true">http://localhost:4000/articles/2017-04/Machine-Learning-101</guid>
+        <pubDate>Sat, 01 Apr 2017 00:00:00 +0200</pubDate>
+        <link>http://localhost:4000/articles/2017-04/New-Project-Started</link>
+        <guid isPermaLink="true">http://localhost:4000/articles/2017-04/New-Project-Started</guid>
         
-        
-        <category>Machine Learning</category>
         
       </item>
     

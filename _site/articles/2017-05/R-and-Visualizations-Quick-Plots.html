@@ -166,12 +166,12 @@
 <p>I will briefly capture the basic graphic types:</p>
 
 <ul>
-  <li><em>Scatter Plots</em></li>
-  <li><em>Line Graphs</em></li>
-  <li><em>Bar Graphs</em></li>
-  <li><em>Histograms</em></li>
-  <li><em>Box Plots</em></li>
-  <li><em>Function Curves</em></li>
+  <li><em><a href="#scatter-plot">Scatter Plots</a></em></li>
+  <li><em><a href="#line-graphs">Line Graphs</a></em></li>
+  <li><em><a href="#bar-graphs">Bar Graphs</a></em></li>
+  <li><em><a href="#histograms">Histograms</a></em></li>
+  <li><em><a href="#box-plot">Box Plots</a></em></li>
+  <li><em><a href="#function-curves">Function Curves</a></em></li>
 </ul>
 
 <h3 id="scatter-plot">Scatter Plot</h3>
@@ -225,7 +225,7 @@ Now we can activate the library and use its quick plot function <code class="hig
 
 <p>I will go more in depth with the individual plotting function <code class="highlighter-rouge">ggplot()</code> in later blog posts of this series. So let’s move forward to line graphs.</p>
 
-<h2 id="line-graph">Line Graph</h2>
+<h2 id="line-graphs">Line Graphs</h2>
 
 <p>For this demonstrations the build in <code class="highlighter-rouge">pressure</code> data set suits perfectly. Let’s have a look…</p>
 
@@ -285,7 +285,7 @@ Now we can activate the library and use its quick plot function <code class="hig
   <p>Note that the <code class="highlighter-rouge">color</code> argument in the <code class="highlighter-rouge">qplot()</code> function is not equivilent to the <code class="highlighter-rouge">col</code> argument in the base <code class="highlighter-rouge">plot()</code> function. <code class="highlighter-rouge">Color</code> is a group parameter and sets automatically the colors. If you want to determine the used colors in the plot manually you have also to add <code class="highlighter-rouge">scale_color_manual()</code> to the plot function. You will see that in another post.</p>
 </blockquote>
 
-<h2 id="bar-graph">Bar Graph</h2>
+<h2 id="bar-graphs">Bar Graphs</h2>
 
 <p>To make a bar chart you can use the base function <code class="highlighter-rouge">barplot()</code> and pass it a vector of values for the height of each bar and (optionally) a vector of labels for each bar (<code class="highlighter-rouge">names.arg</code> parameter).</p>
 
@@ -342,7 +342,7 @@ Now we can activate the library and use its quick plot function <code class="hig
 
 <p><img src="/images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_29_4.png" alt="png" /></p>
 
-<h2 id="histogram">Histogram</h2>
+<h2 id="histograms">Histograms</h2>
 
 <p>Now we will view the distribution of one-dimensional data with a histogram. Let’s see how the gasoline consumption of the cars in the <code class="highlighter-rouge">mtcars</code> data set is distributed.</p>
 
@@ -475,6 +475,8 @@ Now we can activate the library and use its quick plot function <code class="hig
 <p><img src="/images/R_and_Visualizations_Quick_Plots_files/R_and_Visualizations_Quick_Plots_48_1.png" alt="png" /></p>
 
 <p>So now you should have a basic understanding to plot some quick graphs to get a first look into your data. I will try to continue this series with more detailed explanations on how to use the <code class="highlighter-rouge">ggplot2</code> package with the <code class="highlighter-rouge">ggplot()</code> function since this is more powerful for making expressive charts.</p>
+
+<p>The series continues with basics of <a href="../2017-06/R-and-Visualizations-The-Basics-ggplot2">ggplot2 …</a></p>
 
   </article>
 </div>

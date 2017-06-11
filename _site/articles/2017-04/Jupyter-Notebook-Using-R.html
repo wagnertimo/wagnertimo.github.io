@@ -164,7 +164,7 @@
     <p>You can use the programming language <code class="highlighter-rouge">R</code> in Jupyter Notebook by installing the <code class="highlighter-rouge">IRkernel</code>.
 A notebook kernel is a computational engine that executes the code contained in a notebook document. The <code class="highlighter-rouge">ipython kernel</code> executes python code and the <code class="highlighter-rouge">IRkernel</code> runs R code which will be used later. But there are also kernels for many <a href="https://github.com/jupyter/jupyter/wiki/Jupyter-kernels">other languages</a>.</p>
 
-<p>Firstly, you need to install the latest anaconda package. If you haven’t done this before, walk through my post <a href="../Jupyter-Notebook-Installation">Jupyter Notebook – Installation</a>.</p>
+<p>Firstly, you need to install the latest anaconda package. If you haven’t done this before, walk through my post <a href="../2017-04/Jupyter-Notebook-Installation">Jupyter Notebook – Installation</a>.</p>
 
 <p>Now you can get R working in Jupyter notebook by following simple command lines.</p>
 
@@ -183,20 +183,23 @@ A notebook kernel is a computational engine that executes the code contained in 
 </span></code></pre>
 </div>
 
-<p><strong>Step 3:</strong> Loading the IRkernel.
-After installing the packages, you have to load the IRkernel. Therefore call the <code class="highlighter-rouge">installspec()</code> function of the IRkernel package in the R console.</p>
+<p><strong>Step 3:</strong> Loading the IRkernel.</p>
+
+<p>After installing the packages, you have to load the IRkernel. Therefore call the <code class="highlighter-rouge">installspec()</code> function of the IRkernel package in the R console.</p>
 <div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">IRkernel</span><span class="o">::</span><span class="n">installspec</span><span class="p">()</span><span class="w">
 </span></code></pre>
 </div>
 
-<p><strong>Step 4:</strong> Install the Essentials.
-Before you are able to run R in Jupyter Notebook, you will need some essentials to be installed. Use again the <code class="highlighter-rouge">conda</code>command in the shell.</p>
+<p><strong>Step 4:</strong> Install the Essentials.</p>
+
+<p>Before you are able to run R in Jupyter Notebook, you will need some essentials to be installed. Use again the <code class="highlighter-rouge">conda</code>command in the shell.</p>
 <div class="language-sh highlighter-rouge"><pre class="highlight"><code>conda install -c r r-essentials
 </code></pre>
 </div>
 
-<p><strong>Step 5:</strong> Launch Jupyter Notebook.
-Now you should be able to open Jupyter Notebook and select R as the notebook kernel.</p>
+<p><strong>Step 5:</strong> Launch Jupyter Notebook.</p>
+
+<p>Now you should be able to open Jupyter Notebook and select R as the notebook kernel.</p>
 <div class="language-sh highlighter-rouge"><pre class="highlight"><code>jupyter notebook
 </code></pre>
 </div>

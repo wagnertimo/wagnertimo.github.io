@@ -390,3 +390,5 @@ stat_function(fun=myfun)
 
 
 So now you should have a basic understanding to plot some quick graphs to get a first look into your data. I will try to continue this series with more detailed explanations on how to use the `ggplot2` package with the `ggplot()` function since this is more powerful for making expressive charts.
+
+The series continues with basics of [ggplot2 ...](../2017-06/R-and-Visualizations-The-Basics-ggplot2) 

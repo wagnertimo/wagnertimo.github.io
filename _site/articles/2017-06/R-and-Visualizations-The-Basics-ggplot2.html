@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>R and Visualizations – The Basics of ggplot2</title>
+  <meta name="description" content="An introductionary for ggplot2. An overview of its structural template and some basic plot techniques with examples.">
+
+  <!-- CSS files -->
+  <link rel="stylesheet" href="http://localhost:4000/css/font-awesome.min.css">
+  <link rel="stylesheet" href="http://localhost:4000/css/main.css">
+
+  <link rel="canonical" href="http://localhost:4000/articles/2017-06/R-and-Visualizations-The-Basics-ggplot2">
+  <link rel="alternate" type="application/rss+xml" title="Timo Wagner" href="http://localhost:4000/feed.xml" />
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon" sizes="57x57" href="http://localhost:4000/favicons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="http://localhost:4000/favicons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="http://localhost:4000/favicons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="http://localhost:4000/favicons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="http://localhost:4000/favicons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="http://localhost:4000/favicons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="http://localhost:4000/favicons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="http://localhost:4000/favicons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="http://localhost:4000/favicons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="http://localhost:4000/favicons/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:4000/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="http://localhost:4000/favicons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:4000/favicons/favicon-16x16.png">
+  <link rel="manifest" href="http://localhost:4000/favicons/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="http://localhost:4000/favicons/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+
+<body>
+  <div class="row">
+    <div class="col s12 m3">
+      <div class="table cover">
+        
+
+<div class="cover-card table-cell table-middle">
+  
+  <img src="https://avatars2.githubusercontent.com/u/26152358?v=3&u=3ce04d6d58ef6f11be830f4b1c59ce2db97cfec2&s=400" alt="" class="avatar">
+  
+  <a href="http://localhost:4000/home/" class="author_name">Timo Wagner</a>
+  <span class="author_job">Yet Another Data Something Blog.</span>
+  <span class="author_bio mbm">I am currently a master student at the Karlsruher Institute of Technology (KIT). I am passionated about Data Science. I like to crawl the web for data and I am also keen on machine learning algorithms.</span>
+  <nav class="nav">
+    <ul class="nav-list">
+      <!--
+      <li class="nav-item">
+        <a href="http://localhost:4000/home/">home</a>
+      </li>
+      -->
+      <li class="nav-item">
+        <a href="http://localhost:4000/">blog</a>
+      </li>
+      <li class="nav-item">
+        <a href="http://localhost:4000/categories/">categories</a>
+      </li>
+      <li class="nav-item">
+        <a href="http://localhost:4000/archive/">archive</a>
+      </li>
+      <!--
+      <li class="nav-item">
+        <a href="http://localhost:4000/CV/">CV</a>
+      </li>
+      -->
+    </ul>
+  </nav>
+  <script type="text/javascript">
+  // based on http://stackoverflow.com/a/10300743/280842
+  function gen_mail_to_link(hs, subject) {
+    var lhs,rhs;
+    var p = hs.split('@');
+    lhs = p[0];
+    rhs = p[1];
+    document.write("<a class=\"social-link-item\" target=\"_blank\" href=\"mailto");
+    document.write(":" + lhs + "@");
+    document.write(rhs + "?subject=" + subject + "\"><i class=\"fa fa-fw fa-envelope\"></i><\/a>");
+  }
+</script>
+<div class="social-links">
+  <ul>
+    
+      <li>
+      <script>gen_mail_to_link('wagnertimo@gmx.de', 'Hello from website');</script>
+      </li>
+    
+    
+    
+    
+    <li><a href="http://linkedin.com/in/timo-wagner-95168213a/" class="social-link-item" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a></li>
+    
+    <li><a href="http://www.xing.com/profile/Timo_Wagner44" class="social-link-item" target="_blank"><i class="fa fa-fw fa-xing"></i></a></li>
+    
+    
+    <li><a href="http://github.com/wagnertimo" class="social-link-item" target="_blank"><i class="fa fa-fw fa-github"></i></a></li>
+    
+    <li><a href="http://stackoverflow.com/users/7810379/timo-wagner?tab=profile" class="social-link-item" target="_blank"><i class="fa fa-fw fa-stack-overflow"></i></a></li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <a href="http://stackoverflow.com/7810379/timo-wagner?tab=profile"><i class="social-link-item" target="_blank"><i class="fa fa-fw fa-stackoverflow"></i></a></li>
+
+  </ul>
+</div>
+
+</div>
+
+      </div>
+    </div>
+    <div class="col s12 m9">
+      <div class="post-listing">
+        <a class="btn" href= "http://localhost:4000/" >
+  Home
+</a>
+
+<div class="post-image-feature">
+  <img class="feature-image" src=
+  
+  "http://www.datavizcatalogue.com/methods/images/top_images/SVG/circle_packing.svg"
+  
+  alt="R and Visualizations – The Basics of ggplot2 feature image">
+
+  
+</div><!-- /.image-wrap -->
+
+
+
+<div id="post">
+  <header class="post-header">
+    <h1 title="R and Visualizations – The Basics of ggplot2">R and Visualizations – The Basics of ggplot2</h1>
+    <span class="post-meta">
+      <span class="post-date">
+        11 JUN 2017
+      </span>
+      •
+      <span class="read-time" title="Estimated read time">
+  
+  
+    21 mins read
+  
+</span>
+
+    </span>
+
+  </header>
+
+  <article class="post-content">
+    <p>This is the introductionary part of a series of blog posts which will focus on data visualizations with R. It extends my first post about <a href="../2017-05/R-and-Visualizations-Quick-Plots">quick plotting techniques in R</a>. Now it is time to dive into the structure of <code class="highlighter-rouge">ggplot2</code>.</p>
+
+<p>First we are going to load (or install if not done yet) the <code class="highlighter-rouge">tidyverse</code> package. It is a nice collection of R packages which include useful pre-defined function for the workflow of data wrangling and visualization. It e.g. contains <code class="highlighter-rouge">dplyr</code> or <code class="highlighter-rouge">tidyr</code> which allow you to work with <code class="highlighter-rouge">data.frames</code> in a nice and easy (natural) way (we will cover data wrangling in other blog posts). And of course we have <code class="highlighter-rouge">ggplot2</code> loaded.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="c1"># If not installed already: install.packages("tidyverse")
+</span><span class="n">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## Loading tidyverse: ggplot2
+## Loading tidyverse: tibble
+## Loading tidyverse: tidyr
+## Loading tidyverse: readr
+## Loading tidyverse: purrr
+## Loading tidyverse: dplyr
+
+## Conflicts with tidy packages ----------------------------------------------
+
+## filter(): dplyr, stats
+## lag():    dplyr, stats
+</code></pre>
+</div>
+
+<h2 id="data-set">Data Set</h2>
+
+<p>Now everything is setup, let’s look at some data. <code class="highlighter-rouge">ggplot2</code> contains a data set called <code class="highlighter-rouge">mpg</code> which consits of observations from the US Environment Protection Agency on 38 models of car.</p>
+
+<p>To get a first peek into the data use the <code class="highlighter-rouge">str()</code> and <code class="highlighter-rouge">head()</code> function to see what the structure and the first observations look like. All in all we have 11 variables with numerical and character values. If you want to get more information what the variables actually mean, use the help command <code class="highlighter-rouge">?mpg</code>.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">str</span><span class="p">(</span><span class="n">mpg</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## Classes 'tbl_df', 'tbl' and 'data.frame':    234 obs. of  11 variables:
+##  $ manufacturer: chr  "audi" "audi" "audi" "audi" ...
+##  $ model       : chr  "a4" "a4" "a4" "a4" ...
+##  $ displ       : num  1.8 1.8 2 2 2.8 2.8 3.1 1.8 1.8 2 ...
+##  $ year        : int  1999 1999 2008 2008 1999 1999 2008 1999 1999 2008 ...
+##  $ cyl         : int  4 4 4 4 6 6 6 4 4 4 ...
+##  $ trans       : chr  "auto(l5)" "manual(m5)" "manual(m6)" "auto(av)" ...
+##  $ drv         : chr  "f" "f" "f" "f" ...
+##  $ cty         : int  18 21 20 21 16 18 18 18 16 20 ...
+##  $ hwy         : int  29 29 31 30 26 26 27 26 25 28 ...
+##  $ fl          : chr  "p" "p" "p" "p" ...
+##  $ class       : chr  "compact" "compact" "compact" "compact" ...
+</code></pre>
+</div>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">head</span><span class="p">(</span><span class="n">mpg</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## # A tibble: 6 x 11
+##   manufacturer model displ  year   cyl      trans   drv   cty   hwy    fl
+##          &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt;      &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;
+## 1         audi    a4   1.8  1999     4   auto(l5)     f    18    29     p
+## 2         audi    a4   1.8  1999     4 manual(m5)     f    21    29     p
+## 3         audi    a4   2.0  2008     4 manual(m6)     f    20    31     p
+## 4         audi    a4   2.0  2008     4   auto(av)     f    21    30     p
+## 5         audi    a4   2.8  1999     6   auto(l5)     f    16    26     p
+## 6         audi    a4   2.8  1999     6 manual(m5)     f    18    26     p
+## # ... with 1 more variables: class &lt;chr&gt;
+</code></pre>
+</div>
+
+<h2 id="basic-ggplot-elements">Basic ggplot elements</h2>
+
+<h3 id="first-plot">First Plot</h3>
+
+<p>Now that we know what variables we have in the data set we can build our first plot. Let us investigate the relationship between the size of the car engine <code class="highlighter-rouge">displ</code> and the fuel efficency <code class="highlighter-rouge">hwy</code> (highway miles per gallon, the higher the number the more efficient).</p>
+
+<p><code class="highlighter-rouge">ggplot2</code> has its <em>base function</em> <code class="highlighter-rouge">ggplot()</code> which just returns an empty plot. The base function takes in the <code class="highlighter-rouge">data</code> parameter. Later every variable call is refered to that data set (no assignment like e.g. <code class="highlighter-rouge">data$column</code> is needed).</p>
+
+<p>To enrich the plot with data, you can then literally add (with the <code class="highlighter-rouge">+</code> sign) other graphical elements to the plot. In our case, we will add now points (<code class="highlighter-rouge">geom_point()</code>) to the plot with the <code class="highlighter-rouge">displ</code> variable <strong>mapped</strong> to the <strong>x</strong> axis and the value of the respective <code class="highlighter-rouge">hwy</code> <strong>mapped</strong> on the <strong>y</strong> axis. Such mappings where you connect a variable with a visual property are <em>sumed up</em> in an aesthetic (<code class="highlighter-rouge">aes()</code> function). You will see later that you can also map e.g. the color of a graphical element to the value of a variable.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mpg</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><img src="/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-4-1.png" alt="" /></p>
+
+<p>This is the standard plot. Therefore <code class="highlighter-rouge">ggplot2</code> adjust automatically the scales and labels the axis in a nice visual format. We will see later how one can manually modify those graph properties.</p>
+
+<p>You can clearly see a negative correlation. This means that, the bigger the engine the more fuel is needed. But on the far right you can notice a few points lying a bit above the trend. What could those cars be? Hybrids? To answer that question we have to look at the type or <code class="highlighter-rouge">class</code> of the car. So let’s continue and add another visual property to our plot.</p>
+
+<h3 id="aesthetics">Aesthetics</h3>
+
+<p>As I described earlier <code class="highlighter-rouge">ggplot2</code> uses <strong>aesthetic mappings</strong> to map the value of variables to a visual property like position of <strong>x</strong> and <strong>y</strong> axis on the grid. But you can also map to a <strong>color</strong> (or british english: colour), <strong>shape</strong> or <strong>size</strong> (see bottom for a list of aesthetics) which adds somehow a 3rd dimension. So let us now extend our aesthetics in the plot with <code class="highlighter-rouge">aes(x = displ, y = hwy, color = class)</code>.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mpg</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">class</span><span class="p">))</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><img src="/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-5-1.png" alt="" /></p>
+
+<p>Now we can see what observations belong to which type of car. So our <em>hybrid</em> cars are actually two seaters, smaller or lighter cars which need less fuel. The big SUV and Pickup cars are as suspected on the lower edge.</p>
+
+<p>Again <code class="highlighter-rouge">ggplot2</code> chooses automatically an appropriate color scheme. Try out the two other aesthetics (shape and size) by yourself. Notice that for color and shape it makes sense to map them to a categorical variable where as size is appropriate for continuous variables. The shape aesthetic has also a maximum of 6 values. But if your data should have more than 6 levels, you must specify them manually (R has 25 built in shapes that are identified by numbers).</p>
+
+<p>You can also use logical expression for an aesthetic like color. Try e.g. <code class="highlighter-rouge">aes(x = displ, y = hwy, color = displ &gt; 5)</code>. This will seperate your data in red and blue observations based on the logical expression.</p>
+
+<p>List of aesthetics:</p>
+<ul>
+  <li>x (required)</li>
+  <li>y (required)</li>
+  <li>alpha</li>
+  <li>colour</li>
+  <li>fill</li>
+  <li>group</li>
+  <li>shape</li>
+  <li>size</li>
+  <li>stroke</li>
+</ul>
+
+<p>For further information about aesthetics take a look at the <a href="https://cran.r-project.org/web/packages/ggplot2/vignettes/ggplot2-specs.html">cran specification</a>.</p>
+
+<h3 id="facets">Facets</h3>
+
+<p>Let us now learn more about a cool feature of <code class="highlighter-rouge">ggplot2</code> which suits perfectly to look at categorical variables, the <strong>facets</strong>. Facets are basically subplots within a plot. So for each level of a categorical variable you get a plot.</p>
+
+<p>Therefore you need to add the <code class="highlighter-rouge">facet_wrap()</code> function to your plot and specify by a <strong>formula</strong> object (name of a data structure in R, not a synonym for <em>equation</em>. Formulas use the tilt sign <code class="highlighter-rouge">~</code>. They can also be used to build models). The formula defines on which variable the subplots are created.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mpg</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">facet_wrap</span><span class="p">(</span><span class="o">~</span><span class="w"> </span><span class="n">class</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><img src="/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-6-1.png" alt="" /></p>
+
+<p>As always <code class="highlighter-rouge">ggplot2</code> automatically aligns the subplots. But you can also specify the number of rows or columns, e.g. <code class="highlighter-rouge">facet_wrap(~ class, nrow = 2)</code>.</p>
+
+<p>The use of formula expression along with <code class="highlighter-rouge">facet_grid()</code> allows you to combine two variables. Let us look on all subplots of combinations of drive type (<code class="highlighter-rouge">drv</code>) and cylinders (<code class="highlighter-rouge">cyl</code>)</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mpg</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">facet_grid</span><span class="p">(</span><span class="n">drv</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">cyl</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><img src="/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-7-1.png" alt="" /></p>
+
+<h3 id="geometric-objects">Geometric Objects</h3>
+
+<p>You can use different visual objects to represent data. Till now we used points as a geometrical object to create a scatterplot. In <code class="highlighter-rouge">ggplot2</code> such objects are called <strong>geom</strong>. There are different types of geoms. Here is an excerpt of the most important:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">geom_point()</code> - plot a scatterplot</li>
+  <li><code class="highlighter-rouge">geom_line()</code> - plot a line graph</li>
+  <li><code class="highlighter-rouge">geom_smooth</code> - plot a smooth line fitted to the data</li>
+  <li><code class="highlighter-rouge">geom_bar()</code> - plots bars like a histogram</li>
+  <li><code class="highlighter-rouge">geom_density()</code> - plots a density graph for continuous data</li>
+  <li><code class="highlighter-rouge">geom_boxplot()</code> - plots a boxplot</li>
+</ul>
+
+<p>All in all over 30 geoms are provided and extension packages provide even more (see <a href="https://www.ggplot2-exts.org">https://www.ggplot2-exts.org</a> for a sampling). Similarily, look at the <a href="http://ggplot2.tidyverse.org/reference/#section-layer-geoms">ggplot2 reference</a> or check out the <a href="http://rstudio.com/cheatsheets">cheatsheet</a> for further information.</p>
+
+<p>Let’s have a look how differently our scatterplot is represented as a smoothed line plot.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mpg</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_smooth</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><img src="/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-8-1.png" alt="" /></p>
+
+<p>Here you clearly see the upspike at the end which again is due to our two seater cars.</p>
+
+<p>Note that each geom in ggplot2 takes a mapping argument. However, not every aesthetic works with every geom. The shape aaesthetic makes sense for a point geom, but for a line geom. On the other hand, you can set the <strong>linetype</strong> of a line, not of a point.</p>
+
+<p>So let us plot different line styles for each drive type (<code class="highlighter-rouge">drv</code> <code class="highlighter-rouge">4</code> = four-wheel drive, <code class="highlighter-rouge">f</code> = front-wheel drive and <code class="highlighter-rouge">r</code> = rear-wheel drive):</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mpg</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_smooth</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">,</span><span class="w"> </span><span class="n">linetype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">drv</span><span class="p">))</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><img src="/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-9-1.png" alt="" /></p>
+
+<p>As you maybe notice, the lines do not all go from begining till end. This is due to the fact that there is not enough data for this combinations.</p>
+
+<p>Another way to distinguish the line plot between the drivetrain types (<code class="highlighter-rouge">drv</code>) would be to use the color aesthetic again. But there is also the so called <strong>group</strong> aesthetic which groups the data according to the factor levels. The difference lies in the coloring scheme. There is also no legend provided with group.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mpg</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_smooth</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">drv</span><span class="p">))</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><img src="/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-10-1.png" alt="" /></p>
+
+<p>Try out the color aesthetic yourself to see the difference</p>
+
+<h3 id="multiple-geoms">Multiple geoms</h3>
+
+<p>Now it is time to enrich our plot even further and use multiple geoms. How about combining <code class="highlighter-rouge">geom_point()</code> with <code class="highlighter-rouge">geom_smooth</code>:</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mpg</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_smooth</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><img src="/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-11-1.png" alt="" /></p>
+
+<p>As explained earlier, the structure of <code class="highlighter-rouge">ggplot2</code> is to add graphical elements to your base function (empty plot: <code class="highlighter-rouge">ggplot()</code>). Here we simply add the two geoms to the plot. You might ask yourself, but what if i want to change the aesthetics, then i have to change them in both geom objects. You are right, and this duplication can be avoided by defining the mappings already in the base function of <code class="highlighter-rouge">ggplot()</code>. So we will treat these mappings as <em>global mappings</em> that apply to each geom in the graph. Hence,</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_smooth</span><span class="p">()</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>will create the same plot. If you add now mappings into the geom objects, they will be treated as <em>local mappings</em>. They extend or overwrite the global mappings for that <em>layer</em> only.</p>
+
+<p>You can go even further and define new data for a <em>layer</em> in the geom object: <code class="highlighter-rouge">geom_smooth(data = filter(mpg, class == "subcompact"))</code></p>
+
+<blockquote>
+  <p>Note: <code class="highlighter-rouge">filter()</code> is a function of the <code class="highlighter-rouge">dplyr</code> package.</p>
+</blockquote>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">displ</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">class</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_smooth</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">filter</span><span class="p">(</span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="n">class</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"subcompact"</span><span class="p">),</span><span class="w"> </span><span class="n">se</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><img src="/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-12-1.png" alt="" /></p>
+
+<h3 id="statistical-charts">Statistical charts</h3>
+
+<p>One of the plots which can give a nice and easy overview about the frequency of variables are bar charts. In <code class="highlighter-rouge">ggplot2</code> we can use <code class="highlighter-rouge">geom_bar()</code>. To go further into the details of the functionality we will use the <code class="highlighter-rouge">diamonds</code> data set contained in the <code class="highlighter-rouge">ggplot2</code> package. There are about 54,000 diamonds, including the price, carat, color, clarity, and cut of each diamond.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diamonds</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_bar</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cut</span><span class="p">))</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><img src="/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-13-1.png" alt="" /></p>
+
+<p>You can see that there are a lot more diamonds with great cut quality than with bad quality. You may notice that this time, there is now <strong>y</strong> aesthetic mapped to a variable. Despite, there is a <strong>count</strong> variable as y axis. This variable is automatically generated by <code class="highlighter-rouge">ggplot2</code>. New values are also calculated by other plots like e.g. histograms and frequency polygons bin your data and then plot bin counts. Or the already seen smooth geom object fit a model to your data and then plots the predictions.</p>
+
+<p>The method behind that generation of new values is <strong>stat</strong>. This leads us to the notion of <strong>statistical transformation</strong>. For <code class="highlighter-rouge">geom_bar()</code> the default <code class="highlighter-rouge">stat</code> argument is <em>count</em> (see <code class="highlighter-rouge">?geom_bar</code>). So it uses the <code class="highlighter-rouge">stat_count()</code> method. Vice versa, ever stat method has also by default a geom object. Hence,</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diamonds</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">stat_count</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cut</span><span class="p">))</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>would generate the same bar chart. But sometimes it is nicer to see the proportions rather than the absulute counts. Therefore, we can specify the y aesthetic with <code class="highlighter-rouge">..prop..</code>. This overrides the default mapping from transformed variables to aesthetics.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diamonds</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_bar</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cut</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">..prop..</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">))</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><img src="/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-14-1.png" alt="" /></p>
+
+<p>In <code class="highlighter-rouge">ggplot2</code> you have over 20 stat functions (see <code class="highlighter-rouge">?stat_bin</code> or the <a href="https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf">cheatsheet</a>).</p>
+
+<p>Another example would be to use <code class="highlighter-rouge">stat_summary()</code>. We will specify some of its parameters to mimic a boxplot with min, max and median values of the total depth of the diamonds (y axis) grouped by their cut quality (x axis).</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diamonds</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">stat_summary</span><span class="p">(</span><span class="w">
+    </span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cut</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">depth</span><span class="p">),</span><span class="w">
+    </span><span class="n">fun.ymin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">min</span><span class="p">,</span><span class="w">
+    </span><span class="n">fun.ymax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">max</span><span class="p">,</span><span class="w">
+    </span><span class="n">fun.y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">median</span><span class="w">
+  </span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><img src="/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-15-1.png" alt="" /></p>
+
+<p>Now let’s bring some color into the game. We already know that we can use the color aesthetic to map a color for points or lines to a variable. This is also possible for bar geom objects. Just set the same varible of the x aesthetic to the color aesthetic, e.g. <code class="highlighter-rouge">aes(x = cut, color = cut)</code>. But this will give the bars a colored frame and will not fill them with colors. Try your own…</p>
+
+<p>For bar charts it is better to use <strong>fill</strong> aesthetic. So it is even possible to visualize more variables. Let us look at the different distribution of the <code class="highlighter-rouge">clarity</code>(<em>I1</em> = worst, …, IF = best) meassures within each cut quality:</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diamonds</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_bar</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cut</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clarity</span><span class="p">))</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><img src="/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-16-1.png" alt="" /></p>
+
+<p>We see that the best quality diamonds, also have the most clear diamonds. Such bar charts are called <strong>stacked bar charts</strong>. This leads us again to another notion of <strong>position adjustment</strong> which is specified by the <strong>position</strong> argument in the <code class="highlighter-rouge">bar_geom()</code> (like the stat argument). By default the position parameter is set to <code class="highlighter-rouge">"stack"</code>. Hence,</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diamonds</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_bar</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cut</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clarity</span><span class="p">),</span><span class="w"> </span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"stack"</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>would produce the same stacked bar chart. But there are also other position adjustments like e.g. <code class="highlighter-rouge">position = "fill"</code> or <code class="highlighter-rouge">position = "dodge"</code>. Try them out yourself.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diamonds</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_bar</span><span class="p">(</span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cut</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clarity</span><span class="p">),</span><span class="w"> </span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dodge"</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><img src="/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-17-1.png" alt="" /></p>
+
+<h3 id="coordinate-functions">Coordinate functions</h3>
+
+<p>Almost done… Now we will cover coordinate functions to complement the structural template of building plots with <code class="highlighter-rouge">ggplot2</code>. By default the Cartesian coordinate system is used. The x and y positions determine the location of the points on the plot. There are several other coordinate systems that helpful for different use cases.</p>
+
+<p>With <code class="highlighter-rouge">coord_flip()</code> you are able to change the x and y axis. This can be useful if the labels on the x axis of your original plot are too big. Look at this boxplot. If the axis where flipped the labels would be impossible to read.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">class</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hwy</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_boxplot</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">coord_flip</span><span class="p">()</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><img src="/images/R_and_Visualizations_ggplot_basics_files/unnamed-chunk-18-1.png" alt="" /></p>
+
+<h3 id="template-and-structure-of-ggplot">Template and Structure of ggplot</h3>
+
+<p>Below in the code snippet you can see the general template for building plots in <code class="highlighter-rouge">ggplot2</code>. The values in brackets (<code class="highlighter-rouge">&lt;...&gt;</code>) are variables which the user has to define. Not all are needed to be specified, <code class="highlighter-rouge">ggplot2</code> provides useful default values; except for the data, geoms, and mappings.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="n">DATA</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="o">&lt;</span><span class="n">GEOM_FUNCTION</span><span class="o">&gt;</span><span class="p">(</span><span class="w">
+     </span><span class="n">mapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="o">&lt;</span><span class="n">MAPPINGS</span><span class="o">&gt;</span><span class="p">),</span><span class="w">
+     </span><span class="n">stat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="n">STAT</span><span class="o">&gt;</span><span class="p">,</span><span class="w">
+     </span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="n">POSITION</span><span class="o">&gt;</span><span class="w">
+  </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="o">&lt;</span><span class="n">COORDINATE_FUNCTION</span><span class="o">&gt;</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="o">&lt;</span><span class="n">FACET_FUNCTION</span><span class="o">&gt;</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>If you follow this formal system, you can describe any plot as a combination of a dataset, a geom, a set of mappings, a stat, a position adjustment, a coordinate system, and a faceting scheme.</p>
+
+<p>I hope the examples could give you a basic understanding about the structure of <code class="highlighter-rouge">ggplot2</code>. In further blog posts we will go more in depth on how to custumize plots and we will look at specific plot types.</p>
+
+  </article>
+</div>
+
+<div class="share-buttons">
+  <h6>Share on: </h6>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=http://localhost:4000/articles/2017-06/R-and-Visualizations-The-Basics-ggplot2" class="twitter btn" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/articles/2017-06/R-and-Visualizations-The-Basics-ggplot2" class="facebook btn" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url=http://localhost:4000/articles/2017-06/R-and-Visualizations-The-Basics-ggplot2" class="google-plus btn" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
+    <li>
+      <a href="https://news.ycombinator.com/submitlink?u=http://localhost:4000/articles/2017-06/R-and-Visualizations-The-Basics-ggplot2" class="hacker-news btn" title="Share on Hacker News"><i class="fa fa-hacker-news"></i><span> Hacker News</span></a>
+    </li>
+    <li>
+      <a href="https://www.reddit.com/submit?url=http://localhost:4000/articles/2017-06/R-and-Visualizations-The-Basics-ggplot2" class="reddit btn" title="Share on Reddit"><i class="fa fa-reddit"></i><span> Reddit</span></a>
+    </li>
+  </ul>
+</div><!-- end share-buttons -->
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'https-wagnertimo-github-io';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
+        <footer>
+  &copy; 2017 Timo Wagner. Data Science made with <i class="fa fa-heart heart-icon"></i>
+</footer>
+
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="http://localhost:4000/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="http://localhost:4000/js/main.js"></script>
+
+
+</body>
+</html>
