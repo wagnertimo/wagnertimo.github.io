@@ -41,7 +41,7 @@ owner:
   name: Timo Wagner
   avatar: https://avatars2.githubusercontent.com/u/26152358?v=3&u=3ce04d6d58ef6f11be830f4b1c59ce2db97cfec2&s=400
   job: "Yet Another Data Something Blog."
-  bio: "I am currently a master student at the Karlsruher Institute of Technology (KIT). I am passionated about Data Science. I like to crawl the web for data and I am also keen on machine learning algorithms."
+  bio: "I am passionated about Data Science. I like to crawl the web for data and I am also keen on machine learning algorithms."
   email: wagnertimo@gmx.de
   disqus-shortname: https-wagnertimo-github-io
   twitter: #username
@@ -73,3 +73,4 @@ owner:
   500px: #username
   codepen: #username
   stackoverflow: 7810379/timo-wagner?tab=profile
+  medium: @timo.wagner
